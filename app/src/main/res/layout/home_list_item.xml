@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/home_list_item_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/home_list_item_age_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/home_list_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="home_list_item_name"
+        app:layout_constraintBottom_toTopOf="@+id/home_list_item_age_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_list_item_picture"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/home_list_item_age_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="@string/age"
+        app:layout_constraintBaseline_toBaselineOf="@+id/home_list_item_age"
+        app:layout_constraintEnd_toStartOf="@+id/home_list_item_age"
+        app:layout_constraintStart_toEndOf="@+id/home_list_item_picture" />
+
+    <TextView
+        android:id="@+id/home_list_item_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="home_list_item_age"
+        app:layout_constraintBottom_toTopOf="@+id/home_list_item_additional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_list_item_age_label"
+        app:layout_constraintTop_toBottomOf="@id/home_list_item_name"/>
+
+<!--    todo check if extra shouldn't be removed-->
+    <TextView
+        android:id="@+id/home_list_item_additional_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="home_list_item_additional_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/home_list_item_additional"
+        app:layout_constraintEnd_toStartOf="@+id/home_list_item_additional"
+        app:layout_constraintStart_toEndOf="@+id/home_list_item_picture" />
+
+    <TextView
+        android:id="@+id/home_list_item_additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="home_list_item_additional"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_list_item_additional_label"
+        app:layout_constraintTop_toBottomOf="@+id/home_list_item_age" />
+</androidx.constraintlayout.widget.ConstraintLayout>
