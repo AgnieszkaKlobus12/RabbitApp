@@ -5,4 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="age">Wiek:</string>
     <string name="rabbit_list_title">Lista królików i miotów</string>
+    <string name="open">Otwórz</string>
+    <string name="close">Zamknij</string>
+
 </resources>
