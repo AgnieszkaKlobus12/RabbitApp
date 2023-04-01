@@ -7,5 +7,6 @@
     <string name="rabbit_list_title">Lista królików i miotów</string>
     <string name="open">Otwórz</string>
     <string name="close">Zamknij</string>
+    <string name="rabbit_picture">Rabbit picture</string>
 
 </resources>

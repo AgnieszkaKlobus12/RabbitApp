@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.repository.RabbitRepository
 import kotlinx.coroutines.*
 
 @Database(
@@ -16,7 +17,7 @@ import kotlinx.coroutines.*
 )
 abstract class AppDatabase : RoomDatabase() {
 
-//    abstract fun mountainPassProofDAO(): MountainPassProofDAO
+    abstract fun rabbitRepository(): RabbitRepository
 
     @DelicateCoroutinesApi
     companion object {
@@ -47,10 +48,12 @@ abstract class AppDatabase : RoomDatabase() {
             private suspend fun populateDatabase(db: AppDatabase) {
                 db.let { db ->
                     withContext(Dispatchers.IO) {
-//                        val mountainPassProofDAO = db.mountainPassProofDAO()
+                        val rabbitRepository = db.rabbitRepository()
                         // every table needs to be cleared to avoid redundant data
-//                        mountainPassProofDAO.deleteAll()
-//                        mountainPassOfficialDAO.insert(MountainPassOfficial())
+                        rabbitRepository.deleteAll()
+                        rabbitRepository.insert(Rabbit(1, "Misiek", 49872325637, "Male"))
+                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56774767, "Female"))
+
                     }
                 }
             }
