@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.rabbitapp.databinding.FragmentHomeBinding
+import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 
 class MainListFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMainListBinding? = null
     private val binding get() = _binding!!
     private var mainListViewModel: MainListViewModel? = null
 
@@ -22,7 +22,7 @@ class MainListFragment : Fragment() {
     ): View {
         mainListViewModel =
             ViewModelProvider(this)[MainListViewModel::class.java]
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMainListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,10 +34,27 @@ class MainListFragment : Fragment() {
             rabbitsData?.let { rabbitsList = it }
             binding.fragmentHomeRabbitList.adapter = MainListAdapter(rabbitsList)
         }
+
+        binding.addNewMainButton.setOnClickListener(addOnClickListener())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun addOnClickListener(): View.OnClickListener {
+        return View.OnClickListener {
+            if (binding.addLitterButton.visibility == View.GONE) {
+                binding.addLitterButton.visibility = View.VISIBLE
+            } else {
+                binding.addLitterButton.visibility = View.GONE
+            }
+            if (binding.addRabbitButton.visibility == View.GONE) {
+                binding.addRabbitButton.visibility = View.VISIBLE
+            } else {
+                binding.addRabbitButton.visibility = View.GONE
+            }
+        }
     }
 }
