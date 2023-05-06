@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.repository.LitterRepository
 import com.example.rabbitapp.model.repository.RabbitRepository
 import kotlinx.coroutines.*
 
@@ -18,6 +19,7 @@ import kotlinx.coroutines.*
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun rabbitRepository(): RabbitRepository
+    abstract fun litterRepository(): LitterRepository
 
     @DelicateCoroutinesApi
     companion object {
@@ -51,8 +53,8 @@ abstract class AppDatabase : RoomDatabase() {
                         val rabbitRepository = db.rabbitRepository()
                         // every table needs to be cleared to avoid redundant data
                         rabbitRepository.deleteAll()
-                        rabbitRepository.insert(Rabbit(1, "Misiek", 49872325637, "Male"))
-                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56774767, "Female"))
+                        rabbitRepository.insert(Rabbit(0, "Misiek", 49872325637, "Male"))
+                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56745674767, "Female"))
                     }
                 }
             }

@@ -11,13 +11,16 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
-import java.util.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class AddRabbitFragment : Fragment() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainListViewModel by activityViewModels()
+
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +34,8 @@ class AddRabbitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(Date().toString())
+        val formattedDate = LocalDate.now().format(formatter)
+        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
     }
 
@@ -41,7 +45,7 @@ class AddRabbitFragment : Fragment() {
                 Rabbit(
                     0,
                     binding.addRabbitName.text.toString(),
-                    Date(binding.addRabbitDate.text.toString()).toInstant().toEpochMilli(),
+                    LocalDate.parse(binding.addRabbitDate.text.toString(), formatter).toEpochDay(),
                     getRabbitGender()
                 ) //todo add parents
             )
