@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Litter(
-    @PrimaryKey override val id: Long,
+    @PrimaryKey(autoGenerate = true) override val id: Long,
     override val name: String,
     override val birth: Long,
     val size: Int

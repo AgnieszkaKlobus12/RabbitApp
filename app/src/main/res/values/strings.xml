@@ -13,5 +13,12 @@
     <string name="add_to_list">Add to list</string>
     <string name="add_rabbit">Add rabbit</string>
     <string name="add_litter">Add litter</string>
+    <string name="name_label">Imię:</string>
+    <string name="rabbit_placeholder">Królik</string>
+    <string name="birth_date_label">Data urodzenia:</string>
+    <string name="female">Samica</string>
+    <string name="male">Samiec</string>
+    <string name="save">Zapisz</string>
+    <string name="litter_size">Wielkość miotu:</string>
 
 </resources>

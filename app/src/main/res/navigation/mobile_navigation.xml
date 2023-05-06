@@ -9,7 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="com.example.rabbitapp.ui.mainList.MainListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_main_list" />
+        tools:layout="@layout/fragment_main_list">
+        <action
+            android:id="@+id/action_navigation_home_to_addRabbitFragment"
+            app:destination="@id/addRabbitFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_addLitterFragment"
+            app:destination="@id/addLitterFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,5 +29,23 @@
         android:name="com.example.rabbitapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/addRabbitFragment"
+        android:name="com.example.rabbitapp.ui.mainList.AddRabbitFragment"
+        android:label="fragment_add_rabbit"
+        tools:layout="@layout/fragment_add_rabbit">
+        <action
+            android:id="@+id/action_addRabbitFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLitterFragment"
+        android:name="com.example.rabbitapp.ui.mainList.AddLitterFragment"
+        android:label="fragment_add_litter"
+        tools:layout="@layout/fragment_add_litter">
+        <action
+            android:id="@+id/action_addLitterFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>

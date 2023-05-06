@@ -5,23 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMainListBinding
-import com.example.rabbitapp.model.entities.HomeListItem
 
 class MainListFragment : Fragment() {
 
     private var _binding: FragmentMainListBinding? = null
     private val binding get() = _binding!!
-    private var mainListViewModel: MainListViewModel? = null
+    private val mainListViewModel: MainListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mainListViewModel =
-            ViewModelProvider(this)[MainListViewModel::class.java]
         _binding = FragmentMainListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,13 +28,11 @@ class MainListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var rabbitsList = emptyList<HomeListItem>()
-        mainListViewModel?.mainRabbitsItems?.observe(viewLifecycleOwner) { rabbitsData ->
-            rabbitsData?.let { rabbitsList = it }
-            binding.fragmentHomeRabbitList.adapter = MainListAdapter(rabbitsList)
-        }
+        binding.fragmentHomeRabbitList.adapter = MainListAdapter(mainListViewModel.getAll())
 
-        binding.addNewMainButton.setOnClickListener(addOnClickListener())
+        binding.addNewMainButton.setOnClickListener(showFloatingAddButtons())
+        binding.addRabbitButton.setOnClickListener(moveToAddRabbit())
+        binding.addLitterButton.setOnClickListener(moveToAddLitter())
     }
 
     override fun onDestroyView() {
@@ -43,7 +40,7 @@ class MainListFragment : Fragment() {
         _binding = null
     }
 
-    private fun addOnClickListener(): View.OnClickListener {
+    private fun showFloatingAddButtons(): View.OnClickListener {
         return View.OnClickListener {
             if (binding.addLitterButton.visibility == View.GONE) {
                 binding.addLitterButton.visibility = View.VISIBLE
@@ -55,6 +52,18 @@ class MainListFragment : Fragment() {
             } else {
                 binding.addRabbitButton.visibility = View.GONE
             }
+        }
+    }
+
+    private fun moveToAddRabbit(): View.OnClickListener {
+        return View.OnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_home_to_addRabbitFragment)
+        }
+    }
+
+    private fun moveToAddLitter(): View.OnClickListener {
+        return View.OnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_home_to_addLitterFragment)
         }
     }
 }

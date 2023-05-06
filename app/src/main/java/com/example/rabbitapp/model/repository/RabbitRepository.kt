@@ -1,6 +1,5 @@
 package com.example.rabbitapp.model.repository
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.rabbitapp.model.entities.Rabbit
 
@@ -23,6 +22,6 @@ interface RabbitRepository {
     fun deleteAll()
 
     @Query("select * from Rabbit")
-    fun getAll(): LiveData<List<Rabbit>>
+    fun getAll(): List<Rabbit>
 
 }

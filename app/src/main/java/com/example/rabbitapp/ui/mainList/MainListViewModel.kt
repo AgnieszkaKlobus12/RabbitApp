@@ -1,11 +1,9 @@
 package com.example.rabbitapp.ui.mainList
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.rabbitapp.model.AppDatabase
-import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.service.RabbitService
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -20,10 +18,14 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         rabbitRepository = RabbitService(database.rabbitRepository())
     }
 
-    private val _mainRabbitsItems = MutableLiveData<List<HomeListItem>>().apply {
-        value = rabbitRepository.getAll().value
-//        value = listOf(Rabbit(0, "aaaa", 47862582478, "Male"))
+    fun save(rabbit: Rabbit) {
+        rabbitRepository.save(rabbit);
     }
-    val mainRabbitsItems: LiveData<List<HomeListItem>> = _mainRabbitsItems
 
+    fun getAll(): List<Rabbit> {
+        val list = rabbitRepository.getAll()
+        Log.d("VIEW_MODEL", "Rabbit list acquired. Size: " + list.size)
+        return list
+    }
 }
+

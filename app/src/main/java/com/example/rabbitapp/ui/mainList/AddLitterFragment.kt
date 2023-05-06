@@ -10,7 +10,6 @@ import com.example.rabbitapp.R
 
 class AddLitterFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
