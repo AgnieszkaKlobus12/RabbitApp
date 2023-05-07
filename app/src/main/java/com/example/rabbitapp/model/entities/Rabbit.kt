@@ -24,6 +24,7 @@ data class Rabbit(
     override val name: String,
     override val birth: Long,
     val sex: String,
+    val earNumber: String,
 
     val FkMother: Long?,
     val FkFather: Long?

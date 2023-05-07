@@ -81,6 +81,7 @@ class AddRabbitFragment : Fragment() {
                     binding.addRabbitName.text.toString(),
                     LocalDate.parse(binding.addRabbitDate.text.toString(), formatter).toEpochDay(),
                     getRabbitGender(),
+                    binding.addRabbitNumbers.text.toString(),
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )

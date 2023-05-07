@@ -47,8 +47,6 @@
         app:layout_constraintRight_toLeftOf="@id/add_rabbit_date"
         app:layout_constraintTop_toBottomOf="@id/add_rabbit_name" />
 
-
-    <!--        todo add default value as today -->
     <EditText
         android:id="@+id/add_rabbit_date"
         android:layout_width="wrap_content"
@@ -60,6 +58,27 @@
         app:layout_constraintLeft_toRightOf="@id/add_rabbit_date_label"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <TextView
+        android:id="@+id/add_rabbit_numbers_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/ear_numbers"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_rabbit_numbers"
+        app:layout_constraintTop_toBottomOf="@id/add_rabbit_date" />
+
+    <EditText
+        android:id="@+id/add_rabbit_numbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_numbers_label"
+        app:layout_constraintLeft_toRightOf="@id/add_rabbit_numbers_label"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/add_rabbit_gender"
         android:layout_width="wrap_content"
@@ -68,7 +87,7 @@
         app:selectionRequired="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_date_label"
+        app:layout_constraintTop_toBottomOf="@id/add_rabbit_numbers_label"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
@@ -82,9 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/female" />
-
     </com.google.android.material.chip.ChipGroup>
-
 
     <TextView
         android:id="@+id/add_rabbit_mother"
