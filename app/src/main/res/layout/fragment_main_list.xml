@@ -14,13 +14,13 @@
         android:text="@string/rabbit_list_title"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_home_rabbit_list"
+        app:layout_constraintBottom_toTopOf="@id/fragment_home_list_include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/fragment_home_rabbit_list"
+        android:id="@+id/fragment_home_list_include"
         layout="@layout/content_home_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"

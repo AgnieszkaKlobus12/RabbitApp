@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_addLitterFragment"
             app:destination="@id/addLitterFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment" />
     </fragment>
 
     <fragment
@@ -67,5 +70,10 @@
         android:id="@+id/pickMotherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.add.pickParent.PickMotherListFragment"
         android:label="PickMotherListFragment" />
+    <fragment
+        android:id="@+id/rabbitDetailsFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.show.RabbitDetailsFragment"
+        android:label="fragment_rabbit_details"
+        tools:layout="@layout/fragment_rabbit_details" />
 
 </navigation>

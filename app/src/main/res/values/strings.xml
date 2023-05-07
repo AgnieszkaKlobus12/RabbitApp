@@ -24,5 +24,9 @@
     <string name="father">Ojciec</string>
     <string name="pick">Wybierz</string>
     <string name="ear_numbers">Numery:</string>
+    <string name="unknown">Nieznane</string>
+    <string name="sex_label">Płeć:</string>
+    <string name="delete">Usuń</string>
+    <string name="edit">Edytuj</string>
 
 </resources>

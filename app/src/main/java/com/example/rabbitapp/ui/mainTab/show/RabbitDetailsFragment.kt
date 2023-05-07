@@ -1,0 +1,92 @@
+package com.example.rabbitapp.ui.mainTab.show
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import com.example.rabbitapp.R
+import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
+import com.example.rabbitapp.ui.mainTab.HomeListItem
+import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.RabbitDetails
+
+
+class RabbitDetailsFragment : Fragment() {
+
+    private var _binding: FragmentRabbitDetailsBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: MainListViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRabbitDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.rabbitDetailsAge.text =
+            viewModel.selectedRabbit?.let { RabbitDetails.getAge(it.birth) }
+        binding.rabbitDetailsName.text = viewModel.selectedRabbit?.name
+        binding.rabbitDetailsNumber.text = viewModel.selectedRabbit?.earNumber
+        binding.rabbitDetailsSex.text =
+            getGenderTranslated(viewModel.selectedRabbit?.sex)
+        binding.rabbitDetailsBirth.text =
+            viewModel.selectedRabbit?.let { RabbitDetails.getBirthDateString(it.birth) }
+
+        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
+        if (viewModel.selectedRabbit?.FkMother != null) {
+            binding.rabbitDetailsMotherFragment.visibility = View.VISIBLE
+            binding.rabbitDetailsMotherUnknown.visibility = View.GONE
+            val selectedMotherFragment =
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.FkMother!!)!!)
+            transaction.replace(R.id.rabbit_details_mother_fragment, selectedMotherFragment)
+        } else {
+            binding.rabbitDetailsMotherFragment.visibility = View.GONE
+            binding.rabbitDetailsMotherUnknown.visibility = View.VISIBLE
+        }
+
+        if (viewModel.selectedRabbit?.FkFather != null) {
+            binding.rabbitDetailsFatherFragment.visibility = View.VISIBLE
+            binding.rabbitDetailsFatherUnknown.visibility = View.GONE
+            val selectedFatherFragment =
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.FkFather!!)!!)
+            transaction.replace(R.id.rabbit_details_father_fragment, selectedFatherFragment)
+        } else {
+            binding.rabbitDetailsFatherFragment.visibility = View.GONE
+            binding.rabbitDetailsFatherUnknown.visibility = View.VISIBLE
+        }
+        transaction.commit()
+    }
+
+    private fun moveToEditRabbit(): View.OnClickListener {
+        return View.OnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_home_to_addRabbitFragment)
+            //todo edit
+        }
+    }
+
+    private fun deleteRabbit(): View.OnClickListener {
+        return View.OnClickListener { view ->
+            //todo
+        }
+    }
+
+    private fun getGenderTranslated(gender: String?): String {
+        if (gender == Gender.MALE.name) {
+            return getString(R.string.male)
+        } else if (gender == Gender.FEMALE.name) {
+            return getString(R.string.female)
+        }
+        return getString(R.string.unknown)
+    }
+}

@@ -21,6 +21,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedMother: Rabbit? = null
     var selectedFather: Rabbit? = null
 
+    var selectedRabbit: Rabbit? = null
+
     init {
         val database = AppDatabase.getInstance(application)
         rabbitRepository = RabbitService(database.rabbitRepository())
@@ -48,11 +50,18 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return listRabbit
     }
 
+    fun getRabbitFromId(id: Long): Rabbit? {
+        val rabbit = rabbitRepository.getRabbitFromId(id)
+        Log.d("VIEW_MODEL", "Rabbit $rabbit acquired.")
+        return rabbit
+    }
+
     fun getAllRabbits(gender: Gender): List<HomeListItem> {
         return rabbitRepository.getAllWithGender(gender)
     }
 
     fun clearParents() {
+        selectedRabbit = null
         selectedFather = null
         selectedMother = null
     }

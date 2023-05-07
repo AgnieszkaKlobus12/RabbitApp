@@ -11,6 +11,10 @@ class RabbitService(private val rabbitRepository: RabbitRepository) {
         return rabbitRepository.getAll()
     }
 
+    fun getRabbitFromId(id: Long): Rabbit? {
+        return rabbitRepository.getRabbitFromId(id)
+    }
+
     fun getAllWithGender(gender: Gender): List<Rabbit> {
         return rabbitRepository.getAllWithGender(gender.name)
     }
