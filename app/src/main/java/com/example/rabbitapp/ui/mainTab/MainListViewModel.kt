@@ -18,8 +18,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     private val rabbitRepository: RabbitService
     private val litterRepository: LitterService
 
-    public var selectedMother: Rabbit? = null
-    public var selectedFather: Rabbit? = null
+    var selectedMother: Rabbit? = null
+    var selectedFather: Rabbit? = null
 
     init {
         val database = AppDatabase.getInstance(application)
@@ -28,11 +28,11 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save(rabbit: Rabbit) {
-        rabbitRepository.save(rabbit);
+        rabbitRepository.save(rabbit)
     }
 
     fun save(litter: Litter) {
-        litterRepository.save(litter);
+        litterRepository.save(litter)
     }
 
     fun getAll(): List<HomeListItem> {
@@ -49,8 +49,12 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getAllRabbits(gender: Gender): List<HomeListItem> {
-        val listRabbit = rabbitRepository.getAllWithGender(gender)
-        return listRabbit
+        return rabbitRepository.getAllWithGender(gender)
+    }
+
+    fun clearParents() {
+        selectedFather = null
+        selectedMother = null
     }
 }
 

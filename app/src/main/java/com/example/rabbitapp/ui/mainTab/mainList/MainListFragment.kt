@@ -31,6 +31,7 @@ class MainListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainListViewModel.clearParents()
 
         binding.fragmentHomeRabbitList.fragmentHomeRabbitList.adapter =
             MainListAdapter(mainListViewModel.getAll(), object : OnSelected {
