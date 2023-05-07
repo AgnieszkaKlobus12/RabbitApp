@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -53,8 +53,10 @@ abstract class AppDatabase : RoomDatabase() {
                         val rabbitRepository = db.rabbitRepository()
                         // every table needs to be cleared to avoid redundant data
                         rabbitRepository.deleteAll()
-                        rabbitRepository.insert(Rabbit(0, "Misiek", 49872325637, "Male"))
-                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56745674767, "Female"))
+
+                        //test data
+//                        rabbitRepository.insert(Rabbit(0, "Misiek", 49872325637, "Male"))
+//                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56745674767, "Female"))
                     }
                 }
             }

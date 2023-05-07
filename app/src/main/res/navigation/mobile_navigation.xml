@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.rabbitapp.ui.mainList.MainListFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.mainList.MainListFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_main_list">
         <action
@@ -31,21 +31,41 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/addRabbitFragment"
-        android:name="com.example.rabbitapp.ui.mainList.AddRabbitFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.AddRabbitFragment"
         android:label="fragment_add_rabbit"
         tools:layout="@layout/fragment_add_rabbit">
         <action
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_addRabbitFragment_to_pickFatherListFragment"
+            app:destination="@id/pickFatherListFragment" />
+        <action
+            android:id="@+id/action_addRabbitFragment_to_pickMotherListFragment"
+            app:destination="@id/pickMotherListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLitterFragment"
-        android:name="com.example.rabbitapp.ui.mainList.AddLitterFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.AddLitterFragment"
         android:label="fragment_add_litter"
         tools:layout="@layout/fragment_add_litter">
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_addLitterFragment_to_pickMotherListFragment"
+            app:destination="@id/pickMotherListFragment" />
+        <action
+            android:id="@+id/action_addLitterFragment_to_pickFatherListFragment"
+            app:destination="@id/pickFatherListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pickFatherListFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.pickParent.PickFatherListFragment"
+        android:label="PickFatherListFragment" />
+    <fragment
+        android:id="@+id/pickMotherListFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.pickParent.PickMotherListFragment"
+        android:label="PickMotherListFragment" />
 
 </navigation>

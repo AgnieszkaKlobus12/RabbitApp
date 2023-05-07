@@ -3,11 +3,16 @@ package com.example.rabbitapp.model.service
 import android.util.Log
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.repository.RabbitRepository
+import com.example.rabbitapp.utils.Gender
 
 class RabbitService(private val rabbitRepository: RabbitRepository) {
 
     fun getAll(): List<Rabbit> {
         return rabbitRepository.getAll()
+    }
+
+    fun getAllWithGender(gender: Gender): List<Rabbit> {
+        return rabbitRepository.getAllWithGender(gender.name)
     }
 
     fun save(rabbit: Rabbit): Long {

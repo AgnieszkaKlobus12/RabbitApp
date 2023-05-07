@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainList
+package com.example.rabbitapp.ui.mainTab
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.ui.mainTab.add.OnSelected
 
 class MainListAdapter(
     private val values: List<HomeListItem>,
-//    private val onRouteClickedListener: OnRouteClickedListener
+    private val onSelected: OnSelected
 ) :
     RecyclerView.Adapter<MainListAdapter.HomeListItemView>() {
 
@@ -27,7 +28,7 @@ class MainListAdapter(
         holder.name.text = item.name
         holder.age.text = getAge(item.birth)
 
-//        holder.itemView.setOnClickListener { onRouteClickedListener.onItemClick(item) }
+        holder.itemView.setOnClickListener { onSelected.onItemClick(item) }
     }
 
     override fun getItemCount(): Int = values.size

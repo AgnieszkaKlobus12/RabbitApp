@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainList
+package com.example.rabbitapp.ui.mainTab.mainList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMainListBinding
+import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.ui.mainTab.MainListAdapter
+import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.ui.mainTab.add.OnSelected
 
 class MainListFragment : Fragment() {
 
@@ -28,7 +32,13 @@ class MainListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fragmentHomeRabbitList.adapter = MainListAdapter(mainListViewModel.getAll())
+        binding.fragmentHomeRabbitList.fragmentHomeRabbitList.adapter =
+            MainListAdapter(mainListViewModel.getAll(), object : OnSelected {
+                override fun onItemClick(item: HomeListItem) {
+                    TODO("Not yet implemented")
+                }
+
+            })
 
         binding.addNewMainButton.setOnClickListener(showFloatingAddButtons())
         binding.addRabbitButton.setOnClickListener(moveToAddRabbit())

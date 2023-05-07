@@ -20,5 +20,8 @@
     <string name="male">Samiec</string>
     <string name="save">Zapisz</string>
     <string name="litter_size">Wielkość miotu:</string>
+    <string name="mother">Matka</string>
+    <string name="father">Ojciec</string>
+    <string name="pick">Wybierz</string>
 
 </resources>

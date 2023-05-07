@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainList
+package com.example.rabbitapp.ui.mainTab
 
 import android.app.Application
 import android.util.Log
@@ -9,6 +9,7 @@ import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.service.LitterService
 import com.example.rabbitapp.model.service.RabbitService
+import com.example.rabbitapp.utils.Gender
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -16,6 +17,9 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     private val rabbitRepository: RabbitService
     private val litterRepository: LitterService
+
+    public var selectedMother: Rabbit? = null
+    public var selectedFather: Rabbit? = null
 
     init {
         val database = AppDatabase.getInstance(application)
@@ -32,12 +36,21 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getAll(): List<HomeListItem> {
-        val listRabbit = rabbitRepository.getAll()
+        val listRabbit = getAllRabbits()
         val listLitter = litterRepository.getAll()
-        Log.d("VIEW_MODEL", "Rabbit list acquired. Size: " + listRabbit.size)
         Log.d("VIEW_MODEL", "Litter list acquired. Size: " + listLitter.size)
-
         return listRabbit + listLitter
+    }
+
+    private fun getAllRabbits(): List<HomeListItem> {
+        val listRabbit = rabbitRepository.getAll()
+        Log.d("VIEW_MODEL", "Rabbit list acquired. Size: " + listRabbit.size)
+        return listRabbit
+    }
+
+    fun getAllRabbits(gender: Gender): List<HomeListItem> {
+        val listRabbit = rabbitRepository.getAllWithGender(gender)
+        return listRabbit
     }
 }
 

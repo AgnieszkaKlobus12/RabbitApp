@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainList.AddLitterFragment">
+    tools:context=".ui.mainTab.add.AddLitterFragment">
 
     <ImageView
         android:id="@+id/add_litter_picture"
@@ -47,8 +47,6 @@
         app:layout_constraintRight_toLeftOf="@id/add_litter_date"
         app:layout_constraintTop_toBottomOf="@id/add_litter_name" />
 
-
-    <!--        todo add default value as today -->
     <EditText
         android:id="@+id/add_litter_date"
         android:layout_width="wrap_content"
@@ -78,11 +76,51 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_number_label"
+        app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
         app:layout_constraintLeft_toRightOf="@id/add_litter_number_label"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <TextView
+        android:id="@+id/add_litter_mother"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/mother"
+        app:layout_constraintBottom_toTopOf="@id/add_litter_mother_fragment"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_number" />
 
-    <!-- todo add select parents -->
+    <FrameLayout
+        android:id="@+id/add_litter_mother_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:minHeight="50dp"
+        app:layout_constraintBottom_toTopOf="@id/add_litter_father"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_mother" />
+
+    <TextView
+        android:id="@+id/add_litter_father"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/father"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_mother_fragment" />
+
+    <FrameLayout
+        android:id="@+id/add_litter_father_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:minHeight="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_father" />
 
     <Button
         android:id="@+id/add_litter_save_button"
@@ -93,7 +131,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_number"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_father_fragment"
         app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
