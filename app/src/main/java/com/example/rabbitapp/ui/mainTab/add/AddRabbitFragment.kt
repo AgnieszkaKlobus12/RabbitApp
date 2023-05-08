@@ -15,6 +15,7 @@ import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.HomeListItem
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -32,6 +33,21 @@ class AddRabbitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
+
+        if (viewModel.selectedRabbit != null) {
+            viewModel.selectedMother =
+                viewModel.selectedRabbit!!.FkMother?.let { viewModel.getRabbitFromId(it) }
+            viewModel.selectedFather =
+                viewModel.selectedRabbit!!.FkFather?.let { viewModel.getRabbitFromId(it) }
+            binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
+            binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
+            binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
+            if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
+                binding.addRabbitGenderFemale.isChecked = true
+            } else {
+                binding.addRabbitGenderMale.isChecked = true
+            }
+        }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
@@ -58,7 +74,6 @@ class AddRabbitFragment : Fragment() {
             transaction.replace(R.id.add_rabbit_father_fragment, pickButtonFragment)
         }
         transaction.commit()
-
         return binding.root
     }
 
@@ -73,11 +88,11 @@ class AddRabbitFragment : Fragment() {
         binding.addRabbitFatherFragment.setOnClickListener { startSelect(Gender.MALE) }
     }
 
-    private fun saveRabbit(): View.OnClickListener? {
+    private fun saveRabbit(): View.OnClickListener {
         return View.OnClickListener { view ->
             viewModel.save(
                 Rabbit(
-                    0,
+                    viewModel.selectedRabbit?.id ?: 0,
                     binding.addRabbitName.text.toString(),
                     LocalDate.parse(binding.addRabbitDate.text.toString(), formatter).toEpochDay(),
                     getRabbitGender(),

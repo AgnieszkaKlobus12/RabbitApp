@@ -1,5 +1,6 @@
 package com.example.rabbitapp.ui.mainTab.show
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,18 +67,36 @@ class RabbitDetailsFragment : Fragment() {
             binding.rabbitDetailsFatherUnknown.visibility = View.VISIBLE
         }
         transaction.commit()
+
+        binding.rabbitDetailsDeleteButton.setOnClickListener(deleteRabbit())
+        binding.rabbitDetailsEditButton.setOnClickListener(moveToEditRabbit())
     }
 
     private fun moveToEditRabbit(): View.OnClickListener {
         return View.OnClickListener { view ->
-            view.findNavController().navigate(R.id.action_navigation_home_to_addRabbitFragment)
-            //todo edit
+            view.findNavController().navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
         }
     }
 
     private fun deleteRabbit(): View.OnClickListener {
-        return View.OnClickListener { view ->
-            //todo
+        return View.OnClickListener {
+            val alertDialog = requireActivity().let {
+                val builder = AlertDialog.Builder(it)
+                builder.apply {
+                    setPositiveButton(R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                        viewModel.deleteCurrentlySelectedRabbit()
+                        activity?.supportFragmentManager?.popBackStack()
+                    }
+                    setNegativeButton(R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    setTitle(R.string.alert)
+                    setMessage(R.string.confirm_delete_rabbit_message)
+                }
+                builder.create()
+            }
+            alertDialog.show()
         }
     }
 

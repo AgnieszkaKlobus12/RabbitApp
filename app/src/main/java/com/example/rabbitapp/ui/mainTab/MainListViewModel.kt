@@ -56,6 +56,11 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return rabbit
     }
 
+    fun deleteCurrentlySelectedRabbit() {
+        Log.d("VIEW_MODEL", "Rabbit $selectedRabbit deleted.")
+        selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }
+    }
+
     fun getAllRabbits(gender: Gender): List<HomeListItem> {
         return rabbitRepository.getAllWithGender(gender)
     }

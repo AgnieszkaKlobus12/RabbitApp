@@ -74,6 +74,10 @@
         android:id="@+id/rabbitDetailsFragment"
         android:name="com.example.rabbitapp.ui.mainTab.show.RabbitDetailsFragment"
         android:label="fragment_rabbit_details"
-        tools:layout="@layout/fragment_rabbit_details" />
+        tools:layout="@layout/fragment_rabbit_details" >
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_addRabbitFragment"
+            app:destination="@id/addRabbitFragment" />
+    </fragment>
 
 </navigation>

@@ -28,5 +28,9 @@
     <string name="sex_label">Płeć:</string>
     <string name="delete">Usuń</string>
     <string name="edit">Edytuj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="ok">OK</string>
+    <string name="alert">Uwaga</string>
+    <string name="confirm_delete_rabbit_message">Czy na pewno chcesz usunąć królika? Ta operacja jest nieodwracalna!</string>
 
 </resources>

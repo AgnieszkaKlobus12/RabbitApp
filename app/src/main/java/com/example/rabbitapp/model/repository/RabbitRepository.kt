@@ -12,8 +12,8 @@ interface RabbitRepository {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(rabbit: Rabbit)
 
-    @Delete
-    fun delete(rabbit: Rabbit)
+    @Query("delete from Rabbit where id = :id")
+    fun delete(id: Long)
 
     @Query("delete from Rabbit")
     fun deleteAll()
