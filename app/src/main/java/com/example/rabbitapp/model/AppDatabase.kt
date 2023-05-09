@@ -8,8 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
-import com.example.rabbitapp.model.repository.LitterRepository
-import com.example.rabbitapp.model.repository.RabbitRepository
+import com.example.rabbitapp.model.dao.LitterDao
+import com.example.rabbitapp.model.dao.RabbitDao
 import kotlinx.coroutines.*
 
 @Database(
@@ -18,8 +18,8 @@ import kotlinx.coroutines.*
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun rabbitRepository(): RabbitRepository
-    abstract fun litterRepository(): LitterRepository
+    abstract fun rabbitRepository(): RabbitDao
+    abstract fun litterRepository(): LitterDao
 
     @DelicateCoroutinesApi
     companion object {

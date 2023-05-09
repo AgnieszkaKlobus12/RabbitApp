@@ -1,10 +1,10 @@
-package com.example.rabbitapp.model.repository
+package com.example.rabbitapp.model.dao
 
 import androidx.room.*
 import com.example.rabbitapp.model.entities.Rabbit
 
 @Dao
-interface RabbitRepository {
+interface RabbitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(rabbit: Rabbit): Long
