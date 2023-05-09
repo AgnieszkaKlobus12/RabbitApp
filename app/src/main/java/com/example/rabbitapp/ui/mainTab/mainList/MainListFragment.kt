@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
@@ -32,15 +33,20 @@ class MainListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainListViewModel.clearParents()
+        mainListViewModel.clearSelected()
 
         binding.fragmentHomeListInclude.fragmentListRecyclerView.adapter =
             MainListAdapter(mainListViewModel.getAll(), object : OnSelected {
                 override fun onItemClick(item: HomeListItem) {
-                    mainListViewModel.selectedRabbit = item as Rabbit
-                    view.findNavController()
-                        .navigate(R.id.action_navigation_home_to_rabbitDetailsFragment)
-                    //todo as litter
+                    if (item is Rabbit) {
+                        mainListViewModel.selectedRabbit = item
+                        view.findNavController()
+                            .navigate(R.id.action_navigation_home_to_rabbitDetailsFragment)
+                    } else {
+                        mainListViewModel.selectedLitter = item as Litter
+                        view.findNavController()
+                            .navigate(R.id.action_navigation_home_to_litterDetailsFragment)
+                    }
                 }
             })
 

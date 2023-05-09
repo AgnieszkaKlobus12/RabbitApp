@@ -32,5 +32,7 @@
     <string name="ok">OK</string>
     <string name="alert">Uwaga</string>
     <string name="confirm_delete_rabbit_message">Czy na pewno chcesz usunąć królika? Ta operacja jest nieodwracalna!</string>
+    <string name="confirm_delete_litter_message">Czy na pewno chcesz usunąć miot? Ta operacja jest nieodwracalna!</string>
+    <string name="litter_placeholder">Króliczaki</string>
 
 </resources>

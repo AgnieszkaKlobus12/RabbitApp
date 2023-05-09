@@ -15,6 +15,7 @@ import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.ui.mainTab.HomeListItem
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -31,6 +32,16 @@ class AddLitterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
+
+        if (viewModel.selectedLitter != null) {
+            viewModel.selectedMother =
+                viewModel.selectedLitter!!.FkMother?.let { viewModel.getRabbitFromId(it) }
+            viewModel.selectedFather =
+                viewModel.selectedLitter!!.FkFather?.let { viewModel.getRabbitFromId(it) }
+            binding.addLitterDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedLitter!!.birth))
+            binding.addLitterName.setText(viewModel.selectedLitter!!.name)
+            binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
+        }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
@@ -76,7 +87,7 @@ class AddLitterFragment : Fragment() {
         return View.OnClickListener { view ->
             viewModel.save(
                 Litter(
-                    0,
+                    viewModel.selectedLitter?.id ?: 0,
                     binding.addLitterName.text.toString(),
                     LocalDate.parse(binding.addLitterDate.text.toString(), formatter).toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
@@ -92,11 +103,11 @@ class AddLitterFragment : Fragment() {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (gender == Gender.FEMALE) {
             view?.findNavController()
-                ?.navigate(R.id.action_addRabbitFragment_to_pickMotherListFragment)
+                ?.navigate(R.id.action_addLitterFragment_to_pickMotherListFragment)
         }
         if (gender == Gender.MALE) {
             view?.findNavController()
-                ?.navigate(R.id.action_addRabbitFragment_to_pickFatherListFragment)
+                ?.navigate(R.id.action_addLitterFragment_to_pickFatherListFragment)
         }
         transaction.commit()
     }

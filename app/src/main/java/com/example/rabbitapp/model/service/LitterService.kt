@@ -15,4 +15,7 @@ class LitterService(private val litterRepository: LitterRepository) {
         return litterRepository.insert(litter)
     }
 
+    fun deleteWithId(id: Long) {
+        litterRepository.deleteWithId(id)
+    }
 }

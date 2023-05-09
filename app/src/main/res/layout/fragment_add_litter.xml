@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:inputType="textPersonName"
-        android:text="@string/rabbit_placeholder"
+        android:text="@string/litter_placeholder"
         app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_name_label"
         app:layout_constraintLeft_toRightOf="@id/add_litter_name_label"
         app:layout_constraintRight_toRightOf="parent" />

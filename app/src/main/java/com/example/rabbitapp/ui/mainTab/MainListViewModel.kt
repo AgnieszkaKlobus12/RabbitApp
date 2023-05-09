@@ -22,6 +22,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedFather: Rabbit? = null
 
     var selectedRabbit: Rabbit? = null
+    var selectedLitter: Litter? = null
 
     init {
         val database = AppDatabase.getInstance(application)
@@ -61,14 +62,20 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }
     }
 
+    fun deleteCurrentlySelectedLitter() {
+        Log.d("VIEW_MODEL", "Rabbit $selectedRabbit deleted.")
+        selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
+    }
+
     fun getAllRabbits(gender: Gender): List<HomeListItem> {
         return rabbitRepository.getAllWithGender(gender)
     }
 
-    fun clearParents() {
+    fun clearSelected() {
         selectedRabbit = null
         selectedFather = null
         selectedMother = null
+        selectedLitter = null
     }
 }
 

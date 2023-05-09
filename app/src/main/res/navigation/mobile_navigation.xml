@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_home_to_rabbitDetailsFragment"
             app:destination="@id/rabbitDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_litterDetailsFragment"
+            app:destination="@id/litterDetailsFragment" />
     </fragment>
 
     <fragment
@@ -78,6 +81,15 @@
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_addRabbitFragment"
             app:destination="@id/addRabbitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/litterDetailsFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.show.LitterDetailsFragment"
+        android:label="fragment_litter_details"
+        tools:layout="@layout/fragment_litter_details" >
+        <action
+            android:id="@+id/action_litterDetailsFragment_to_addLitterFragment"
+            app:destination="@id/addLitterFragment" />
     </fragment>
 
 </navigation>
