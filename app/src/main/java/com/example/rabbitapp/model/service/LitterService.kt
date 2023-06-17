@@ -1,21 +1,13 @@
 package com.example.rabbitapp.model.service
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.rabbitapp.model.entities.Litter
-import com.example.rabbitapp.model.dao.LitterDao
+import com.example.rabbitapp.model.repository.LitterRepository
 
-class LitterService(private val litterDao: LitterDao) {
+class LitterService(private val litterRepository: LitterRepository) {
 
-    fun getAll(): List<Litter> {
-        return litterDao.getAll()
+    fun getAll(): LiveData<List<Litter>> {
+        return litterRepository.getAll()
     }
 
-    fun save(litter: Litter): Long {
-        Log.d("DATABASE", "Litter $litter saved")
-        return litterDao.insert(litter)
-    }
-
-    fun deleteWithId(id: Long) {
-        litterDao.deleteWithId(id)
-    }
 }
