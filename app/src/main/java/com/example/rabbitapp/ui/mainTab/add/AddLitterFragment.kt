@@ -91,6 +91,7 @@ class AddLitterFragment : Fragment() {
                     binding.addLitterName.text.toString(),
                     LocalDate.parse(binding.addLitterDate.text.toString(), formatter).toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
+                    ByteArray(0),
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )
