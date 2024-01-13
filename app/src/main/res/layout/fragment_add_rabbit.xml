@@ -16,92 +16,118 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/add_rabbit_name_label"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:id="@+id/table_rabbit_data"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/name_label"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add_rabbit_name"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_picture" />
-
-    <EditText
-        android:id="@+id/add_rabbit_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:inputType="textPersonName"
-        android:text="@string/rabbit_placeholder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_name_label"
-        app:layout_constraintLeft_toRightOf="@id/add_rabbit_name_label"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/add_rabbit_date_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/birth_date_label"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add_rabbit_date"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_name" />
-
-    <EditText
-        android:id="@+id/add_rabbit_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_date_label"
-        app:layout_constraintLeft_toRightOf="@id/add_rabbit_date_label"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/add_rabbit_numbers_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/ear_numbers"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add_rabbit_numbers"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_date" />
-
-    <EditText
-        android:id="@+id/add_rabbit_numbers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_numbers_label"
-        app:layout_constraintLeft_toRightOf="@id/add_rabbit_numbers_label"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/add_rabbit_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        app:selectionRequired="true"
+        android:layout_margin="@dimen/table_section_margin"
+        app:layout_constraintBottom_toTopOf="@id/add_rabbit_mother"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_numbers_label"
-        app:singleSelection="true">
+        app:layout_constraintTop_toBottomOf="@id/add_rabbit_picture">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/add_rabbit_gender_male"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/male" />
+        <TableRow>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/add_rabbit_gender_female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/female" />
-    </com.google.android.material.chip.ChipGroup>
+            <TextView
+                android:id="@+id/add_rabbit_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:text="@string/name_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/add_rabbit_name"
+                app:layout_constraintTop_toBottomOf="@id/add_rabbit_picture" />
+
+            <EditText
+                android:id="@+id/add_rabbit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+                android:text="@string/rabbit_placeholder"
+                app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_name_label"
+                app:layout_constraintLeft_toRightOf="@id/add_rabbit_name_label"
+                app:layout_constraintRight_toRightOf="parent" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/add_rabbit_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:text="@string/birth_date_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/add_rabbit_date"
+                app:layout_constraintTop_toBottomOf="@id/add_rabbit_name" />
+
+            <EditText
+                android:id="@+id/add_rabbit_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date"
+                app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_date_label"
+                app:layout_constraintLeft_toRightOf="@id/add_rabbit_date_label"
+                app:layout_constraintRight_toRightOf="parent" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/add_rabbit_numbers_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:text="@string/ear_numbers"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/add_rabbit_numbers"
+                app:layout_constraintTop_toBottomOf="@id/add_rabbit_date" />
+
+            <EditText
+                android:id="@+id/add_rabbit_numbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintBaseline_toBaselineOf="@+id/add_rabbit_numbers_label"
+                app:layout_constraintLeft_toRightOf="@id/add_rabbit_numbers_label"
+                app:layout_constraintRight_toRightOf="parent" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/add_rabbit_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/table_margin"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/add_rabbit_gender_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/add_rabbit_gender_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female" />
+            </com.google.android.material.chip.ChipGroup>
+        </TableRow>
+    </TableLayout>
 
     <TextView
         android:id="@+id/add_rabbit_mother"
@@ -112,7 +138,7 @@
         app:layout_constraintBottom_toTopOf="@id/add_rabbit_mother_fragment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_rabbit_gender" />
+        app:layout_constraintTop_toBottomOf="@id/table_rabbit_data" />
 
     <FrameLayout
         android:id="@+id/add_rabbit_mother_fragment"
