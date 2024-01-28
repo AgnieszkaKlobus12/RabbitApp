@@ -45,22 +45,22 @@ class RabbitDetailsFragment : Fragment() {
             viewModel.selectedRabbit?.let { RabbitDetails.getBirthDateString(it.birth) }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedRabbit?.FkMother != null) {
+        if (viewModel.selectedRabbit?.fkMother != null) {
             binding.rabbitDetailsMotherFragment.visibility = View.VISIBLE
             binding.rabbitDetailsMotherUnknown.visibility = View.GONE
             val selectedMotherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.FkMother!!)!!)
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkMother!!)!!)
             transaction.replace(R.id.rabbit_details_mother_fragment, selectedMotherFragment)
         } else {
             binding.rabbitDetailsMotherFragment.visibility = View.GONE
             binding.rabbitDetailsMotherUnknown.visibility = View.VISIBLE
         }
 
-        if (viewModel.selectedRabbit?.FkFather != null) {
+        if (viewModel.selectedRabbit?.fkFather != null) {
             binding.rabbitDetailsFatherFragment.visibility = View.VISIBLE
             binding.rabbitDetailsFatherUnknown.visibility = View.GONE
             val selectedFatherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.FkFather!!)!!)
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkFather!!)!!)
             transaction.replace(R.id.rabbit_details_father_fragment, selectedFatherFragment)
         } else {
             binding.rabbitDetailsFatherFragment.visibility = View.GONE

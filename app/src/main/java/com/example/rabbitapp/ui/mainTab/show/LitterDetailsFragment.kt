@@ -42,22 +42,22 @@ class LitterDetailsFragment : Fragment() {
             viewModel.selectedLitter?.let { RabbitDetails.getBirthDateString(it.birth) }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedLitter?.FkMother != null) {
+        if (viewModel.selectedLitter?.fkMother != null) {
             binding.litterDetailsMotherFragment.visibility = View.VISIBLE
             binding.litterDetailsMotherUnknown.visibility = View.GONE
             val selectedMotherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedLitter!!.FkMother!!)!!)
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkMother!!)!!)
             transaction.replace(R.id.litter_details_mother_fragment, selectedMotherFragment)
         } else {
             binding.litterDetailsMotherFragment.visibility = View.GONE
             binding.litterDetailsMotherUnknown.visibility = View.VISIBLE
         }
 
-        if (viewModel.selectedLitter?.FkFather != null) {
+        if (viewModel.selectedLitter?.fkFather != null) {
             binding.litterDetailsFatherFragment.visibility = View.VISIBLE
             binding.litterDetailsFatherUnknown.visibility = View.GONE
             val selectedFatherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedLitter!!.FkFather!!)!!)
+                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkFather!!)!!)
             transaction.replace(R.id.litter_details_father_fragment, selectedFatherFragment)
         } else {
             binding.litterDetailsFatherFragment.visibility = View.GONE

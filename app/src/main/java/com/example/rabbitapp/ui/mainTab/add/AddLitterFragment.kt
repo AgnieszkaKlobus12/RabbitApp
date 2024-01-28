@@ -34,13 +34,7 @@ class AddLitterFragment : Fragment() {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
 
         if (viewModel.selectedLitter != null) {
-            viewModel.selectedMother =
-                viewModel.selectedLitter!!.FkMother?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedFather =
-                viewModel.selectedLitter!!.FkFather?.let { viewModel.getRabbitFromId(it) }
-            binding.addLitterDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedLitter!!.birth))
-            binding.addLitterName.setText(viewModel.selectedLitter!!.name)
-            binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
+          setFieldsToSelectedLitter()
         }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
@@ -81,6 +75,16 @@ class AddLitterFragment : Fragment() {
 
         binding.addLitterMotherFragment.setOnClickListener { startSelect(Gender.FEMALE) }
         binding.addLitterFatherFragment.setOnClickListener { startSelect(Gender.MALE) }
+    }
+
+    private fun setFieldsToSelectedLitter(){
+        viewModel.selectedMother =
+            viewModel.selectedLitter!!.fkMother?.let { viewModel.getRabbitFromId(it) }
+        viewModel.selectedFather =
+            viewModel.selectedLitter!!.fkFather?.let { viewModel.getRabbitFromId(it) }
+        binding.addLitterDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedLitter!!.birth))
+        binding.addLitterName.setText(viewModel.selectedLitter!!.name)
+        binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
     }
 
     private fun saveLitter(): View.OnClickListener {

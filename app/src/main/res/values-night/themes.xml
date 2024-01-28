@@ -3,13 +3,13 @@
     <style name="Theme.RabbitApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorPrimary">@color/pastel_color</item> <!-- Change to your desired gray color -->
+        <item name="colorPrimaryVariant">@color/pastel_color_variant</item> <!-- Change to a slightly darker gray if needed -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Change to a contrasting text color -->
+        <!-- Secondary brand color with pastel shade. -->
+        <item name="colorSecondary">@color/pastel_color</item> <!-- Define your pastel color -->
+        <item name="colorSecondaryVariant">@color/pastel_color_variant</item> <!-- Darker shade of pastel color -->
+        <item name="colorOnSecondary">@color/black</item> <!-- Change to a contrasting text color -->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

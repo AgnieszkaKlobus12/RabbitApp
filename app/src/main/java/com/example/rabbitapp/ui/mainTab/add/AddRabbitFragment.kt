@@ -35,18 +35,7 @@ class AddRabbitFragment : Fragment() {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
 
         if (viewModel.selectedRabbit != null) {
-            viewModel.selectedMother =
-                viewModel.selectedRabbit!!.FkMother?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedFather =
-                viewModel.selectedRabbit!!.FkFather?.let { viewModel.getRabbitFromId(it) }
-            binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
-            binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
-            binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
-            if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
-                binding.addRabbitGenderFemale.isChecked = true
-            } else {
-                binding.addRabbitGenderMale.isChecked = true
-            }
+            setFieldsToSelectedRabbit()
         }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
@@ -56,7 +45,7 @@ class AddRabbitFragment : Fragment() {
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
                 override fun select(gender: Gender) {
-                    startSelect(gender)
+                    parentSelect(gender)
                 }
             })
             transaction.replace(R.id.add_rabbit_mother_fragment, pickButtonFragment)
@@ -68,7 +57,7 @@ class AddRabbitFragment : Fragment() {
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
                 override fun select(gender: Gender) {
-                    startSelect(gender)
+                    parentSelect(gender)
                 }
             })
             transaction.replace(R.id.add_rabbit_father_fragment, pickButtonFragment)
@@ -84,8 +73,23 @@ class AddRabbitFragment : Fragment() {
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
 
-        binding.addRabbitMotherFragment.setOnClickListener { startSelect(Gender.FEMALE) }
-        binding.addRabbitFatherFragment.setOnClickListener { startSelect(Gender.MALE) }
+        binding.addRabbitMotherFragment.setOnClickListener { parentSelect(Gender.FEMALE) }
+        binding.addRabbitFatherFragment.setOnClickListener { parentSelect(Gender.MALE) }
+    }
+
+    private fun setFieldsToSelectedRabbit(){
+            viewModel.selectedMother =
+                viewModel.selectedRabbit!!.fkMother?.let { viewModel.getRabbitFromId(it) }
+            viewModel.selectedFather =
+                viewModel.selectedRabbit!!.fkFather?.let { viewModel.getRabbitFromId(it) }
+            binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
+            binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
+            binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
+            if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
+                binding.addRabbitGenderFemale.isChecked = true
+            } else {
+                binding.addRabbitGenderMale.isChecked = true
+            }
     }
 
     private fun saveRabbit(): View.OnClickListener {
@@ -102,7 +106,6 @@ class AddRabbitFragment : Fragment() {
                 )
             )
             view.findNavController().navigate(R.id.action_addRabbitFragment_to_navigation_home)
-
         }
     }
 
@@ -114,13 +117,13 @@ class AddRabbitFragment : Fragment() {
         }
     }
 
-    private fun startSelect(gender: Gender) {
+    private fun parentSelect(parentGender: Gender) {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (gender == Gender.FEMALE) {
+        if (parentGender == Gender.FEMALE) {
             view?.findNavController()
                 ?.navigate(R.id.action_addRabbitFragment_to_pickMotherListFragment)
         }
-        if (gender == Gender.MALE) {
+        if (parentGender == Gender.MALE) {
             view?.findNavController()
                 ?.navigate(R.id.action_addRabbitFragment_to_pickFatherListFragment)
         }

@@ -9,13 +9,13 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = Rabbit::class,
             parentColumns = ["id"],
-            childColumns = ["FkMother"],
+            childColumns = ["fkMother"],
             onDelete = ForeignKey.SET_NULL
         ),
         ForeignKey(
             entity = Rabbit::class,
             parentColumns = ["id"],
-            childColumns = ["FkFather"],
+            childColumns = ["fkFather"],
             onDelete = ForeignKey.SET_NULL
         )]
 )
@@ -27,8 +27,8 @@ data class Rabbit(
     val earNumber: String,
     val image: ByteArray?,
 
-    val FkMother: Long?,
-    val FkFather: Long?
+    val fkMother: Long?,
+    val fkFather: Long?
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {
@@ -42,8 +42,8 @@ data class Rabbit(
         if (birth != other.birth) return false
         if (sex != other.sex) return false
         if (earNumber != other.earNumber) return false
-        if (FkMother != other.FkMother) return false
-        if (FkFather != other.FkFather) return false
+        if (fkMother != other.fkMother) return false
+        if (fkFather != other.fkFather) return false
 
         return true
     }
@@ -54,8 +54,8 @@ data class Rabbit(
         result = 31 * result + birth.hashCode()
         result = 31 * result + sex.hashCode()
         result = 31 * result + earNumber.hashCode()
-        result = 31 * result + (FkMother?.hashCode() ?: 0)
-        result = 31 * result + (FkFather?.hashCode() ?: 0)
+        result = 31 * result + (fkMother?.hashCode() ?: 0)
+        result = 31 * result + (fkFather?.hashCode() ?: 0)
         return result
     }
 }
