@@ -8,14 +8,14 @@
 
     <ImageView
         android:id="@+id/litter_details_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_margin="@dimen/default_margin"
         app:layout_constraintBottom_toTopOf="@+id/litter_details_table_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        app:srcCompat="@drawable/rabbit_2_back" />
 
     <TableLayout
         android:id="@+id/litter_details_table_layout"

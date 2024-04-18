@@ -12,11 +12,9 @@
         <item name="colorSecondary">@color/pastel_color</item> <!-- Define your pastel color -->
         <item name="colorSecondaryVariant">@color/pastel_color_variant
         </item> <!-- Darker shade of pastel color -->
-        <item name="colorOnSecondary">@color/black
-        </item> <!-- Change to a contrasting text color -->
+        <item name="colorOnSecondary">@color/black</item> <!-- Change to a contrasting text color -->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-
         <!-- Customize your theme here. -->
     </style>
 

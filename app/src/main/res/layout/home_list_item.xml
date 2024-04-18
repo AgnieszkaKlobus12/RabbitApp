@@ -7,14 +7,14 @@
 
     <ImageView
         android:id="@+id/home_list_item_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/home_list_item_age_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_home_black_24dp"
+        app:srcCompat="@drawable/rabbit_back"
         android:contentDescription="@string/rabbit_picture" />
 
     <TextView
