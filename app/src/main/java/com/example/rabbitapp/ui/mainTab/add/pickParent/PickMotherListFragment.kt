@@ -32,12 +32,16 @@ class PickMotherListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.selectedMother = null
         binding.fragmentListRecyclerView.adapter =
-            MainListAdapter(viewModel.getAllRabbits(Gender.FEMALE), object : OnSelected {
-                override fun onItemClick(item: HomeListItem) {
-                    viewModel.selectedMother = item as Rabbit
-                    activity?.onBackPressed()
-                }
-            })
+            MainListAdapter(
+                viewModel.getAllRabbitsExcept(
+                    Gender.FEMALE,
+                    viewModel.selectedRabbit!!.id
+                ), object : OnSelected {
+                    override fun onItemClick(item: HomeListItem) {
+                        viewModel.selectedMother = item as Rabbit
+                        activity?.onBackPressed()
+                    }
+                })
     }
 
 }

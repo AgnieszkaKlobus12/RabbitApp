@@ -1,8 +1,8 @@
 package com.example.rabbitapp.model.service
 
 import android.util.Log
-import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.dao.RabbitDao
+import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.utils.Gender
 
 class RabbitService(private val rabbitDao: RabbitDao) {
@@ -19,8 +19,8 @@ class RabbitService(private val rabbitDao: RabbitDao) {
         rabbitDao.delete(id)
     }
 
-    fun getAllWithGender(gender: Gender): List<Rabbit> {
-        return rabbitDao.getAllWithGender(gender.name)
+    fun getAllWithGenderExcept(gender: Gender, id: Long): List<Rabbit> {
+        return rabbitDao.getAllWithGenderExcept(gender.name, id)
     }
 
     fun save(rabbit: Rabbit): Long {
