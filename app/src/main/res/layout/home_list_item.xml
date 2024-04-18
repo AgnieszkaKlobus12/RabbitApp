@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toStartOf="@+id/home_list_item_age_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_launcher_background"
+        tools:srcCompat="@drawable/ic_home_black_24dp"
         android:contentDescription="@string/rabbit_picture" />
 
     <TextView
