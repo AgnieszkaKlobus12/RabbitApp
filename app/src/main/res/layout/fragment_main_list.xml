@@ -49,7 +49,7 @@
         android:layout_marginBottom="9dp"
         android:clickable="true"
         android:contentDescription="@string/add_rabbit"
-        android:src="@android:drawable/alert_dark_frame"
+        android:src="@drawable/rabbit"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/add_new_main_button"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -62,7 +62,7 @@
         android:layout_marginBottom="9dp"
         android:clickable="true"
         android:contentDescription="@string/add_litter"
-        android:src="@android:drawable/alert_dark_frame"
+        android:src="@drawable/rabbit_2_xxl"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/add_rabbit_button"
         app:layout_constraintEnd_toEndOf="parent" />
