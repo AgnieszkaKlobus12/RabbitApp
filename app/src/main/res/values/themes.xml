@@ -18,6 +18,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:textColorPrimaryInverse">?attr/colorPrimaryVariant</item>
+
+        <item name="android:colorBackground">@color/background_light</item>
+
         <!-- Customize your theme here. -->
     </style>
 
