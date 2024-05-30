@@ -27,6 +27,14 @@ class AddRabbitFragment : Fragment() {
 
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.selectedMother =
+            viewModel.selectedRabbit!!.fkMother?.let { viewModel.getRabbitFromId(it) }
+        viewModel.selectedFather =
+            viewModel.selectedRabbit!!.fkFather?.let { viewModel.getRabbitFromId(it) }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,10 +86,6 @@ class AddRabbitFragment : Fragment() {
     }
 
     private fun setFieldsToSelectedRabbit(){
-            viewModel.selectedMother =
-                viewModel.selectedRabbit!!.fkMother?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedFather =
-                viewModel.selectedRabbit!!.fkFather?.let { viewModel.getRabbitFromId(it) }
             binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
             binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
             binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)

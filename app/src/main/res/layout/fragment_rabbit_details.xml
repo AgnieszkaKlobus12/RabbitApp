@@ -133,7 +133,6 @@
                         android:layout_margin="@dimen/default_margin"
                         android:text="@string/unknown" />
                 </TableRow>
-
             </TableLayout>
 
             <TextView
@@ -153,7 +152,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:minHeight="50dp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/rabbit_details_father_label"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -165,7 +163,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:gravity="center"
-                android:minHeight="50dp"
                 android:text="@string/unknown"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/rabbit_details_father_label"
@@ -190,7 +187,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:minHeight="50dp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -202,7 +198,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:gravity="center"
-                android:minHeight="50dp"
                 android:text="@string/unknown"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"

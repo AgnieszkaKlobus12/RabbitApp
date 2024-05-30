@@ -26,6 +26,14 @@ class AddLitterFragment : Fragment() {
 
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.selectedMother =
+            viewModel.selectedLitter!!.fkMother?.let { viewModel.getRabbitFromId(it) }
+        viewModel.selectedFather =
+            viewModel.selectedLitter!!.fkFather?.let { viewModel.getRabbitFromId(it) }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +42,7 @@ class AddLitterFragment : Fragment() {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
 
         if (viewModel.selectedLitter != null) {
-          setFieldsToSelectedLitter()
+            setFieldsToSelectedLitter()
         }
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
@@ -78,10 +86,6 @@ class AddLitterFragment : Fragment() {
     }
 
     private fun setFieldsToSelectedLitter(){
-        viewModel.selectedMother =
-            viewModel.selectedLitter!!.fkMother?.let { viewModel.getRabbitFromId(it) }
-        viewModel.selectedFather =
-            viewModel.selectedLitter!!.fkFather?.let { viewModel.getRabbitFromId(it) }
         binding.addLitterDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedLitter!!.birth))
         binding.addLitterName.setText(viewModel.selectedLitter!!.name)
         binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
@@ -100,7 +104,6 @@ class AddLitterFragment : Fragment() {
                 )
             )
             view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
-
         }
     }
 
