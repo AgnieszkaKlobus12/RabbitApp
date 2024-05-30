@@ -6,148 +6,165 @@
     android:layout_height="match_parent"
     tools:context=".ui.mainTab.add.AddLitterFragment">
 
-    <ImageView
-        android:id="@+id/add_litter_picture"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rabbit_2_back" />
-
-    <TableLayout
-        android:id="@+id/table_litter_data"
+    <ScrollView
+        android:id="@+id/add_litter_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/table_section_margin"
-        app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_litter_save_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_picture">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/add_litter_name_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:text="@string/name_label"
+            <ImageView
+                android:id="@+id/add_litter_picture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/default_margin"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/add_litter_name"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_picture" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/rabbit_2_back" />
 
-            <EditText
-                android:id="@+id/add_litter_name"
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:id="@+id/table_litter_data"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:inputType="textPersonName"
-                android:text="@string/litter_placeholder"
-                app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_name_label"
-                app:layout_constraintLeft_toRightOf="@id/add_litter_name_label"
-                app:layout_constraintRight_toRightOf="parent" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/add_litter_date_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:text="@string/birth_date_label"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/add_litter_date"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_name" />
-
-            <EditText
-                android:id="@+id/add_litter_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="date"
-                app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_date_label"
-                app:layout_constraintLeft_toRightOf="@id/add_litter_date_label"
-                app:layout_constraintRight_toRightOf="parent" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/add_litter_number_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:text="@string/litter_size"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/add_litter_number"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_date" />
-
-            <EditText
-                android:id="@+id/add_litter_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/table_margin"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_number_label"
+                android:layout_margin="@dimen/table_section_margin"
                 app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
-                app:layout_constraintLeft_toRightOf="@id/add_litter_number_label"
-                app:layout_constraintRight_toRightOf="parent" />
-        </TableRow>
-    </TableLayout>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_litter_picture">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/add_litter_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:text="@string/name_label"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/add_litter_name"
+                        app:layout_constraintTop_toBottomOf="@id/add_litter_picture" />
+
+                    <EditText
+                        android:id="@+id/add_litter_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:inputType="textPersonName"
+                        android:text="@string/litter_placeholder"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_name_label"
+                        app:layout_constraintLeft_toRightOf="@id/add_litter_name_label"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/add_litter_date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:text="@string/birth_date_label"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/add_litter_date"
+                        app:layout_constraintTop_toBottomOf="@id/add_litter_name" />
+
+                    <EditText
+                        android:id="@+id/add_litter_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="date"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_date_label"
+                        app:layout_constraintLeft_toRightOf="@id/add_litter_date_label"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/add_litter_number_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:text="@string/litter_size"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/add_litter_number"
+                        app:layout_constraintTop_toBottomOf="@id/add_litter_date" />
+
+                    <EditText
+                        android:id="@+id/add_litter_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_number_label"
+                        app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
+                        app:layout_constraintLeft_toRightOf="@id/add_litter_number_label"
+                        app:layout_constraintRight_toRightOf="parent" />
+                </TableRow>
+            </TableLayout>
 
 
-    <TextView
-        android:id="@+id/add_litter_mother"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/mother"
-        app:layout_constraintBottom_toTopOf="@id/add_litter_mother_fragment"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/table_litter_data" />
+            <TextView
+                android:id="@+id/add_litter_mother"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/mother"
+                app:layout_constraintBottom_toTopOf="@id/add_litter_mother_fragment"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/table_litter_data" />
 
-    <FrameLayout
-        android:id="@+id/add_litter_mother_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:minHeight="50dp"
-        app:layout_constraintBottom_toTopOf="@id/add_litter_father"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_mother" />
+            <FrameLayout
+                android:id="@+id/add_litter_mother_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:minHeight="50dp"
+                app:layout_constraintBottom_toTopOf="@id/add_litter_father"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_litter_mother" />
 
-    <TextView
-        android:id="@+id/add_litter_father"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/father"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_mother_fragment" />
+            <TextView
+                android:id="@+id/add_litter_father"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/father"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_litter_mother_fragment" />
 
-    <FrameLayout
-        android:id="@+id/add_litter_father_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:minHeight="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_father" />
+            <FrameLayout
+                android:id="@+id/add_litter_father_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:minHeight="50dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_litter_father" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/add_litter_save_button"
@@ -158,7 +175,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_litter_father_fragment"
+        app:layout_constraintTop_toBottomOf="@id/add_litter_scroll_view"
         app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
