@@ -25,8 +25,8 @@ data class Litter(
     override val birth: Long,
     val size: Int,
     override val imagePath: String?,
-    val fkMother: Long?,
-    val fkFather: Long?
+    override val fkMother: Long?,
+    override val fkFather: Long?
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {

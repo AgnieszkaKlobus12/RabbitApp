@@ -1,16 +1,17 @@
 package com.example.rabbitapp.ui.mainTab.add
 
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.widget.ImageView
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
 import java.time.format.DateTimeFormatter
@@ -37,15 +38,26 @@ abstract class AddFragment : Fragment() {
         transaction.commit()
     }
 
-//    private fun setPictureToSelectedOrDefault() {
-//        if (viewModel.selectedRabbit != null && viewModel.selectedRabbit!!.imagePath != null && viewModel.selectedRabbit!!.imagePath!!.isNotEmpty()) {
-//            binding.addLitterPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!));
-//        } else {
-//            binding.addLitterPicture.setImageResource(R.drawable.rabbit_2_back)
-//        }
-//    }
+    fun setPictureToSelectedOrDefault(
+        pictureView: ImageView,
+        entityToEdit: HomeListItem?,
+        drawable: Int
+    ) {
+        if (entityToEdit?.imagePath != null && entityToEdit.imagePath!!.isNotEmpty()) {
+            pictureView.setImageBitmap(BitmapFactory.decodeFile(entityToEdit.imagePath!!));
+        } else {
+            pictureView.setImageResource(drawable)
+        }
+    }
 
-    fun getGalleryLauncher(picture: ImageView): ActivityResultLauncher<String> {
+    fun setParents(item: HomeListItem?) {
+        viewModel.selectedMother =
+            item?.fkMother?.let { viewModel.getRabbitFromId(it) }
+        viewModel.selectedFather =
+            item?.fkFather?.let { viewModel.getRabbitFromId(it) }
+    }
+
+    fun setGalleryLauncher(picture: ImageView) {
         val galleryLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {
@@ -62,7 +74,10 @@ abstract class AddFragment : Fragment() {
                     picture.setImageBitmap(bitmap)
                 }
             }
-        return galleryLauncher
+
+        picture.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
     }
 
 }

@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
-import com.example.rabbitapp.ui.mainTab.HomeListItem
+import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
@@ -49,7 +49,7 @@ class RabbitDetailsFragment : Fragment() {
             binding.rabbitDetailsMotherFragment.visibility = View.VISIBLE
             binding.rabbitDetailsMotherUnknown.visibility = View.GONE
             val selectedMotherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkMother!!)!!)
+                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkMother!!)!!)
             transaction.replace(R.id.rabbit_details_mother_fragment, selectedMotherFragment)
         } else {
             binding.rabbitDetailsMotherFragment.visibility = View.GONE
@@ -60,7 +60,7 @@ class RabbitDetailsFragment : Fragment() {
             binding.rabbitDetailsFatherFragment.visibility = View.VISIBLE
             binding.rabbitDetailsFatherUnknown.visibility = View.GONE
             val selectedFatherFragment =
-                HomeListItem(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkFather!!)!!)
+                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkFather!!)!!)
             transaction.replace(R.id.rabbit_details_father_fragment, selectedFatherFragment)
         } else {
             binding.rabbitDetailsFatherFragment.visibility = View.GONE

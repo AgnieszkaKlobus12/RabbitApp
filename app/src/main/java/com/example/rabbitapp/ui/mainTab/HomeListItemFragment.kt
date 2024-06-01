@@ -9,7 +9,7 @@ import com.example.rabbitapp.databinding.HomeListItemBinding
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.utils.RabbitDetails.Companion.getAge
 
-class HomeListItem(val rabbit: Rabbit) : Fragment() {
+class HomeListItemFragment(val rabbit: Rabbit) : Fragment() {
 
     private var _binding: HomeListItemBinding? = null
     private val binding get() = _binding!!

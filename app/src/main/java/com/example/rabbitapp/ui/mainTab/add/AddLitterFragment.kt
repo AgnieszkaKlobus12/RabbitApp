@@ -1,6 +1,5 @@
 package com.example.rabbitapp.ui.mainTab.add
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -11,7 +10,7 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddLitterBinding
 import com.example.rabbitapp.model.entities.Litter
-import com.example.rabbitapp.ui.mainTab.HomeListItem
+import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
@@ -27,24 +26,22 @@ class AddLitterFragment : AddFragment() {
     ): View {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
 
-        val galleryLauncher = getGalleryLauncher(binding.addLitterPicture)
-        binding.addLitterPicture.setOnClickListener {
-            galleryLauncher.launch("image/*")
-        }
+        setGalleryLauncher(binding.addLitterPicture)
 
         if (viewModel.selectedLitter != null) {
-            viewModel.selectedMother =
-                viewModel.selectedLitter?.fkMother?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedFather =
-                viewModel.selectedLitter?.fkFather?.let { viewModel.getRabbitFromId(it) }
+            setParents(viewModel.selectedLitter)
             setFieldsToSelectedLitter()
         }
 
-        setPictureToSelectedOrDefault()
+        setPictureToSelectedOrDefault(
+            binding.addLitterPicture,
+            viewModel.selectedLitter,
+            R.drawable.rabbit_2_back
+        )
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
-            val selectedMotherFragment = HomeListItem(viewModel.selectedMother!!)
+            val selectedMotherFragment = HomeListItemFragment(viewModel.selectedMother!!)
             transaction.replace(R.id.add_litter_mother_fragment, selectedMotherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
@@ -60,7 +57,7 @@ class AddLitterFragment : AddFragment() {
         }
 
         if (viewModel.selectedFather != null) {
-            val selectedFatherFragment = HomeListItem(viewModel.selectedFather!!)
+            val selectedFatherFragment = HomeListItemFragment(viewModel.selectedFather!!)
             transaction.replace(R.id.add_litter_father_fragment, selectedFatherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
@@ -106,14 +103,6 @@ class AddLitterFragment : AddFragment() {
         binding.addLitterDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedLitter!!.birth))
         binding.addLitterName.setText(viewModel.selectedLitter!!.name)
         binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
-    }
-
-    private fun setPictureToSelectedOrDefault() {
-        if (viewModel.selectedRabbit != null && viewModel.selectedRabbit!!.imagePath != null && viewModel.selectedRabbit!!.imagePath!!.isNotEmpty()) {
-            binding.addLitterPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!));
-        } else {
-            binding.addLitterPicture.setImageResource(R.drawable.rabbit_2_back)
-        }
     }
 
     private fun saveLitter(): View.OnClickListener {

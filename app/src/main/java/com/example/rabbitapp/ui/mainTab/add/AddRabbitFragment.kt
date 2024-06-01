@@ -1,6 +1,5 @@
 package com.example.rabbitapp.ui.mainTab.add
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -11,7 +10,7 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.HomeListItem
+import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
@@ -21,7 +20,6 @@ class AddRabbitFragment : AddFragment() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,26 +27,22 @@ class AddRabbitFragment : AddFragment() {
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
 
-        val galleryLauncher = getGalleryLauncher(binding.addRabbitPicture)
-
-        binding.addRabbitPicture.setOnClickListener {
-            galleryLauncher.launch("image/*")
-        }
+        setGalleryLauncher(binding.addRabbitPicture)
 
         if (viewModel.selectedRabbit != null) {
-            viewModel.selectedMother =
-                viewModel.selectedRabbit?.fkMother?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedFather =
-                viewModel.selectedRabbit?.fkFather?.let { viewModel.getRabbitFromId(it) }
-
+            setParents(viewModel.selectedRabbit)
             setFieldsToSelectedRabbit()
         }
 
-        setPictureToSelectedOrDefault()
+        setPictureToSelectedOrDefault(
+            binding.addRabbitPicture,
+            viewModel.selectedRabbit,
+            R.drawable.rabbit_back
+        )
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
-            val selectedMotherFragment = HomeListItem(viewModel.selectedMother!!)
+            val selectedMotherFragment = HomeListItemFragment(viewModel.selectedMother!!)
             transaction.replace(R.id.add_rabbit_mother_fragment, selectedMotherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
@@ -64,7 +58,7 @@ class AddRabbitFragment : AddFragment() {
         }
 
         if (viewModel.selectedFather != null) {
-            val selectedFatherFragment = HomeListItem(viewModel.selectedFather!!)
+            val selectedFatherFragment = HomeListItemFragment(viewModel.selectedFather!!)
             transaction.replace(R.id.add_rabbit_father_fragment, selectedFatherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
@@ -102,14 +96,6 @@ class AddRabbitFragment : AddFragment() {
                 R.id.action_addRabbitFragment_to_pickMotherListFragment,
                 R.id.action_addRabbitFragment_to_pickFatherListFragment
             )
-        }
-    }
-
-    private fun setPictureToSelectedOrDefault() {
-        if (viewModel.selectedRabbit != null && viewModel.selectedRabbit!!.imagePath != null && viewModel.selectedRabbit!!.imagePath!!.isNotEmpty()) {
-            binding.addRabbitPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!));
-        } else {
-            binding.addRabbitPicture.setImageResource(R.drawable.rabbit_back)
         }
     }
 
