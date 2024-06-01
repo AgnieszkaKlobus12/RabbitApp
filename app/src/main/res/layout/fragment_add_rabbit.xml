@@ -132,12 +132,14 @@
                             android:id="@+id/add_rabbit_gender_male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:text="@string/male" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/add_rabbit_gender_female"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:text="@string/female" />
                     </com.google.android.material.chip.ChipGroup>
                 </TableRow>
