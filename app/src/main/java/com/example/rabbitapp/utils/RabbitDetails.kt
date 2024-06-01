@@ -14,7 +14,15 @@ class RabbitDetails {
             val days = epochDays % 30
             val months = epochDays / 30 % 12
             val years = epochDays / 365
-            return "$years y $months m $days d"
+            return if (years.toInt() == 0) {
+                if ( months.toInt() == 0 ) {
+                    "$days d"
+                } else {
+                    "$months m $days d"
+                }
+            } else {
+                "$years y $months m $days d"
+            }
         }
 
         fun getBirthDateString(birthdate: Long): String? {

@@ -59,8 +59,8 @@ abstract class AppDatabase : RoomDatabase() {
                         rabbitRepository.deleteAll()
 
                         //test data
-//                        rabbitRepository.insert(Rabbit(0, "Misiek", 49872325637, "Male"))
-//                        rabbitRepository.insert(Rabbit(1, "Zuzia", 56745674767, "Female"))
+                        rabbitRepository.insert(Rabbit(1, "Misiek", 19144, "MALE",  "101", null, null, null))
+                        rabbitRepository.insert(Rabbit(2, "Zuzia", 19844, "FEMALE", "102", null, null, null))
                     }
                 }
             }
