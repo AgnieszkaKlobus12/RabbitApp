@@ -9,11 +9,14 @@
     <string name="close">Zamknij</string>
     <string name="rabbit_picture">Zdjęcie Królika</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="rabbit_details">Szczegóły królika</string>
+    <string name="litter_details">Szczegóły miotu</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_list">Dodaj</string>
     <string name="add_rabbit">Dodaj królika</string>
     <string name="add_litter">Dodaj miot</string>
-    <string name="name_label">Imię:</string>
+    <string name="rabbit_name_label">Imię:</string>
+    <string name="litter_name_label">Nazwa:</string>
     <string name="rabbit_placeholder">Królik</string>
     <string name="birth_date_label">Data urodzenia:</string>
     <string name="female">Samica</string>

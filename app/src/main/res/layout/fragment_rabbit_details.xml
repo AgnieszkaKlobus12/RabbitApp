@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_margin"
-                        android:text="@string/name_label" />
+                        android:text="@string/rabbit_name_label" />
 
                     <TextView
                         android:id="@+id/rabbit_details_name"
