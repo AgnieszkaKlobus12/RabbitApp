@@ -1,5 +1,6 @@
 package com.example.rabbitapp.ui.mainTab.add
 
+import android.app.DatePickerDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
@@ -15,12 +16,14 @@ import com.example.rabbitapp.ui.mainTab.HomeListItem
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
-
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class AddRabbitFragment : AddFragment() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
 
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,7 +88,7 @@ class AddRabbitFragment : AddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formattedDate = LocalDate.now().format(formatter)
+        val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
 
@@ -103,18 +106,36 @@ class AddRabbitFragment : AddFragment() {
                 R.id.action_addRabbitFragment_to_pickFatherListFragment
             )
         }
+
+        binding.addRabbitDate.setOnClickListener {
+            showDatePickerDialog()
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+            binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
+        }, year, month, day)
+
+        datePickerDialog.show()
     }
 
     private fun setPictureToSelectedOrDefault() {
         if (viewModel.selectedRabbit != null && viewModel.selectedRabbit!!.imagePath != null && viewModel.selectedRabbit!!.imagePath!!.isNotEmpty()) {
-            binding.addRabbitPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!));
+            binding.addRabbitPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!))
         } else {
             binding.addRabbitPicture.setImageResource(R.drawable.rabbit_back)
         }
     }
 
     private fun setFieldsToSelectedRabbit() {
-        binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
+        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(LocalDate.ofEpochDay(viewModel.selectedRabbit!!.birth).format(dateFormatter))
         binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
         binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
         if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
@@ -130,7 +151,7 @@ class AddRabbitFragment : AddFragment() {
                 Rabbit(
                     viewModel.selectedRabbit?.id ?: 0,
                     binding.addRabbitName.text.toString(),
-                    LocalDate.parse(binding.addRabbitDate.text.toString(), formatter).toEpochDay(),
+                    LocalDate.parse(binding.addRabbitDate.text.toString(), dateFormatter).toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
                     null,
@@ -149,4 +170,8 @@ class AddRabbitFragment : AddFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
