@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/addRabbitFragment"
         android:name="com.example.rabbitapp.ui.mainTab.add.AddRabbitFragment"
-        android:label="fragment_add_rabbit"
+        android:label="@string/add_rabbit"
         tools:layout="@layout/fragment_add_rabbit">
         <action
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/addLitterFragment"
         android:name="com.example.rabbitapp.ui.mainTab.add.AddLitterFragment"
-        android:label="fragment_add_litter"
+        android:label="@string/add_litter"
         tools:layout="@layout/fragment_add_litter">
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"

@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Aplikacja z królikami</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Strona główna</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="age">Wiek:</string>
     <string name="rabbit_list_title">Lista królików i miotów</string>
     <string name="open">Otwórz</string>
     <string name="close">Zamknij</string>
-    <string name="rabbit_picture">Rabbit picture</string>
+    <string name="rabbit_picture">Zdjęcie Królika</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_to_list">Dodaj</string>
