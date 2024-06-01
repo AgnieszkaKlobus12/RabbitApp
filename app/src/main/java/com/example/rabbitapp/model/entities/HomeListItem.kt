@@ -4,5 +4,5 @@ interface HomeListItem {
     val id: Long
     val name: String
     val birth: Long
-    val imagePath: String
+    val imagePath: String?
 }

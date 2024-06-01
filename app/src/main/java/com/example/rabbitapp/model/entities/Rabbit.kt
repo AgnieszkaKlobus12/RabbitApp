@@ -25,10 +25,9 @@ data class Rabbit(
     override val birth: Long,
     val sex: String,
     val earNumber: String,
-    val imagePath: String?,
-
+    override val imagePath: String?,
     val fkMother: Long?,
-    val fkFather: Long?
+    val fkFather: Long?,
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {
