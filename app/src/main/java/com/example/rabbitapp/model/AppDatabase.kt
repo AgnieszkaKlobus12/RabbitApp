@@ -5,16 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.rabbitapp.model.dao.LitterDao
+import com.example.rabbitapp.model.dao.RabbitDao
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
-import com.example.rabbitapp.model.dao.LitterDao
-import com.example.rabbitapp.model.dao.RabbitDao
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class],
-    version = 4
+    version = 5
 )
 abstract class AppDatabase : RoomDatabase() {
 

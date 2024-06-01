@@ -24,7 +24,7 @@ data class Litter(
     override val name: String,
     override val birth: Long,
     val size: Int,
-    val image: ByteArray?,
+    val imagePath: String?,
 
     val fkMother: Long?,
     val fkFather: Long?

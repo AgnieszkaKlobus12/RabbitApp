@@ -25,7 +25,7 @@ data class Rabbit(
     override val birth: Long,
     val sex: String,
     val earNumber: String,
-    val image: ByteArray?,
+    val imagePath: String?,
 
     val fkMother: Long?,
     val fkFather: Long?

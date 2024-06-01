@@ -1,39 +1,26 @@
 package com.example.rabbitapp.ui.mainTab.add
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.HomeListItem
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
-class AddRabbitFragment : Fragment() {
+class AddRabbitFragment : AddFragment() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
 
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.selectedMother =
-            viewModel.selectedRabbit!!.fkMother?.let { viewModel.getRabbitFromId(it) }
-        viewModel.selectedFather =
-            viewModel.selectedRabbit!!.fkFather?.let { viewModel.getRabbitFromId(it) }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,9 +29,22 @@ class AddRabbitFragment : Fragment() {
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
 
+        val galleryLauncher = getGalleryLauncher(binding.addRabbitPicture)
+
+        binding.addRabbitPicture.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
+
         if (viewModel.selectedRabbit != null) {
+            viewModel.selectedMother =
+                viewModel.selectedRabbit?.fkMother?.let { viewModel.getRabbitFromId(it) }
+            viewModel.selectedFather =
+                viewModel.selectedRabbit?.fkFather?.let { viewModel.getRabbitFromId(it) }
+
             setFieldsToSelectedRabbit()
         }
+
+        setPictureToSelectedOrDefault()
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
@@ -53,7 +53,11 @@ class AddRabbitFragment : Fragment() {
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
                 override fun select(gender: Gender) {
-                    parentSelect(gender)
+                    parentSelect(
+                        gender,
+                        R.id.action_addRabbitFragment_to_pickMotherListFragment,
+                        R.id.action_addRabbitFragment_to_pickFatherListFragment
+                    )
                 }
             })
             transaction.replace(R.id.add_rabbit_mother_fragment, pickButtonFragment)
@@ -65,7 +69,11 @@ class AddRabbitFragment : Fragment() {
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
                 override fun select(gender: Gender) {
-                    parentSelect(gender)
+                    parentSelect(
+                        gender,
+                        R.id.action_addRabbitFragment_to_pickMotherListFragment,
+                        R.id.action_addRabbitFragment_to_pickFatherListFragment
+                    )
                 }
             })
             transaction.replace(R.id.add_rabbit_father_fragment, pickButtonFragment)
@@ -81,19 +89,39 @@ class AddRabbitFragment : Fragment() {
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
 
-        binding.addRabbitMotherFragment.setOnClickListener { parentSelect(Gender.FEMALE) }
-        binding.addRabbitFatherFragment.setOnClickListener { parentSelect(Gender.MALE) }
+        binding.addRabbitMotherFragment.setOnClickListener {
+            parentSelect(
+                Gender.FEMALE,
+                R.id.action_addRabbitFragment_to_pickMotherListFragment,
+                R.id.action_addRabbitFragment_to_pickFatherListFragment
+            )
+        }
+        binding.addRabbitFatherFragment.setOnClickListener {
+            parentSelect(
+                Gender.MALE,
+                R.id.action_addRabbitFragment_to_pickMotherListFragment,
+                R.id.action_addRabbitFragment_to_pickFatherListFragment
+            )
+        }
     }
 
-    private fun setFieldsToSelectedRabbit(){
-            binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
-            binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
-            binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
-            if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
-                binding.addRabbitGenderFemale.isChecked = true
-            } else {
-                binding.addRabbitGenderMale.isChecked = true
-            }
+    private fun setPictureToSelectedOrDefault() {
+        if (viewModel.selectedRabbit != null && viewModel.selectedRabbit!!.imagePath != null && viewModel.selectedRabbit!!.imagePath!!.isNotEmpty()) {
+            binding.addRabbitPicture.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit!!.imagePath!!));
+        } else {
+            binding.addRabbitPicture.setImageResource(R.drawable.rabbit_back)
+        }
+    }
+
+    private fun setFieldsToSelectedRabbit() {
+        binding.addRabbitDate.setText(RabbitDetails.getBirthDateString(viewModel.selectedRabbit!!.birth))
+        binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
+        binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
+        if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
+            binding.addRabbitGenderFemale.isChecked = true
+        } else {
+            binding.addRabbitGenderMale.isChecked = true
+        }
     }
 
     private fun saveRabbit(): View.OnClickListener {
@@ -105,7 +133,7 @@ class AddRabbitFragment : Fragment() {
                     LocalDate.parse(binding.addRabbitDate.text.toString(), formatter).toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
-                    ByteArray(0),
+                    null,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )
@@ -119,19 +147,6 @@ class AddRabbitFragment : Fragment() {
         } else {
             Gender.MALE.name
         }
-    }
-
-    private fun parentSelect(parentGender: Gender) {
-        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (parentGender == Gender.FEMALE) {
-            view?.findNavController()
-                ?.navigate(R.id.action_addRabbitFragment_to_pickMotherListFragment)
-        }
-        if (parentGender == Gender.MALE) {
-            view?.findNavController()
-                ?.navigate(R.id.action_addRabbitFragment_to_pickFatherListFragment)
-        }
-        transaction.commit()
     }
 
 }
