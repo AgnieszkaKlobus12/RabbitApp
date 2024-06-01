@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.rabbitapp.databinding.HomeListItemBinding
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.utils.RabbitDetails.Companion.getAge
 
 class HomeListItem(val rabbit: Rabbit) : Fragment() {
 
@@ -27,13 +28,5 @@ class HomeListItem(val rabbit: Rabbit) : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun getAge(birthdate: Long): String {
-        val epochDays = System.currentTimeMillis() / 86400000 - birthdate
-        val days = epochDays % 30
-        val months = epochDays / 30 % 12
-        val years = epochDays / 365
-        return "$years y $months m $days d"
     }
 }
