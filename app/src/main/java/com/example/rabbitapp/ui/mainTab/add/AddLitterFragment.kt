@@ -26,7 +26,7 @@ class AddLitterFragment : AddFragment() {
     ): View {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
 
-        setGalleryLauncher(binding.addLitterPicture)
+        setGalleryLauncher(binding.addLitterPicture, viewModel.selectedLitter)
 
         if (viewModel.selectedLitter != null) {
             setParents(viewModel.selectedLitter)
@@ -107,13 +107,14 @@ class AddLitterFragment : AddFragment() {
 
     private fun saveLitter(): View.OnClickListener {
         return View.OnClickListener { view ->
+            val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
             viewModel.save(
                 Litter(
                     viewModel.selectedLitter?.id ?: 0,
                     binding.addLitterName.text.toString(),
                     LocalDate.parse(binding.addLitterDate.text.toString(), formatter).toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
-                    null,
+                    path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )

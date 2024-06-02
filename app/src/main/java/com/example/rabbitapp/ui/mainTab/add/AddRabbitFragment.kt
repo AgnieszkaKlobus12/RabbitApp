@@ -1,7 +1,6 @@
 package com.example.rabbitapp.ui.mainTab.add
 
 import android.app.DatePickerDialog
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.utils.Gender
-import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -32,7 +30,7 @@ class AddRabbitFragment : AddFragment() {
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
 
-        setGalleryLauncher(binding.addRabbitPicture)
+        setGalleryLauncher(binding.addRabbitPicture, viewModel.selectedRabbit)
 
         if (viewModel.selectedRabbit != null) {
             setParents(viewModel.selectedRabbit)
@@ -114,16 +112,20 @@ class AddRabbitFragment : AddFragment() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
-            binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
-        }, year, month, day)
+        val datePickerDialog =
+            DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+                binding.addRabbitDate.text =
+                    Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
+            }, year, month, day)
 
         datePickerDialog.show()
     }
 
     private fun setFieldsToSelectedRabbit() {
-        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(LocalDate.ofEpochDay(viewModel.selectedRabbit!!.birth).format(dateFormatter))
+        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(
+            LocalDate.ofEpochDay(viewModel.selectedRabbit!!.birth).format(dateFormatter)
+        )
         binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
         binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
         if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
@@ -135,14 +137,16 @@ class AddRabbitFragment : AddFragment() {
 
     private fun saveRabbit(): View.OnClickListener {
         return View.OnClickListener { view ->
+            val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
             viewModel.save(
                 Rabbit(
                     viewModel.selectedRabbit?.id ?: 0,
                     binding.addRabbitName.text.toString(),
-                    LocalDate.parse(binding.addRabbitDate.text.toString(), dateFormatter).toEpochDay(),
+                    LocalDate.parse(binding.addRabbitDate.text.toString(), dateFormatter)
+                        .toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
-                    null,
+                    path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )

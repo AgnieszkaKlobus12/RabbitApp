@@ -1,20 +1,30 @@
 package com.example.rabbitapp.ui.mainTab.add
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
+import java.io.File
+import java.io.FileOutputStream
 import java.time.format.DateTimeFormatter
+import java.util.UUID
+
 
 abstract class AddFragment : Fragment() {
 
@@ -44,9 +54,11 @@ abstract class AddFragment : Fragment() {
         drawable: Int
     ) {
         if (entityToEdit?.imagePath != null && entityToEdit.imagePath!!.isNotEmpty()) {
-            pictureView.setImageBitmap(BitmapFactory.decodeFile(entityToEdit.imagePath!!));
+            pictureView.setImageBitmap(BitmapFactory.decodeFile(entityToEdit.imagePath!!))
+            pictureView.tag = entityToEdit.imagePath!!
         } else {
             pictureView.setImageResource(drawable)
+            pictureView.tag = drawable
         }
     }
 
@@ -57,7 +69,7 @@ abstract class AddFragment : Fragment() {
             item?.fkFather?.let { viewModel.getRabbitFromId(it) }
     }
 
-    fun setGalleryLauncher(picture: ImageView) {
+    fun setGalleryLauncher(picture: ImageView, item: HomeListItem?) {
         val galleryLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {
@@ -72,12 +84,68 @@ abstract class AddFragment : Fragment() {
                         MediaStore.Images.Media.getBitmap(requireContext().contentResolver, it)
                     }
                     picture.setImageBitmap(bitmap)
+                    picture.tag = UUID.randomUUID().toString()
                 }
             }
 
         picture.setOnClickListener {
             galleryLauncher.launch("image/*")
         }
+    }
+
+    fun saveNewPicture(item: HomeListItem?, picture: ImageView): String? {
+        if (picture.tag == R.drawable.rabbit_back || picture.tag == R.drawable.rabbit_2_back) {
+            return null
+        }
+        removeOldImage(item)
+        val internalStorage: File = requireContext().getDir("RabbitPictures", Context.MODE_PRIVATE)
+        val imageFilePath = File(internalStorage, UUID.randomUUID().toString() + ".png")
+        var picturePath = imageFilePath.toString()
+
+        val fos: FileOutputStream?
+        try {
+            fos = FileOutputStream(imageFilePath)
+
+            val drawableBitmap = (picture.drawable as BitmapDrawable).bitmap
+
+            val bitmapWidth = drawableBitmap.width
+            val bitmapHeight = drawableBitmap.height
+
+            // Ensure the ImageView has been laid out
+            if (bitmapWidth > 0 && bitmapHeight > 0) {
+                val softwareBitmap =
+                    Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888)
+
+                // Draw the ImageView onto the software-rendered bitmap
+                val canvas = Canvas(softwareBitmap)
+                if (picture.drawable is BitmapDrawable) {
+                    // Convert the drawable to a software bitmap
+                    val softwareDrawableBitmap = drawableBitmap.copy(Bitmap.Config.ARGB_8888, false)
+                    canvas.drawBitmap(softwareDrawableBitmap, 0f, 0f, null)
+                } else {
+                    picture.draw(canvas)
+                }
+
+                // Compress and save the bitmap
+                softwareBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            }
+
+            fos.close()
+        } catch (ex: Exception) {
+            Log.i("DATABASE", "Problem updating picture", ex)
+            picturePath = ""
+            picture.tag = R.drawable.rabbit_back
+        }
+
+        return picturePath
+    }
+
+    private fun removeOldImage(item: HomeListItem?) {
+        if (item?.imagePath == null || item.imagePath!!.isEmpty()) {
+            return
+        }
+        val reportFilePath = File(item.imagePath!!)
+        reportFilePath.delete()
     }
 
 }
