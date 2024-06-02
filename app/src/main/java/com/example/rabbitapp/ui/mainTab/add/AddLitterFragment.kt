@@ -107,6 +107,9 @@ class AddLitterFragment : AddFragment() {
 
     private fun saveLitter(): View.OnClickListener {
         return View.OnClickListener { view ->
+            if (!validateFields()) {
+                return@OnClickListener
+            }
             val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
             viewModel.save(
                 Litter(
@@ -120,6 +123,23 @@ class AddLitterFragment : AddFragment() {
             )
             view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
         }
+    }
+
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (binding.addLitterName.text.isEmpty()) {
+            binding.addLitterName.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.addLitterDate.text.isEmpty()) {
+            binding.addLitterDate.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.addLitterNumber.text.isEmpty()) {
+            binding.addLitterNumber.error = getString(R.string.error_empty)
+            correct = false
+        }
+        return correct
     }
 
 }

@@ -112,18 +112,31 @@
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/add_rabbit_gender_male"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:text="@string/male" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/add_rabbit_gender_female"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:text="@string/female" />
                     </com.google.android.material.chip.ChipGroup>
+                </TableRow>
+
+                <TableRow android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/add_rabbit_gender_error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_span="2"
+                        android:text="@string/gender_empty"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
                 </TableRow>
             </TableLayout>
 

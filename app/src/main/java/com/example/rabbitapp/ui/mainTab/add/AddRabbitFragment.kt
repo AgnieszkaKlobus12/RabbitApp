@@ -137,6 +137,9 @@ class AddRabbitFragment : AddFragment() {
 
     private fun saveRabbit(): View.OnClickListener {
         return View.OnClickListener { view ->
+            if (!validateFields()) {
+                return@OnClickListener
+            }
             val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
             viewModel.save(
                 Rabbit(
@@ -152,6 +155,25 @@ class AddRabbitFragment : AddFragment() {
             )
             view.findNavController().navigate(R.id.action_addRabbitFragment_to_navigation_home)
         }
+    }
+
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (binding.addRabbitName.text.isEmpty()) {
+            binding.addRabbitName.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.addRabbitDate.text.isEmpty()) {
+            binding.addRabbitDate.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (!binding.addRabbitGenderFemale.isChecked && !binding.addRabbitGenderMale.isChecked) {
+            binding.addRabbitGenderError.visibility = View.VISIBLE
+            correct = false
+        } else {
+            binding.addRabbitGenderError.visibility = View.GONE
+        }
+        return correct
     }
 
     private fun getRabbitGender(): String {
