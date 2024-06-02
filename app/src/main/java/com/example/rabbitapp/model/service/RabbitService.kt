@@ -19,7 +19,10 @@ class RabbitService(private val rabbitDao: RabbitDao) {
         rabbitDao.delete(id)
     }
 
-    fun getAllWithGenderExcept(gender: Gender, id: Long): List<Rabbit> {
+    fun getAllWithGenderExcept(gender: Gender, id: Long?): List<Rabbit> {
+        if (id == null) {
+            return rabbitDao.getAllWithGender(gender.name)
+        }
         return rabbitDao.getAllWithGenderExcept(gender.name, id)
     }
 

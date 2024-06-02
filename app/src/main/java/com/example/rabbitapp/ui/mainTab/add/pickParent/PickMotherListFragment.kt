@@ -35,7 +35,7 @@ class PickMotherListFragment : Fragment() {
             MainListAdapter(
                 viewModel.getAllRabbitsExcept(
                     Gender.FEMALE,
-                    viewModel.selectedRabbit!!.id
+                    viewModel.selectedRabbit?.id
                 ), object : OnSelected {
                     override fun onItemClick(item: HomeListItem) {
                         viewModel.selectedMother = item as Rabbit
