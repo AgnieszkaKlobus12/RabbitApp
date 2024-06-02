@@ -67,7 +67,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
     }
 
-    fun getAllRabbitsExcept(gender: Gender, id: Long): List<HomeListItem> {
+    fun getAllRabbitsExcept(gender: Gender, id: Long?): List<HomeListItem> {
         return rabbitRepository.getAllWithGenderExcept(gender, id)
     }
 

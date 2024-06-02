@@ -1,6 +1,7 @@
 package com.example.rabbitapp.ui.mainTab.show
 
 import android.app.AlertDialog
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,7 @@ class RabbitDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setPictureToSelectedOrDefault();
         binding.rabbitDetailsAge.text =
             viewModel.selectedRabbit?.let { RabbitDetails.getAge(it.birth) }
         binding.rabbitDetailsName.text = viewModel.selectedRabbit?.name
@@ -107,5 +108,13 @@ class RabbitDetailsFragment : Fragment() {
             return getString(R.string.female)
         }
         return getString(R.string.unknown)
+    }
+
+    private fun setPictureToSelectedOrDefault() {
+        if (viewModel.selectedRabbit?.imagePath != null && viewModel.selectedRabbit?.imagePath!!.isNotEmpty()) {
+            binding.rabbitDetailsImage.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit?.imagePath!!))
+        } else {
+            binding.rabbitDetailsImage.setImageResource(R.drawable.rabbit_back)
+        }
     }
 }

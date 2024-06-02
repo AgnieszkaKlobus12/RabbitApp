@@ -24,6 +24,9 @@ interface RabbitDao {
     @Query("select * from Rabbit where sex = :gender and id != :id")
     fun getAllWithGenderExcept(gender: String, id: Long): List<Rabbit>
 
+    @Query("select * from Rabbit where sex = :gender")
+    fun getAllWithGender(gender: String): List<Rabbit>
+
     @Query("select * from Rabbit where id = :id")
     fun getRabbitFromId(id: Long): Rabbit?
 }
