@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/home_list_item_picture"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="10dp"
         android:contentDescription="@string/rabbit_picture"
         app:layout_constraintBottom_toBottomOf="parent"

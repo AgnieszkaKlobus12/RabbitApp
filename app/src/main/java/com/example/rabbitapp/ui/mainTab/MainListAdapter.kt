@@ -28,6 +28,7 @@ class MainListAdapter(
     override fun onBindViewHolder(holder: HomeListItemView, position: Int) {
         val item = values[position]
         setPictureToSelectedOrDefault(item, holder.image)
+        holder.name.text = item.name
         holder.age.text = RabbitDetails.getAge(item.birth)
         holder.itemView.setOnClickListener { onSelected.onItemClick(item) }
     }

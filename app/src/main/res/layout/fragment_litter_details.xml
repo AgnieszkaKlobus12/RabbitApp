@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/litter_details_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_margin="@dimen/default_margin"
                 app:layout_constraintBottom_toTopOf="@+id/litter_details_table_layout"
                 app:layout_constraintEnd_toEndOf="parent"
