@@ -42,7 +42,7 @@ class AddLitterFragment : AddFragment() {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
             val selectedMotherFragment = HomeListItemFragment(viewModel.selectedMother!!)
-            transaction.replace(R.id.add_litter_mother_fragment, selectedMotherFragment)
+            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
                 override fun select(gender: Gender) {
@@ -53,12 +53,12 @@ class AddLitterFragment : AddFragment() {
                     )
                 }
             })
-            transaction.replace(R.id.add_litter_mother_fragment, pickButtonFragment)
+            transaction.replace(R.id.add_mother_fragment, pickButtonFragment)
         }
 
         if (viewModel.selectedFather != null) {
             val selectedFatherFragment = HomeListItemFragment(viewModel.selectedFather!!)
-            transaction.replace(R.id.add_litter_father_fragment, selectedFatherFragment)
+            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
                 override fun select(gender: Gender) {
@@ -69,7 +69,7 @@ class AddLitterFragment : AddFragment() {
                     )
                 }
             })
-            transaction.replace(R.id.add_litter_father_fragment, pickButtonFragment)
+            transaction.replace(R.id.add_father_fragment, pickButtonFragment)
         }
         transaction.commit()
 
@@ -83,14 +83,14 @@ class AddLitterFragment : AddFragment() {
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
 
-        binding.addLitterMotherFragment.setOnClickListener {
+        binding.fragmentAddLitterIncludeParents.addMotherFragment.setOnClickListener {
             parentSelect(
                 Gender.FEMALE,
                 R.id.action_addLitterFragment_to_pickMotherListFragment,
                 R.id.action_addLitterFragment_to_pickFatherListFragment
             )
         }
-        binding.addLitterFatherFragment.setOnClickListener {
+        binding.fragmentAddLitterIncludeParents.addFatherFragment.setOnClickListener {
             parentSelect(
                 Gender.MALE,
                 R.id.action_addLitterFragment_to_pickMotherListFragment,

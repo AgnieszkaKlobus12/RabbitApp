@@ -46,7 +46,7 @@ class AddRabbitFragment : AddFragment() {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedMother != null) {
             val selectedMotherFragment = HomeListItemFragment(viewModel.selectedMother!!)
-            transaction.replace(R.id.add_rabbit_mother_fragment, selectedMotherFragment)
+            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
                 override fun select(gender: Gender) {
@@ -57,12 +57,12 @@ class AddRabbitFragment : AddFragment() {
                     )
                 }
             })
-            transaction.replace(R.id.add_rabbit_mother_fragment, pickButtonFragment)
+            transaction.replace(R.id.add_mother_fragment, pickButtonFragment)
         }
 
         if (viewModel.selectedFather != null) {
             val selectedFatherFragment = HomeListItemFragment(viewModel.selectedFather!!)
-            transaction.replace(R.id.add_rabbit_father_fragment, selectedFatherFragment)
+            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
                 override fun select(gender: Gender) {
@@ -73,7 +73,7 @@ class AddRabbitFragment : AddFragment() {
                     )
                 }
             })
-            transaction.replace(R.id.add_rabbit_father_fragment, pickButtonFragment)
+            transaction.replace(R.id.add_father_fragment, pickButtonFragment)
         }
         transaction.commit()
         return binding.root
@@ -86,14 +86,14 @@ class AddRabbitFragment : AddFragment() {
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
 
-        binding.addRabbitMotherFragment.setOnClickListener {
+        binding.fragmentAddRabbitIncludeParents.addMotherFragment.setOnClickListener {
             parentSelect(
                 Gender.FEMALE,
                 R.id.action_addRabbitFragment_to_pickMotherListFragment,
                 R.id.action_addRabbitFragment_to_pickFatherListFragment
             )
         }
-        binding.addRabbitFatherFragment.setOnClickListener {
+        binding.fragmentAddRabbitIncludeParents.addFatherFragment.setOnClickListener {
             parentSelect(
                 Gender.MALE,
                 R.id.action_addRabbitFragment_to_pickMotherListFragment,

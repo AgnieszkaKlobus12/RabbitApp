@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/table_section_margin"
-                app:layout_constraintBottom_toTopOf="@id/add_rabbit_mother"
+                app:layout_constraintBottom_toTopOf="@id/fragment_add_rabbit_include_parents"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_rabbit_picture">
@@ -140,47 +140,14 @@
                 </TableRow>
             </TableLayout>
 
-            <TextView
-                android:id="@+id/add_rabbit_mother"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:text="@string/mother"
-                app:layout_constraintBottom_toTopOf="@id/add_rabbit_mother_fragment"
+            <include
+                android:id="@+id/fragment_add_rabbit_include_parents"
+                layout="@layout/pick_parents_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/table_rabbit_data" />
-
-            <FrameLayout
-                android:id="@+id/add_rabbit_mother_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:minHeight="50dp"
-                app:layout_constraintBottom_toTopOf="@id/add_rabbit_father"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_rabbit_mother" />
-
-            <TextView
-                android:id="@+id/add_rabbit_father"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:text="@string/father"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_rabbit_mother_fragment" />
-
-            <FrameLayout
-                android:id="@+id/add_rabbit_father_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:minHeight="50dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_rabbit_father" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

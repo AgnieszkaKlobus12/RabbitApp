@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/table_section_margin"
-                app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
+                app:layout_constraintBottom_toTopOf="@id/fragment_add_litter_include_parents"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_litter_picture">
@@ -113,55 +113,20 @@
                         android:ems="10"
                         android:inputType="number"
                         app:layout_constraintBaseline_toBaselineOf="@+id/add_litter_number_label"
-                        app:layout_constraintBottom_toTopOf="@id/add_litter_mother"
+                        app:layout_constraintBottom_toTopOf="@id/fragment_add_litter_include_parents"
                         app:layout_constraintLeft_toRightOf="@id/add_litter_number_label"
                         app:layout_constraintRight_toRightOf="parent" />
                 </TableRow>
             </TableLayout>
 
-
-            <TextView
-                android:id="@+id/add_litter_mother"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:text="@string/mother"
-                app:layout_constraintBottom_toTopOf="@id/add_litter_mother_fragment"
+            <include
+                android:id="@+id/fragment_add_litter_include_parents"
+                layout="@layout/pick_parents_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/table_litter_data" />
-
-            <FrameLayout
-                android:id="@+id/add_litter_mother_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:minHeight="50dp"
-                app:layout_constraintBottom_toTopOf="@id/add_litter_father"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_mother" />
-
-            <TextView
-                android:id="@+id/add_litter_father"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:text="@string/father"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_mother_fragment" />
-
-            <FrameLayout
-                android:id="@+id/add_litter_father_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:minHeight="50dp"
-                android:maxHeight="50dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_litter_father" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
