@@ -30,7 +30,7 @@ class AddRabbitFragment : AddFragment() {
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
 
-        setGalleryLauncher(binding.addRabbitPicture, viewModel.selectedRabbit)
+        setGalleryLauncher(binding.addRabbitPicture)
 
         if (viewModel.selectedRabbit != null) {
             setParents(viewModel.selectedRabbit)

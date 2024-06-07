@@ -3,16 +3,18 @@
     <style name="Theme.RabbitApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pastel_color
+        <item name="colorPrimary">@color/pastel_color_dark
         </item> <!-- Change to your desired gray color -->
-        <item name="colorPrimaryVariant">@color/pastel_color_variant
+        <item name="colorPrimaryVariant">@color/pastel_color_variant_dark
         </item> <!-- Change to a slightly darker gray if needed -->
-        <item name="colorOnPrimary">@color/black</item> <!-- Change to a contrasting text color -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Change to a contrasting text color -->
         <!-- Secondary brand color with pastel shade. -->
-        <item name="colorSecondary">@color/pastel_color</item> <!-- Define your pastel color -->
-        <item name="colorSecondaryVariant">@color/pastel_color_variant
+        <item name="colorSecondary">@color/pastel_color_dark
+        </item> <!-- Define your pastel color -->
+        <item name="colorSecondaryVariant">@color/pastel_color_variant_dark
         </item> <!-- Darker shade of pastel color -->
-        <item name="colorOnSecondary">@color/black</item> <!-- Change to a contrasting text color -->
+        <item name="colorOnSecondary">@color/white
+        </item> <!-- Change to a contrasting text color -->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -22,14 +24,14 @@
     <style name="Theme.RabbitApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="background">@color/background_light</item>
+        <item name="background">@color/background_dark</item>
     </style>
 
     <style name="Theme.RabbitApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:textColorPrimaryInverse">@color/black</item>
-        <item name="android:actionMenuTextColor">@color/black</item>
-        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="Theme.RabbitApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

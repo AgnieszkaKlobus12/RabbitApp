@@ -14,6 +14,8 @@
     <color name="pastel_color_variant">#ffb6c1</color>
     <color name="pastel_color_light">#ffe4e1</color>
     <color name="pastel_color_variant_light">#ffc0cb</color>
+    <color name="pastel_color_dark">#345B63</color>
+    <color name="pastel_color_variant_dark">#1D3F4A</color>
     <color name="background_light">#FFE4E1</color>
-    <color name="background_dark">#140000</color>
+    <color name="background_dark">#152D35</color>
 </resources>

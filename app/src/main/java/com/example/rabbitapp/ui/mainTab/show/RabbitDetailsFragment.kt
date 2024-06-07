@@ -14,6 +14,7 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.ui.mainTab.add.UnknownParentFragment
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 
@@ -47,25 +48,21 @@ class RabbitDetailsFragment : Fragment() {
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedRabbit?.fkMother != null) {
-            binding.rabbitDetailsMotherFragment.visibility = View.VISIBLE
-            binding.rabbitDetailsMotherUnknown.visibility = View.GONE
             val selectedMotherFragment =
                 HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkMother!!)!!)
-            transaction.replace(R.id.rabbit_details_mother_fragment, selectedMotherFragment)
+            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
-            binding.rabbitDetailsMotherFragment.visibility = View.GONE
-            binding.rabbitDetailsMotherUnknown.visibility = View.VISIBLE
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
         }
 
         if (viewModel.selectedRabbit?.fkFather != null) {
-            binding.rabbitDetailsFatherFragment.visibility = View.VISIBLE
-            binding.rabbitDetailsFatherUnknown.visibility = View.GONE
             val selectedFatherFragment =
                 HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkFather!!)!!)
-            transaction.replace(R.id.rabbit_details_father_fragment, selectedFatherFragment)
+            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
-            binding.rabbitDetailsFatherFragment.visibility = View.GONE
-            binding.rabbitDetailsFatherUnknown.visibility = View.VISIBLE
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_father_fragment, unknownParentFragment)
         }
         transaction.commit()
 
@@ -75,7 +72,8 @@ class RabbitDetailsFragment : Fragment() {
 
     private fun moveToEditRabbit(): View.OnClickListener {
         return View.OnClickListener { view ->
-            view.findNavController().navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
+            view.findNavController()
+                .navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
         }
     }
 

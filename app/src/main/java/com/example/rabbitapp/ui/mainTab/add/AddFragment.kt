@@ -22,14 +22,12 @@ import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.utils.Gender
 import java.io.File
 import java.io.FileOutputStream
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 
 abstract class AddFragment : Fragment() {
 
     protected val viewModel: MainListViewModel by activityViewModels()
-    protected val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     fun parentSelect(
         parentGender: Gender,
@@ -69,7 +67,7 @@ abstract class AddFragment : Fragment() {
             item?.fkFather?.let { viewModel.getRabbitFromId(it) }
     }
 
-    fun setGalleryLauncher(picture: ImageView, item: HomeListItem?) {
+    fun setGalleryLauncher(picture: ImageView) {
         val galleryLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {

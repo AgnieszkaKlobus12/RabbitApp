@@ -14,6 +14,7 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.ui.mainTab.add.UnknownParentFragment
 import com.example.rabbitapp.utils.RabbitDetails
 
 
@@ -45,25 +46,21 @@ class LitterDetailsFragment : Fragment() {
 
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (viewModel.selectedLitter?.fkMother != null) {
-            binding.litterDetailsMotherFragment.visibility = View.VISIBLE
-            binding.litterDetailsMotherUnknown.visibility = View.GONE
             val selectedMotherFragment =
                 HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkMother!!)!!)
-            transaction.replace(R.id.litter_details_mother_fragment, selectedMotherFragment)
+            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
-            binding.litterDetailsMotherFragment.visibility = View.GONE
-            binding.litterDetailsMotherUnknown.visibility = View.VISIBLE
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
         }
 
         if (viewModel.selectedLitter?.fkFather != null) {
-            binding.litterDetailsFatherFragment.visibility = View.VISIBLE
-            binding.litterDetailsFatherUnknown.visibility = View.GONE
             val selectedFatherFragment =
                 HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkFather!!)!!)
-            transaction.replace(R.id.litter_details_father_fragment, selectedFatherFragment)
+            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
-            binding.litterDetailsFatherFragment.visibility = View.GONE
-            binding.litterDetailsFatherUnknown.visibility = View.VISIBLE
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_father_fragment, unknownParentFragment)
         }
         transaction.commit()
 

@@ -13,7 +13,6 @@ import com.example.rabbitapp.databinding.FragmentAddLitterBinding
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.utils.Gender
-import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -31,7 +30,7 @@ class AddLitterFragment : AddFragment() {
     ): View {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
 
-        setGalleryLauncher(binding.addLitterPicture, viewModel.selectedLitter)
+        setGalleryLauncher(binding.addLitterPicture)
 
         if (viewModel.selectedLitter != null) {
             setParents(viewModel.selectedLitter)
@@ -77,7 +76,6 @@ class AddLitterFragment : AddFragment() {
             transaction.replace(R.id.add_father_fragment, pickButtonFragment)
         }
         transaction.commit()
-
         return binding.root
     }
 
@@ -123,7 +121,9 @@ class AddLitterFragment : AddFragment() {
     }
 
     private fun setFieldsToSelectedLitter() {
-        binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(LocalDate.ofEpochDay(viewModel.selectedRabbit!!.birth).format(dateFormatter))
+        binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(
+            LocalDate.ofEpochDay(viewModel.selectedLitter!!.birth).format(dateFormatter)
+        )
         binding.addLitterName.setText(viewModel.selectedLitter!!.name)
         binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
     }
