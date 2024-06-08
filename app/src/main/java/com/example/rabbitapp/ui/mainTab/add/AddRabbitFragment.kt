@@ -36,11 +36,6 @@ class AddRabbitFragment : AddFragment() {
             parentSelectService.setParents(viewModel.selectedRabbit, viewModel)
             setFieldsToSelectedRabbit()
         }
-        parentSelectService.displaySelectParentFragment(
-            R.id.action_addRabbitFragment_to_pickMotherListFragment,
-            R.id.action_addRabbitFragment_to_pickFatherListFragment,
-            childFragmentManager, viewModel, view
-        )
 
         setPictureToSelectedOrDefault(
             binding.addRabbitPicture,
@@ -57,18 +52,16 @@ class AddRabbitFragment : AddFragment() {
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
-
-        parentSelectService.setOnClickListeners(
-            childFragmentManager,
-            view,
-            binding.fragmentAddRabbitIncludeParents,
-            R.id.action_addRabbitFragment_to_pickMotherListFragment,
-            R.id.action_addRabbitFragment_to_pickFatherListFragment
-        )
-
         binding.addRabbitDate.setOnClickListener {
             showDatePickerDialog()
         }
+
+        parentSelectService.displaySelectParentFragment(
+            binding.fragmentAddRabbitIncludeParents,
+            R.id.action_addRabbitFragment_to_pickMotherListFragment,
+            R.id.action_addRabbitFragment_to_pickFatherListFragment,
+            childFragmentManager, viewModel, view
+        )
     }
 
     private fun showDatePickerDialog() {

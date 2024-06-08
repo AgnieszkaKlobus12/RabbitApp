@@ -42,12 +42,6 @@ class AddLitterFragment : AddFragment() {
             R.drawable.rabbit_2_back
         )
 
-        parentSelectService.displaySelectParentFragment(
-            R.id.action_addLitterFragment_to_pickMotherListFragment,
-            R.id.action_addLitterFragment_to_pickFatherListFragment,
-            childFragmentManager, viewModel, view
-        )
-
         return binding.root
     }
 
@@ -57,18 +51,16 @@ class AddLitterFragment : AddFragment() {
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
-
-        parentSelectService.setOnClickListeners(
-            childFragmentManager,
-            view,
-            binding.fragmentAddLitterIncludeParents,
-            R.id.action_addLitterFragment_to_pickMotherListFragment,
-            R.id.action_addLitterFragment_to_pickFatherListFragment
-        )
-
         binding.addLitterDate.setOnClickListener {
             showDatePickerDialog()
         }
+
+        parentSelectService.displaySelectParentFragment(
+            binding.fragmentAddLitterIncludeParents,
+            R.id.action_addLitterFragment_to_pickMotherListFragment,
+            R.id.action_addLitterFragment_to_pickFatherListFragment,
+            childFragmentManager, viewModel, view
+        )
     }
 
     private fun showDatePickerDialog() {

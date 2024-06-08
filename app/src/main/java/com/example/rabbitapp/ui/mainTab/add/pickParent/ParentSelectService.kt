@@ -17,6 +17,7 @@ import com.example.rabbitapp.utils.Gender
 class ParentSelectService {
 
     fun displaySelectParentFragment(
+        binding: PickParentsFragmentBinding,
         pickMotherListFragment: Int,
         pickFatherListFragment: Int,
         childFragmentManager: FragmentManager,
@@ -64,9 +65,16 @@ class ParentSelectService {
             transaction.replace(R.id.add_father_fragment, pickButtonFragment)
         }
         transaction.commit()
+        setOnClickListeners(
+            childFragmentManager,
+            view,
+            binding,
+            pickMotherListFragment,
+            pickFatherListFragment
+        )
     }
 
-    fun setOnClickListeners(
+    private fun setOnClickListeners(
         childFragmentManager: FragmentManager,
         view: View?,
         binding: PickParentsFragmentBinding,
@@ -112,9 +120,13 @@ class ParentSelectService {
     }
 
     fun setParents(item: HomeListItem?, viewModel: MainListViewModel) {
-        viewModel.selectedMother =
-            item?.fkMother?.let { viewModel.getRabbitFromId(it) }
-        viewModel.selectedFather =
-            item?.fkFather?.let { viewModel.getRabbitFromId(it) }
+        if (viewModel.selectedMother == null) {
+            viewModel.selectedMother =
+                item?.fkMother?.let { viewModel.getRabbitFromId(it) }
+        }
+        if (viewModel.selectedFather == null) {
+            viewModel.selectedFather =
+                item?.fkFather?.let { viewModel.getRabbitFromId(it) }
+        }
     }
 }
