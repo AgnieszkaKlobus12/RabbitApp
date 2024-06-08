@@ -6,13 +6,11 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddLitterBinding
 import com.example.rabbitapp.model.entities.Litter
-import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.ui.mainTab.add.pickParent.ParentSelectService
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -22,6 +20,7 @@ class AddLitterFragment : AddFragment() {
     private val binding get() = _binding!!
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    private val parentSelectService: ParentSelectService = ParentSelectService()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +32,7 @@ class AddLitterFragment : AddFragment() {
         setGalleryLauncher(binding.addLitterPicture)
 
         if (viewModel.selectedLitter != null) {
-            setParents(viewModel.selectedLitter)
+            parentSelectService.setParents(viewModel.selectedLitter, viewModel)
             setFieldsToSelectedLitter()
         }
 
@@ -43,39 +42,12 @@ class AddLitterFragment : AddFragment() {
             R.drawable.rabbit_2_back
         )
 
-        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedMother != null) {
-            val selectedMotherFragment = HomeListItemFragment(viewModel.selectedMother!!)
-            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
-        } else {
-            val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
-                override fun select(gender: Gender) {
-                    parentSelect(
-                        gender,
-                        R.id.action_addLitterFragment_to_pickMotherListFragment,
-                        R.id.action_addLitterFragment_to_pickFatherListFragment
-                    )
-                }
-            })
-            transaction.replace(R.id.add_mother_fragment, pickButtonFragment)
-        }
+        parentSelectService.displaySelectParentFragment(
+            R.id.action_addLitterFragment_to_pickMotherListFragment,
+            R.id.action_addLitterFragment_to_pickFatherListFragment,
+            childFragmentManager, viewModel, view
+        )
 
-        if (viewModel.selectedFather != null) {
-            val selectedFatherFragment = HomeListItemFragment(viewModel.selectedFather!!)
-            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
-        } else {
-            val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
-                override fun select(gender: Gender) {
-                    parentSelect(
-                        gender,
-                        R.id.action_addLitterFragment_to_pickMotherListFragment,
-                        R.id.action_addLitterFragment_to_pickFatherListFragment
-                    )
-                }
-            })
-            transaction.replace(R.id.add_father_fragment, pickButtonFragment)
-        }
-        transaction.commit()
         return binding.root
     }
 
@@ -86,20 +58,13 @@ class AddLitterFragment : AddFragment() {
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
 
-        binding.fragmentAddLitterIncludeParents.addMotherFragment.setOnClickListener {
-            parentSelect(
-                Gender.FEMALE,
-                R.id.action_addLitterFragment_to_pickMotherListFragment,
-                R.id.action_addLitterFragment_to_pickFatherListFragment
-            )
-        }
-        binding.fragmentAddLitterIncludeParents.addFatherFragment.setOnClickListener {
-            parentSelect(
-                Gender.MALE,
-                R.id.action_addLitterFragment_to_pickMotherListFragment,
-                R.id.action_addLitterFragment_to_pickFatherListFragment
-            )
-        }
+        parentSelectService.setOnClickListeners(
+            childFragmentManager,
+            view,
+            binding.fragmentAddLitterIncludeParents,
+            R.id.action_addLitterFragment_to_pickMotherListFragment,
+            R.id.action_addLitterFragment_to_pickFatherListFragment
+        )
 
         binding.addLitterDate.setOnClickListener {
             showDatePickerDialog()

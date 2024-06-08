@@ -1,6 +1,7 @@
 package com.example.rabbitapp.ui.mainTab.add.pickParent
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class PickFatherListFragment : Fragment() {
                 ), object : OnSelected {
                     override fun onItemClick(item: HomeListItem) {
                         viewModel.selectedFather = item as Rabbit
+                        Log.d("PickFatherListFragment", "New father selected: $item")
                         activity?.onBackPressed()
                     }
                 })

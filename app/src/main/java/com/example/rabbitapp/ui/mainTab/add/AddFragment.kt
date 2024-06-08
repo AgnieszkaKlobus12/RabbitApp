@@ -13,13 +13,10 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.utils.Gender
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
@@ -28,23 +25,6 @@ import java.util.UUID
 abstract class AddFragment : Fragment() {
 
     protected val viewModel: MainListViewModel by activityViewModels()
-
-    fun parentSelect(
-        parentGender: Gender,
-        pickMotherListFragment: Int,
-        pickFatherListFragment: Int
-    ) {
-        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (parentGender == Gender.FEMALE) {
-            view?.findNavController()
-                ?.navigate(pickMotherListFragment)
-        }
-        if (parentGender == Gender.MALE) {
-            view?.findNavController()
-                ?.navigate(pickFatherListFragment)
-        }
-        transaction.commit()
-    }
 
     fun setPictureToSelectedOrDefault(
         pictureView: ImageView,
@@ -58,13 +38,6 @@ abstract class AddFragment : Fragment() {
             pictureView.setImageResource(drawable)
             pictureView.tag = drawable
         }
-    }
-
-    fun setParents(item: HomeListItem?) {
-        viewModel.selectedMother =
-            item?.fkMother?.let { viewModel.getRabbitFromId(it) }
-        viewModel.selectedFather =
-            item?.fkFather?.let { viewModel.getRabbitFromId(it) }
     }
 
     fun setGalleryLauncher(picture: ImageView) {

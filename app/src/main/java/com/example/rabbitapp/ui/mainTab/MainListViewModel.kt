@@ -41,29 +41,29 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     fun getAll(): List<HomeListItem> {
         val listRabbit = getAllRabbitsExcept()
         val listLitter = litterRepository.getAll()
-        Log.d("VIEW_MODEL", "Litter list acquired. Size: " + listLitter.size)
+        Log.d("ViewModel", "Litter list acquired. Size: " + listLitter.size)
         return listRabbit + listLitter
     }
 
     private fun getAllRabbitsExcept(): List<HomeListItem> {
         val listRabbit = rabbitRepository.getAll()
-        Log.d("VIEW_MODEL", "Rabbit list acquired. Size: " + listRabbit.size)
+        Log.d("ViewModel", "Rabbit list acquired. Size: " + listRabbit.size)
         return listRabbit
     }
 
     fun getRabbitFromId(id: Long): Rabbit? {
         val rabbit = rabbitRepository.getRabbitFromId(id)
-        Log.d("VIEW_MODEL", "Rabbit $rabbit acquired.")
+        Log.d("ViewModel", "Rabbit $rabbit acquired.")
         return rabbit
     }
 
     fun deleteCurrentlySelectedRabbit() {
-        Log.d("VIEW_MODEL", "Rabbit $selectedRabbit deleted.")
+        Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
         selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }
     }
 
     fun deleteCurrentlySelectedLitter() {
-        Log.d("VIEW_MODEL", "Rabbit $selectedRabbit deleted.")
+        Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
         selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
     }
 
