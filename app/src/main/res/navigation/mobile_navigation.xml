@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/addRabbitFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.AddRabbitFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.RabbitFragmentWithPicture"
         android:label="@string/add_rabbit"
         tools:layout="@layout/fragment_add_rabbit">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/addLitterFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.AddLitterFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.add.LitterFragmentWithPicture"
         android:label="@string/add_litter"
         tools:layout="@layout/fragment_add_litter">
         <action
@@ -67,11 +67,11 @@
     </fragment>
     <fragment
         android:id="@+id/pickFatherListFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.pickParent.PickFatherListFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.parent.PickFatherListFragment"
         android:label="PickFatherListFragment" />
     <fragment
         android:id="@+id/pickMotherListFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.pickParent.PickMotherListFragment"
+        android:name="com.example.rabbitapp.ui.mainTab.parent.PickMotherListFragment"
         android:label="PickMotherListFragment" />
     <fragment
         android:id="@+id/rabbitDetailsFragment"
@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_addLitterFragment"
             app:destination="@id/addLitterFragment" />
+        <action
+            android:id="@+id/action_litterDetailsFragment_to_addRabbitFragment"
+            app:destination="@id/addRabbitFragment" />
     </fragment>
 
 </navigation>

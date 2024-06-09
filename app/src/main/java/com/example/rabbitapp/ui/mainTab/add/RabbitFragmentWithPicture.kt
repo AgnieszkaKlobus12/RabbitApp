@@ -10,13 +10,13 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.add.pickParent.ParentSelectService
+import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class AddRabbitFragment : AddFragment() {
+class RabbitFragmentWithPicture : FragmentWithPicture() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
 

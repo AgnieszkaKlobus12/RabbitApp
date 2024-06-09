@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainTab.add.pickParent
+package com.example.rabbitapp.ui.mainTab.parent
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.add.OnSelected
 import com.example.rabbitapp.utils.Gender
 
-class PickFatherListFragment : Fragment() {
+class PickMotherListFragment : Fragment() {
     private var _binding: ContentHomeListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainListViewModel by activityViewModels()
@@ -31,18 +31,19 @@ class PickFatherListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.selectedFather = null
+        viewModel.selectedMother = null
         binding.fragmentListRecyclerView.adapter =
             MainListAdapter(
                 viewModel.getAllRabbitsExcept(
-                    Gender.MALE,
+                    Gender.FEMALE,
                     viewModel.selectedRabbit?.id
                 ), object : OnSelected {
                     override fun onItemClick(item: HomeListItem) {
-                        viewModel.selectedFather = item as Rabbit
-                        Log.d("PickFatherListFragment", "New father selected: $item")
+                        viewModel.selectedMother = item as Rabbit
+                        Log.d("PickMotherListFragment", "New mother selected: $item")
                         activity?.onBackPressed()
                     }
                 })
     }
+
 }

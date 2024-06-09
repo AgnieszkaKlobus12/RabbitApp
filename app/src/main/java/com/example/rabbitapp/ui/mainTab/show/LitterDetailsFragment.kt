@@ -1,30 +1,26 @@
 package com.example.rabbitapp.ui.mainTab.show
 
 import android.app.AlertDialog
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
-import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.ui.mainTab.add.UnknownParentFragment
+import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
+import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.RabbitDetails
 
 
-class LitterDetailsFragment : Fragment() {
+class LitterDetailsFragment : FragmentWithPicture() {
 
     private var _binding: FragmentLitterDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val parentSelectService: ParentSelectService = ParentSelectService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +29,18 @@ class LitterDetailsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.litter_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.navigation_add_rabbit -> {
+                view?.findNavController()
+                    ?.navigate(R.id.action_litterDetailsFragment_to_addRabbitFragment)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateView(
@@ -47,7 +55,12 @@ class LitterDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setPictureToSelectedOrDefault()
+        setPictureToSelectedOrDefault(
+            binding.litterDetailsImage,
+            viewModel.selectedLitter,
+            R.drawable.rabbit_2_back
+        )
+
         binding.litterDetailsAge.text =
             viewModel.selectedLitter?.let { RabbitDetails.getAge(it.birth) }
         binding.litterDetailsName.text = viewModel.selectedLitter?.name
@@ -55,25 +68,13 @@ class LitterDetailsFragment : Fragment() {
         binding.litterDetailsBirth.text =
             viewModel.selectedLitter?.let { RabbitDetails.getBirthDateString(it.birth) }
 
-        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedLitter?.fkMother != null) {
-            val selectedMotherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkMother!!)!!)
-            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
-        } else {
-            val unknownParentFragment = UnknownParentFragment()
-            transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
+        viewModel.selectedLitter?.let {
+            parentSelectService.displayParentOrUnknown(
+                it,
+                childFragmentManager,
+                viewModel
+            )
         }
-
-        if (viewModel.selectedLitter?.fkFather != null) {
-            val selectedFatherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedLitter!!.fkFather!!)!!)
-            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
-        } else {
-            val unknownParentFragment = UnknownParentFragment()
-            transaction.replace(R.id.add_father_fragment, unknownParentFragment)
-        }
-        transaction.commit()
 
         binding.litterDetailsDeleteButton.setOnClickListener(deleteLitter())
         binding.litterDetailsEditButton.setOnClickListener(moveToEditLitter())
@@ -105,14 +106,6 @@ class LitterDetailsFragment : Fragment() {
                 builder.create()
             }
             alertDialog.show()
-        }
-    }
-
-    private fun setPictureToSelectedOrDefault() {
-        if (viewModel.selectedLitter?.imagePath != null && viewModel.selectedLitter?.imagePath!!.isNotEmpty()) {
-            binding.litterDetailsImage.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedLitter?.imagePath!!));
-        } else {
-            binding.litterDetailsImage.setImageResource(R.drawable.rabbit_2_back)
         }
     }
 

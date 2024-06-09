@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainTab.add.pickParent
+package com.example.rabbitapp.ui.mainTab.parent
 
 import android.util.Log
 import android.view.View
@@ -72,6 +72,32 @@ class ParentSelectService {
             pickMotherListFragment,
             pickFatherListFragment
         )
+    }
+
+    fun displayParentOrUnknown(
+        showingItem: HomeListItem,
+        childFragmentManager: FragmentManager,
+        viewModel: MainListViewModel,
+    ) {
+        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
+        if (showingItem.fkMother != null) {
+            val selectedMotherFragment =
+                HomeListItemFragment(viewModel.getRabbitFromId(showingItem.fkMother!!)!!)
+            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
+        } else {
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
+        }
+
+        if (showingItem.fkFather != null) {
+            val selectedFatherFragment =
+                HomeListItemFragment(viewModel.getRabbitFromId(showingItem.fkFather!!)!!)
+            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
+        } else {
+            val unknownParentFragment = UnknownParentFragment()
+            transaction.replace(R.id.add_father_fragment, unknownParentFragment)
+        }
+        transaction.commit()
     }
 
     private fun setOnClickListeners(

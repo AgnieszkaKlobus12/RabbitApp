@@ -1,29 +1,24 @@
 package com.example.rabbitapp.ui.mainTab.show
 
 import android.app.AlertDialog
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
-import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.ui.mainTab.add.UnknownParentFragment
+import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
+import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 
 
-class RabbitDetailsFragment : Fragment() {
+class RabbitDetailsFragment : FragmentWithPicture() {
 
     private var _binding: FragmentRabbitDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val parentSelectService: ParentSelectService = ParentSelectService()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +31,12 @@ class RabbitDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setPictureToSelectedOrDefault();
+
+        setPictureToSelectedOrDefault(
+            binding.rabbitDetailsImage,
+            viewModel.selectedRabbit,
+            R.drawable.rabbit_back
+        );
         binding.rabbitDetailsAge.text =
             viewModel.selectedRabbit?.let { RabbitDetails.getAge(it.birth) }
         binding.rabbitDetailsName.text = viewModel.selectedRabbit?.name
@@ -46,25 +46,13 @@ class RabbitDetailsFragment : Fragment() {
         binding.rabbitDetailsBirth.text =
             viewModel.selectedRabbit?.let { RabbitDetails.getBirthDateString(it.birth) }
 
-        val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedRabbit?.fkMother != null) {
-            val selectedMotherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkMother!!)!!)
-            transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
-        } else {
-            val unknownParentFragment = UnknownParentFragment()
-            transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
+        viewModel.selectedRabbit?.let {
+            parentSelectService.displayParentOrUnknown(
+                it,
+                childFragmentManager,
+                viewModel
+            )
         }
-
-        if (viewModel.selectedRabbit?.fkFather != null) {
-            val selectedFatherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(viewModel.selectedRabbit!!.fkFather!!)!!)
-            transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
-        } else {
-            val unknownParentFragment = UnknownParentFragment()
-            transaction.replace(R.id.add_father_fragment, unknownParentFragment)
-        }
-        transaction.commit()
 
         binding.rabbitDetailsDeleteButton.setOnClickListener(deleteRabbit())
         binding.rabbitDetailsEditButton.setOnClickListener(moveToEditRabbit())
@@ -108,11 +96,4 @@ class RabbitDetailsFragment : Fragment() {
         return getString(R.string.unknown)
     }
 
-    private fun setPictureToSelectedOrDefault() {
-        if (viewModel.selectedRabbit?.imagePath != null && viewModel.selectedRabbit?.imagePath!!.isNotEmpty()) {
-            binding.rabbitDetailsImage.setImageBitmap(BitmapFactory.decodeFile(viewModel.selectedRabbit?.imagePath!!))
-        } else {
-            binding.rabbitDetailsImage.setImageResource(R.drawable.rabbit_back)
-        }
-    }
 }

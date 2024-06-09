@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainTab.add
+package com.example.rabbitapp.ui.mainTab.parent
 
 import android.os.Bundle
 import android.view.LayoutInflater

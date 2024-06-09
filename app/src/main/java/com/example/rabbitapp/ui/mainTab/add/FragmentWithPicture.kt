@@ -22,18 +22,18 @@ import java.io.FileOutputStream
 import java.util.UUID
 
 
-abstract class AddFragment : Fragment() {
+abstract class FragmentWithPicture : Fragment() {
 
     protected val viewModel: MainListViewModel by activityViewModels()
 
     fun setPictureToSelectedOrDefault(
         pictureView: ImageView,
-        entityToEdit: HomeListItem?,
+        entity: HomeListItem?,
         drawable: Int
     ) {
-        if (entityToEdit?.imagePath != null && entityToEdit.imagePath!!.isNotEmpty()) {
-            pictureView.setImageBitmap(BitmapFactory.decodeFile(entityToEdit.imagePath!!))
-            pictureView.tag = entityToEdit.imagePath!!
+        if (entity?.imagePath != null && entity.imagePath!!.isNotEmpty()) {
+            pictureView.setImageBitmap(BitmapFactory.decodeFile(entity.imagePath!!))
+            pictureView.tag = entity.imagePath!!
         } else {
             pictureView.setImageResource(drawable)
             pictureView.tag = drawable

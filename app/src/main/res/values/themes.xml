@@ -17,7 +17,6 @@
         </item> <!-- Change to a contrasting text color -->
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="android:textColorPrimaryInverse">?attr/colorPrimaryVariant</item>
 
         <item name="android:colorBackground">@color/background_light</item>
 
@@ -27,6 +26,7 @@
     <style name="Theme.RabbitApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="background">@color/background_light</item>
     </style>
 
     <style name="Theme.RabbitApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
