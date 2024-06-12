@@ -39,4 +39,5 @@
     <string name="error_empty">To pole nie może być puste</string>
     <string name="gender_empty">Płeć musi być wybrana!</string>
     <string name="add_rabbit_to_litter">Dodaj królika do miotu</string>
+    <string name="belongs_to_litter">Należy do miotu:</string>
 </resources>

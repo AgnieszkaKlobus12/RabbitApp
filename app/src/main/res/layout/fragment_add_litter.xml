@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainTab.add.LitterFragmentWithPicture">
+    tools:context=".ui.mainTab.add.LitterAddFragment">
 
     <ScrollView
         android:id="@+id/add_litter_scroll_view"

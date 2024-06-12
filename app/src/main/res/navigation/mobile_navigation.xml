@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/addRabbitFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.RabbitFragmentWithPicture"
+        android:name="com.example.rabbitapp.ui.mainTab.add.RabbitAddFragment"
         android:label="@string/add_rabbit"
         tools:layout="@layout/fragment_add_rabbit">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/addLitterFragment"
-        android:name="com.example.rabbitapp.ui.mainTab.add.LitterFragmentWithPicture"
+        android:name="com.example.rabbitapp.ui.mainTab.add.LitterAddFragment"
         android:label="@string/add_litter"
         tools:layout="@layout/fragment_add_litter">
         <action

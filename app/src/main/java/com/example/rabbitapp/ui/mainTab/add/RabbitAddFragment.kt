@@ -3,6 +3,7 @@ package com.example.rabbitapp.ui.mainTab.add
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,12 @@ import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class RabbitFragmentWithPicture : FragmentWithPicture() {
+class RabbitAddFragment : FragmentWithPicture() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
 
@@ -32,6 +34,9 @@ class RabbitFragmentWithPicture : FragmentWithPicture() {
 
         setGalleryLauncher(binding.addRabbitPicture)
 
+        if (viewModel.selectedLitter != null) {
+            setLitterItem()
+        }
         if (viewModel.selectedRabbit != null) {
             parentSelectService.setParents(viewModel.selectedRabbit, viewModel)
             setFieldsToSelectedRabbit()
@@ -142,8 +147,18 @@ class RabbitFragmentWithPicture : FragmentWithPicture() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setLitterItem() {
+        binding.fragmentAddRabbitBelongTo.root.visibility = View.VISIBLE
+        binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemAge.text =
+            viewModel.selectedLitter?.let { RabbitDetails.getAge(it.birth) }
+        binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemName.text =
+            viewModel.selectedLitter?.name
+        setPictureToSelectedOrDefault(
+            binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemPicture,
+            viewModel.selectedLitter,
+            R.drawable.rabbit_2_back
+        )
+        Log.d("RabbitFragment", "Litter added ${viewModel.selectedLitter}")
     }
+
 }

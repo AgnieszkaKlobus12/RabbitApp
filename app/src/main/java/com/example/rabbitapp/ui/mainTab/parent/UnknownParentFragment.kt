@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.rabbitapp.databinding.UnknownParentLayoutBinding
 
-class UnknownParentFragment :
-    Fragment() {
+class UnknownParentFragment : Fragment() {
+
     private var _binding: UnknownParentLayoutBinding? = null
     private val binding get() = _binding!!
 

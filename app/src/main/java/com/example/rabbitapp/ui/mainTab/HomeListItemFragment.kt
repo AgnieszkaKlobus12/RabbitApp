@@ -1,17 +1,16 @@
 package com.example.rabbitapp.ui.mainTab
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.HomeListItemBinding
-import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.utils.RabbitDetails.Companion.getAge
 
-class HomeListItemFragment(val rabbit: Rabbit) : Fragment() {
+class HomeListItemFragment(val item: HomeListItem) : FragmentWithPicture() {
 
     private var _binding: HomeListItemBinding? = null
     private val binding get() = _binding!!
@@ -22,23 +21,14 @@ class HomeListItemFragment(val rabbit: Rabbit) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = HomeListItemBinding.inflate(inflater, container, false)
-        binding.homeListItemAge.text = getAge(rabbit.birth)
-        binding.homeListItemName.text = rabbit.name
-        setPictureToSelectedOrDefault()
+        binding.homeListItemAge.text = getAge(item.birth)
+        binding.homeListItemName.text = item.name
+        setPictureToSelectedOrDefault(
+            binding.homeListItemPicture,
+            viewModel.selectedLitter,
+            R.drawable.rabbit_2_back
+        )
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setPictureToSelectedOrDefault() {
-        if (!rabbit.imagePath.isNullOrEmpty()) {
-            binding.homeListItemPicture.setImageBitmap(BitmapFactory.decodeFile(rabbit.imagePath))
-
-        } else {
-            binding.homeListItemPicture.setImageResource(R.drawable.rabbit_back)
-        }
-    }
 }

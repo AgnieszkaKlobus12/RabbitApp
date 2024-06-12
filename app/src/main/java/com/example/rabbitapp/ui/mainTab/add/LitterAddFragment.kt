@@ -15,7 +15,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class LitterFragmentWithPicture : FragmentWithPicture() {
+class LitterAddFragment : FragmentWithPicture() {
     private var _binding: FragmentAddLitterBinding? = null
     private val binding get() = _binding!!
 
