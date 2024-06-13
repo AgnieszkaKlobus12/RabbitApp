@@ -17,6 +17,12 @@ import androidx.room.PrimaryKey
             parentColumns = ["id"],
             childColumns = ["fkFather"],
             onDelete = ForeignKey.SET_NULL
+        ),
+        ForeignKey(
+            entity = Litter::class,
+            parentColumns = ["id"],
+            childColumns = ["fkLitter"],
+            onDelete = ForeignKey.SET_NULL
         )]
 )
 data class Rabbit(
@@ -28,6 +34,7 @@ data class Rabbit(
     override val imagePath: String?,
     override val fkMother: Long?,
     override val fkFather: Long?,
+    val fkLitter: Long?
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {
@@ -43,6 +50,7 @@ data class Rabbit(
         if (earNumber != other.earNumber) return false
         if (fkMother != other.fkMother) return false
         if (fkFather != other.fkFather) return false
+        if (fkLitter != other.fkLitter) return false
 
         return true
     }

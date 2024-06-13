@@ -1,7 +1,9 @@
 package com.example.rabbitapp.ui.mainTab.parent
 
+import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
@@ -17,7 +19,6 @@ import com.example.rabbitapp.utils.Gender
 class ParentSelectService {
 
     fun displaySelectParentFragment(
-        binding: PickParentsFragmentBinding,
         pickMotherListFragment: Int,
         pickFatherListFragment: Int,
         childFragmentManager: FragmentManager,
@@ -65,13 +66,6 @@ class ParentSelectService {
             transaction.replace(R.id.add_father_fragment, pickButtonFragment)
         }
         transaction.commit()
-        setOnClickListeners(
-            childFragmentManager,
-            view,
-            binding,
-            pickMotherListFragment,
-            pickFatherListFragment
-        )
     }
 
     fun displayParentOrUnknown(
@@ -100,7 +94,21 @@ class ParentSelectService {
         transaction.commit()
     }
 
-    private fun setOnClickListeners(
+    fun setChangeIllegalMessage(
+        context: Context,
+        binding: PickParentsFragmentBinding,
+        message: String
+    ) {
+        val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        binding.addMotherFragment.setOnClickListener {
+            toast.show()
+        }
+        binding.addFatherFragment.setOnClickListener {
+            toast.show()
+        }
+    }
+
+    fun setOnClickListenersParents(
         childFragmentManager: FragmentManager,
         view: View?,
         binding: PickParentsFragmentBinding,

@@ -40,4 +40,6 @@
     <string name="gender_empty">Płeć musi być wybrana!</string>
     <string name="add_rabbit_to_litter">Dodaj królika do miotu</string>
     <string name="belongs_to_litter">Należy do miotu:</string>
+    <string name="illegal_parent_change">Zmiana rodzica niemożliwa podczas dodawania do miotu.</string>
+    <string name="date_change_illegal">Zmiana daty urodzenia niemożliwa podczas dodawania do miotu.</string>
 </resources>

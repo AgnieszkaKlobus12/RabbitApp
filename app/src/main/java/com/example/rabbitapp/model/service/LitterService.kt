@@ -17,4 +17,8 @@ class LitterService(private val litterDao: LitterDao) {
         litterDao.insert(litter)
     }
 
+    fun getLitterFromId(id: Long): Litter? {
+        return litterDao.getLitterFromId(id)
+    }
+
 }

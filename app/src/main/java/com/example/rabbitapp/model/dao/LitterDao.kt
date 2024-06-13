@@ -1,6 +1,10 @@
 package com.example.rabbitapp.model.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.example.rabbitapp.model.entities.Litter
 
 @Dao
@@ -20,5 +24,8 @@ interface LitterDao {
 
     @Query("select * from Litter")
     fun getAll(): List<Litter>
+
+    @Query("select * from Litter where id = :id")
+    fun getLitterFromId(id: Long): Litter?
 
 }

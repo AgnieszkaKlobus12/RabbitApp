@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class],
-    version = 6
+    version = 7
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -55,12 +55,52 @@ abstract class AppDatabase : RoomDatabase() {
                 db.let { db ->
                     withContext(Dispatchers.IO) {
                         val rabbitRepository = db.rabbitRepository()
+                        val litterRepository = db.litterRepository()
                         // every table needs to be cleared to avoid redundant data
                         rabbitRepository.deleteAll()
+                        litterRepository.deleteAll()
 
                         //test data
-//                        rabbitRepository.insert(Rabbit(1, "Misiek", 19144, "MALE",  "101", null, null, null))
-//                        rabbitRepository.insert(Rabbit(2, "Zuzia", 19844, "FEMALE", "102", null, null, null))
+                        rabbitRepository.insert(
+                            Rabbit(
+                                1,
+                                "Misiek",
+                                19144,
+                                "MALE",
+                                "101",
+                                null,
+                                null,
+                                null,
+                                null
+                            )
+                        )
+                        rabbitRepository.insert(
+                            Rabbit(
+                                2,
+                                "Zuzia",
+                                19844,
+                                "FEMALE",
+                                "102",
+                                null,
+                                null,
+                                null,
+                                null
+                            )
+                        )
+                        litterRepository.insert(Litter(3, "Miot", 19844, 3, null, 1, 2))
+                        rabbitRepository.insert(
+                            Rabbit(
+                                4,
+                                "Miotka",
+                                19844,
+                                "FEMALE",
+                                "103",
+                                null,
+                                1,
+                                2,
+                                3
+                            )
+                        )
                     }
                 }
             }

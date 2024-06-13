@@ -2,6 +2,7 @@ package com.example.rabbitapp.ui.mainTab.show
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,22 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                 childFragmentManager,
                 viewModel
             )
+        }
+
+        if (viewModel.selectedRabbit?.fkLitter != null) {
+            viewModel.selectedLitter =
+                viewModel.getLitterFromId(viewModel.selectedRabbit!!.fkLitter!!)
+            binding.fragmentAddRabbitBelongTo.root.visibility = View.VISIBLE
+            binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemAge.text =
+                viewModel.selectedLitter?.let { RabbitDetails.getAge(it.birth) }
+            binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemName.text =
+                viewModel.selectedLitter?.name
+            setPictureToSelectedOrDefault(
+                binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemPicture,
+                viewModel.selectedLitter,
+                R.drawable.rabbit_2_back
+            )
+            Log.d("RabbitDetailsFragment", "Litter added ${viewModel.selectedLitter}")
         }
 
         binding.rabbitDetailsDeleteButton.setOnClickListener(deleteRabbit())

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
@@ -34,12 +35,13 @@ class RabbitAddFragment : FragmentWithPicture() {
 
         setGalleryLauncher(binding.addRabbitPicture)
 
-        if (viewModel.selectedLitter != null) {
-            setLitterItem()
-        }
         if (viewModel.selectedRabbit != null) {
             parentSelectService.setParents(viewModel.selectedRabbit, viewModel)
             setFieldsToSelectedRabbit()
+        }
+        if (viewModel.selectedLitter != null) {
+            parentSelectService.setParents(viewModel.selectedLitter, viewModel)
+            setLitterItem()
         }
 
         setPictureToSelectedOrDefault(
@@ -57,16 +59,31 @@ class RabbitAddFragment : FragmentWithPicture() {
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
-        binding.addRabbitDate.setOnClickListener {
-            showDatePickerDialog()
-        }
-
         parentSelectService.displaySelectParentFragment(
-            binding.fragmentAddRabbitIncludeParents,
             R.id.action_addRabbitFragment_to_pickMotherListFragment,
             R.id.action_addRabbitFragment_to_pickFatherListFragment,
-            childFragmentManager, viewModel, view
+            childFragmentManager,
+            viewModel, view
         )
+        if (viewModel.selectedLitter == null) {
+            parentSelectService.setOnClickListenersParents(
+                childFragmentManager,
+                view,
+                binding.fragmentAddRabbitIncludeParents,
+                R.id.action_addRabbitFragment_to_pickMotherListFragment,
+                R.id.action_addRabbitFragment_to_pickFatherListFragment
+            )
+
+            binding.addRabbitDate.setOnClickListener {
+                showDatePickerDialog()
+            }
+        } else {
+            parentSelectService.setChangeIllegalMessage(
+                requireContext(),
+                binding.fragmentAddRabbitIncludeParents,
+                getString(R.string.illegal_parent_change)
+            )
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -113,7 +130,8 @@ class RabbitAddFragment : FragmentWithPicture() {
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
                     path,
-                    viewModel.selectedMother?.id, viewModel.selectedFather?.id
+                    viewModel.selectedMother?.id, viewModel.selectedFather?.id,
+                    viewModel.selectedLitter?.id
                 )
             )
             view.findNavController().navigate(R.id.action_addRabbitFragment_to_navigation_home)
@@ -158,6 +176,15 @@ class RabbitAddFragment : FragmentWithPicture() {
             viewModel.selectedLitter,
             R.drawable.rabbit_2_back
         )
+        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(
+            LocalDate.ofEpochDay(viewModel.selectedLitter!!.birth).format(dateFormatter)
+        )
+        binding.addRabbitDate.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.date_change_illegal), Toast.LENGTH_SHORT
+            ).show()
+        }
         Log.d("RabbitFragment", "Litter added ${viewModel.selectedLitter}")
     }
 

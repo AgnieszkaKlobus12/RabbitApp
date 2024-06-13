@@ -56,10 +56,17 @@ class LitterAddFragment : FragmentWithPicture() {
         }
 
         parentSelectService.displaySelectParentFragment(
-            binding.fragmentAddLitterIncludeParents,
             R.id.action_addLitterFragment_to_pickMotherListFragment,
             R.id.action_addLitterFragment_to_pickFatherListFragment,
-            childFragmentManager, viewModel, view
+            childFragmentManager,
+            viewModel, view
+        )
+        parentSelectService.setOnClickListenersParents(
+            childFragmentManager,
+            view,
+            binding.fragmentAddLitterIncludeParents,
+            R.id.action_addLitterFragment_to_pickMotherListFragment,
+            R.id.action_addLitterFragment_to_pickFatherListFragment
         )
     }
 
@@ -69,10 +76,12 @@ class LitterAddFragment : FragmentWithPicture() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
-            binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
-        }, year, month, day)
+        val datePickerDialog =
+            DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+                binding.addLitterDate.text =
+                    Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
+            }, year, month, day)
 
         datePickerDialog.show()
     }
@@ -95,7 +104,8 @@ class LitterAddFragment : FragmentWithPicture() {
                 Litter(
                     viewModel.selectedLitter?.id ?: 0,
                     binding.addLitterName.text.toString(),
-                    LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter).toEpochDay(),
+                    LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter)
+                        .toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
