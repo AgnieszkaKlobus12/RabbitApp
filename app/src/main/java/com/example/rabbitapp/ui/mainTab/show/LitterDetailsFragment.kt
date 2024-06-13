@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
@@ -34,11 +35,18 @@ class LitterDetailsFragment : FragmentWithPicture() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_add_rabbit -> {
-                view?.findNavController()
-                    ?.navigate(R.id.action_litterDetailsFragment_to_addRabbitFragment)
+                if (viewModel.getAllRabbitFromLitter(viewModel.selectedLitter!!.id).size < viewModel.selectedLitter?.size!!) {
+                    view?.findNavController()
+                        ?.navigate(R.id.action_litterDetailsFragment_to_addRabbitFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.cannot_add_more_rabbits_to_litter),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

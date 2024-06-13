@@ -109,7 +109,7 @@ class LitterAddFragment : FragmentWithPicture() {
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
-                )
+                )   //todo change all connected rabbits on birthday updated
             )
             view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
         }

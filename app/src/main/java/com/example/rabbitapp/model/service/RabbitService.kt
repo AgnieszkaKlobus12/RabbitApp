@@ -31,4 +31,8 @@ class RabbitService(private val rabbitDao: RabbitDao) {
         return rabbitDao.insert(rabbit)
     }
 
+    fun getAllFromLitter(id: Long): List<Rabbit> {
+        return rabbitDao.getAllFromLitter(id)
+    }
+
 }

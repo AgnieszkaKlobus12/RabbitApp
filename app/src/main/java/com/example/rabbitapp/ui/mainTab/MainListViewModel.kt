@@ -51,6 +51,13 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return listRabbit
     }
 
+
+    fun getAllRabbitFromLitter(id: Long): List<Rabbit> {
+        val listRabbit = rabbitRepository.getAllFromLitter(id)
+        Log.d("ViewModel", "Rabbit list acquired. Size: " + listRabbit.size)
+        return listRabbit
+    }
+
     fun getRabbitFromId(id: Long): Rabbit? {
         val rabbit = rabbitRepository.getRabbitFromId(id)
         Log.d("ViewModel", "Rabbit $rabbit acquired.")
