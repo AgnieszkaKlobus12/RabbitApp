@@ -19,6 +19,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/add_litter_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:background="?android:colorSecondary"
+                android:gravity="center"
+                android:padding="@dimen/small_margin"
+                android:text="@string/litter_edit_warn_message"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/add_litter_picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/add_litter_picture"
                 android:layout_width="200dp"
@@ -26,7 +42,7 @@
                 android:layout_margin="@dimen/default_margin"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_litter_message"
                 app:srcCompat="@drawable/rabbit_2_back" />
 
             <TableLayout

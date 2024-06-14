@@ -121,12 +121,25 @@
                 android:id="@+id/fragment_litter_details_include_parents"
                 layout="@layout/pick_parents_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/fragment_litter_details_include_litter_items"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/litter_details_table_layout" />
 
+            <include
+                android:id="@+id/fragment_litter_details_include_litter_items"
+                layout="@layout/fragment_litter_contains_rabbits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_litter_details_include_parents" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
     <Button

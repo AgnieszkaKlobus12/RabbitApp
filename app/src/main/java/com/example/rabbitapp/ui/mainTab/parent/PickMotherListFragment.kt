@@ -32,11 +32,20 @@ class PickMotherListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.selectedMother = null
+        val idList: MutableList<Long> = mutableListOf()
+        if (viewModel.selectedRabbit?.id != null) {
+            idList.add(viewModel.selectedRabbit!!.id)
+        }
+        if (viewModel.selectedLitter?.id != null) {
+            idList.addAll(
+                viewModel.getAllRabbitFromLitter(viewModel.selectedLitter!!.id)
+                    .map { rabbit: Rabbit -> rabbit.id })
+        }
         binding.fragmentListRecyclerView.adapter =
             MainListAdapter(
                 viewModel.getAllRabbitsExcept(
                     Gender.FEMALE,
-                    viewModel.selectedRabbit?.id
+                    idList
                 ), object : OnSelected {
                     override fun onItemClick(item: HomeListItem) {
                         viewModel.selectedMother = item as Rabbit

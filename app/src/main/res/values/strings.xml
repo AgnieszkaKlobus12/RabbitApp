@@ -43,4 +43,6 @@
     <string name="illegal_parent_change">Zmiana rodzica niemożliwa podczas dodawania do miotu.</string>
     <string name="date_change_illegal">Zmiana daty urodzenia niemożliwa podczas dodawania do miotu.</string>
     <string name="cannot_add_more_rabbits_to_litter">Nie można dodać wiecej królików niż wynosi rozmiar miotu</string>
+    <string name="rabbits_belonging_to_litter">Króliki należące do miotu:</string>
+    <string name="litter_edit_warn_message">Uwaga! Zmiana daty urodzenia lub rodziców miotu spowoduje taką samą zmianę we wszystkich królikach należących do tego miotu!</string>
 </resources>

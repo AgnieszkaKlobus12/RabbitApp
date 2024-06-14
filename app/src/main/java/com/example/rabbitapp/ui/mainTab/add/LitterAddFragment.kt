@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddLitterBinding
 import com.example.rabbitapp.model.entities.Litter
+import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -53,6 +54,12 @@ class LitterAddFragment : FragmentWithPicture() {
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
         binding.addLitterDate.setOnClickListener {
             showDatePickerDialog()
+        }
+
+        viewModel.selectedLitter?.id?.let {
+            if (viewModel.getAllRabbitFromLitter(it).isNotEmpty()) {
+                binding.addLitterMessage.visibility = View.VISIBLE
+            }
         }
 
         parentSelectService.displaySelectParentFragment(
@@ -100,6 +107,23 @@ class LitterAddFragment : FragmentWithPicture() {
                 return@OnClickListener
             }
             val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
+            viewModel.selectedLitter?.id?.let {//todo fix litter and rabbit disconnecting and data saving
+                viewModel.getAllRabbitFromLitter(it)
+                    .forEach { rabbit: Rabbit ->
+                        run {
+                            rabbit.birth =
+                                LocalDate.parse(
+                                    binding.addLitterDate.text.toString(),
+                                    dateFormatter
+                                )
+                                    .toEpochDay()
+                            rabbit.fkFather = viewModel.selectedFather?.id
+                            rabbit.fkMother = viewModel.selectedMother?.id
+                            rabbit.fkLitter = viewModel.selectedLitter!!.id
+                            viewModel.update(rabbit)
+                        }
+                    }
+            }
             viewModel.save(
                 Litter(
                     viewModel.selectedLitter?.id ?: 0,
@@ -109,7 +133,7 @@ class LitterAddFragment : FragmentWithPicture() {
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
-                )   //todo change all connected rabbits on birthday updated
+                )
             )
             view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
         }

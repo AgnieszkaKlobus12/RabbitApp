@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_addRabbitFragment"
             app:destination="@id/addRabbitFragment" />
+        <action
+            android:id="@+id/acton_litterDetailsFragment_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment" />
     </fragment>
 
 </navigation>

@@ -34,6 +34,10 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         rabbitRepository.save(rabbit)
     }
 
+    fun update(rabbit: Rabbit) {
+        rabbitRepository.update(rabbit)
+    }
+
     fun save(litter: Litter) {
         litterRepository.save(litter)
     }
@@ -80,8 +84,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
     }
 
-    fun getAllRabbitsExcept(gender: Gender, id: Long?): List<HomeListItem> {
-        return rabbitRepository.getAllWithGenderExcept(gender, id)
+    fun getAllRabbitsExcept(gender: Gender, ids: List<Long>): List<HomeListItem> {
+        return rabbitRepository.getAllWithGenderExcept(gender, ids)
     }
 
     fun clearSelected() {

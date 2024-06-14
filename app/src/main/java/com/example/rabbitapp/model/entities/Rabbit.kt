@@ -28,13 +28,13 @@ import androidx.room.PrimaryKey
 data class Rabbit(
     @PrimaryKey(autoGenerate = true) override val id: Long,
     override val name: String,
-    override val birth: Long,
+    override var birth: Long,
     val sex: String,
     val earNumber: String?,
     override val imagePath: String?,
-    override val fkMother: Long?,
-    override val fkFather: Long?,
-    val fkLitter: Long?
+    override var fkMother: Long?,
+    override var fkFather: Long?,
+    var fkLitter: Long?
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {

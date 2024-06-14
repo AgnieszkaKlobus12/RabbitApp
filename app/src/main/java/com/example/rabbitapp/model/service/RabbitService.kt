@@ -19,16 +19,18 @@ class RabbitService(private val rabbitDao: RabbitDao) {
         rabbitDao.delete(id)
     }
 
-    fun getAllWithGenderExcept(gender: Gender, id: Long?): List<Rabbit> {
-        if (id == null) {
-            return rabbitDao.getAllWithGender(gender.name)
-        }
+    fun getAllWithGenderExcept(gender: Gender, id: List<Long>): List<Rabbit> {
         return rabbitDao.getAllWithGenderExcept(gender.name, id)
     }
 
     fun save(rabbit: Rabbit): Long {
         Log.d("DATABASE", "Rabbit $rabbit saved")
         return rabbitDao.insert(rabbit)
+    }
+
+    fun update(rabbit: Rabbit) {
+        Log.d("DATABASE", "Rabbit $rabbit updated")
+        return rabbitDao.update(rabbit)
     }
 
     fun getAllFromLitter(id: Long): List<Rabbit> {

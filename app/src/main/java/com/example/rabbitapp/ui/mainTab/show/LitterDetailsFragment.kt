@@ -12,7 +12,11 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
+import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.ui.mainTab.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
+import com.example.rabbitapp.ui.mainTab.add.OnSelected
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.RabbitDetails
 
@@ -83,7 +87,22 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 viewModel
             )
         }
-
+        viewModel.selectedLitter?.id?.let {
+            val rabbitList = viewModel.getAllRabbitFromLitter(it)
+            if (rabbitList.isNotEmpty()) {
+                binding.fragmentLitterDetailsIncludeLitterItems.root.visibility = View.VISIBLE
+                binding.fragmentLitterDetailsIncludeLitterItems.fragmentLitterContainsRabbitList.fragmentListRecyclerView.adapter =
+                    MainListAdapter(rabbitList, object : OnSelected {
+                        override fun onItemClick(item: HomeListItem) {
+                            if (item is Rabbit) {
+                                viewModel.selectedRabbit = item
+                                view.findNavController()
+                                    .navigate(R.id.acton_litterDetailsFragment_to_rabbitDetailsFragment)
+                            }
+                        }
+                    })
+            }
+        }
         binding.litterDetailsDeleteButton.setOnClickListener(deleteLitter())
         binding.litterDetailsEditButton.setOnClickListener(moveToEditLitter())
     }
