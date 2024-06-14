@@ -32,6 +32,9 @@ class LitterAddFragment : FragmentWithPicture() {
 
         setGalleryLauncher(binding.addLitterPicture)
 
+        val formattedDate = LocalDate.now().format(dateFormatter)
+        binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+
         if (viewModel.selectedLitter != null) {
             parentSelectService.setParents(viewModel.selectedLitter, viewModel)
             setFieldsToSelectedLitter()
@@ -49,8 +52,6 @@ class LitterAddFragment : FragmentWithPicture() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formattedDate = LocalDate.now().format(dateFormatter)
-        binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
         binding.addLitterDate.setOnClickListener {
             showDatePickerDialog()

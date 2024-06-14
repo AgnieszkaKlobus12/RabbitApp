@@ -35,6 +35,9 @@ class RabbitAddFragment : FragmentWithPicture() {
 
         setGalleryLauncher(binding.addRabbitPicture)
 
+        val formattedDate = LocalDate.now().format(dateFormatter)
+        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+
         if (viewModel.selectedRabbit != null) {
             parentSelectService.setParents(viewModel.selectedRabbit, viewModel)
             setFieldsToSelectedRabbit()
@@ -56,8 +59,6 @@ class RabbitAddFragment : FragmentWithPicture() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formattedDate = LocalDate.now().format(dateFormatter)
-        binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
         parentSelectService.displaySelectParentFragment(
             R.id.action_addRabbitFragment_to_pickMotherListFragment,
