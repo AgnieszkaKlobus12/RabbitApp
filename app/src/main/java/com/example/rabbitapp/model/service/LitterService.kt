@@ -13,8 +13,8 @@ class LitterService(private val litterDao: LitterDao) {
         litterDao.deleteWithId(it);
     }
 
-    fun save(litter: Litter) {
-        litterDao.insert(litter)
+    fun save(litter: Litter): Long {
+        return litterDao.insert(litter)
     }
 
     fun getLitterFromId(id: Long): Litter? {

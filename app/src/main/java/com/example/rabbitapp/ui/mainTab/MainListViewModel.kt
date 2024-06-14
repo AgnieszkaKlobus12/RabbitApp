@@ -38,8 +38,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         rabbitRepository.update(rabbit)
     }
 
-    fun save(litter: Litter) {
-        litterRepository.save(litter)
+    fun save(litter: Litter): Long {
+        return litterRepository.save(litter)
     }
 
     fun getAll(): List<HomeListItem> {

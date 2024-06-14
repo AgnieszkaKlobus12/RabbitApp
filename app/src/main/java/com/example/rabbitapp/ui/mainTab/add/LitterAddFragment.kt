@@ -106,25 +106,12 @@ class LitterAddFragment : FragmentWithPicture() {
             if (!validateFields()) {
                 return@OnClickListener
             }
+            var rabbitList = emptyList<Rabbit>()
             val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
-            viewModel.selectedLitter?.id?.let {//todo fix litter and rabbit disconnecting and data saving
-                viewModel.getAllRabbitFromLitter(it)
-                    .forEach { rabbit: Rabbit ->
-                        run {
-                            rabbit.birth =
-                                LocalDate.parse(
-                                    binding.addLitterDate.text.toString(),
-                                    dateFormatter
-                                )
-                                    .toEpochDay()
-                            rabbit.fkFather = viewModel.selectedFather?.id
-                            rabbit.fkMother = viewModel.selectedMother?.id
-                            rabbit.fkLitter = viewModel.selectedLitter!!.id
-                            viewModel.update(rabbit)
-                        }
-                    }
+            viewModel.selectedLitter?.id?.let {
+                rabbitList = viewModel.getAllRabbitFromLitter(it)
             }
-            viewModel.save(
+            val id = viewModel.save(
                 Litter(
                     viewModel.selectedLitter?.id ?: 0,
                     binding.addLitterName.text.toString(),
@@ -135,6 +122,20 @@ class LitterAddFragment : FragmentWithPicture() {
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )
+            rabbitList.forEach { rabbit: Rabbit ->
+                run {
+                    rabbit.birth =
+                        LocalDate.parse(
+                            binding.addLitterDate.text.toString(),
+                            dateFormatter
+                        )
+                            .toEpochDay()
+                    rabbit.fkFather = viewModel.selectedFather?.id
+                    rabbit.fkMother = viewModel.selectedMother?.id
+                    rabbit.fkLitter = id
+                    viewModel.update(rabbit)
+                }
+            }
             view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
         }
     }
