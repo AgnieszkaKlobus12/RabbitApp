@@ -14,9 +14,9 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
-import com.example.rabbitapp.ui.mainTab.add.OnSelected
+import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
+import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.RabbitDetails
 
@@ -93,7 +93,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
             if (rabbitList.isNotEmpty()) {
                 binding.fragmentLitterDetailsIncludeLitterItems.root.visibility = View.VISIBLE
                 binding.fragmentLitterDetailsIncludeLitterItems.fragmentLitterContainsRabbitList.fragmentListRecyclerView.adapter =
-                    MainListAdapter(rabbitList, object : OnSelected {
+                    MainListAdapter(rabbitList, object : OnSelectedItem {
                         override fun onItemClick(item: HomeListItem) {
                             if (item is Rabbit) {
                                 viewModel.selectedRabbit = item

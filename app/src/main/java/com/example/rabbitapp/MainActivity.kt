@@ -2,7 +2,6 @@ package com.example.rabbitapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_vaccine_list, R.id.navigation_notifications
             ), binding.mainActivityDrawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

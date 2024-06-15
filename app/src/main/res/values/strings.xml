@@ -48,4 +48,6 @@
     <string name="vaccine">Szczepionka:</string>
     <string name="vaccination_date">Data szczepienia:</string>
     <string name="dose">Dawka:</string>
+    <string name="vaccine_details">Szczegóły szczepionki</string>
+    <string name="vaccines">Szczepionki</string>
 </resources>

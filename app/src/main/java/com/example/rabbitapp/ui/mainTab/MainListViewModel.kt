@@ -7,8 +7,10 @@ import com.example.rabbitapp.model.AppDatabase
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.model.service.LitterService
 import com.example.rabbitapp.model.service.RabbitService
+import com.example.rabbitapp.model.service.VaccineService
 import com.example.rabbitapp.utils.Gender
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -17,6 +19,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     private val rabbitRepository: RabbitService
     private val litterRepository: LitterService
+    private val vaccinesRepository: VaccineService
 
     var selectedMother: Rabbit? = null
     var selectedFather: Rabbit? = null
@@ -28,6 +31,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         val database = AppDatabase.getInstance(application)
         rabbitRepository = RabbitService(database.rabbitRepository())
         litterRepository = LitterService(database.litterRepository())
+        vaccinesRepository = VaccineService(database.vaccineRepository())
     }
 
     fun save(rabbit: Rabbit): Long {
@@ -93,6 +97,16 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedFather = null
         selectedMother = null
         selectedLitter = null
+    }
+
+    //vaccines
+
+    fun getAllVaccines(): List<Vaccine> {
+        return vaccinesRepository.getAll()
+    }
+
+    fun getVaccine(id: Long): Vaccine? {
+        return vaccinesRepository.getById(id)
     }
 }
 

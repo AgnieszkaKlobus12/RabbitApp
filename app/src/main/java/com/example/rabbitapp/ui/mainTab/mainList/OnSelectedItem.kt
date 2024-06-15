@@ -1,8 +1,8 @@
-package com.example.rabbitapp.ui.mainTab.add
+package com.example.rabbitapp.ui.mainTab.mainList
 
 import com.example.rabbitapp.model.entities.HomeListItem
 
-interface OnSelected {
+interface OnSelectedItem {
 
     fun onItemClick(item: HomeListItem)
 

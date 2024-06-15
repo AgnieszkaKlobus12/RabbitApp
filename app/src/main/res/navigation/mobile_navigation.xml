@@ -25,16 +25,31 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.rabbitapp.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_vaccine_list"
+        android:name="com.example.rabbitapp.ui.vaccines.VaccineListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_vaccine_list">
+        <action
+            android:id="@+id/action_navigation_vaccine_list_to_vaccineDetailsFragment"
+            app:destination="@id/fragment_vaccine_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.rabbitapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/fragment_vaccine_details"
+        android:name="com.example.rabbitapp.ui.vaccines.VaccineFragment"
+        android:label="@string/vaccine_details"
+        tools:layout="@layout/fragment_vaccine">
+        <argument
+            android:name="vaccine_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/addRabbitFragment"

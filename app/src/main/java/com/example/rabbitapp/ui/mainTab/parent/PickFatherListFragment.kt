@@ -10,9 +10,9 @@ import androidx.fragment.app.activityViewModels
 import com.example.rabbitapp.databinding.ContentHomeListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.ui.mainTab.add.OnSelected
+import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
+import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.utils.Gender
 
 class PickFatherListFragment : Fragment() {
@@ -47,7 +47,7 @@ class PickFatherListFragment : Fragment() {
                 viewModel.getAllRabbitsExcept(
                     Gender.MALE,
                     idList
-                ), object : OnSelected {
+                ), object : OnSelectedItem {
                     override fun onItemClick(item: HomeListItem) {
                         viewModel.selectedFather = item as Rabbit
                         Log.d("PickFatherListFragment", "New father selected: $item")

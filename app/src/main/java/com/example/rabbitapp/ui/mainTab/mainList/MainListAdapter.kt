@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainTab
+package com.example.rabbitapp.ui.mainTab.mainList
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.add.OnSelected
 import com.example.rabbitapp.utils.RabbitDetails
 
 class MainListAdapter(
     private val values: List<HomeListItem>,
-    private val onSelected: OnSelected
+    private val onSelectedItem: OnSelectedItem
 ) :
     RecyclerView.Adapter<MainListAdapter.HomeListItemView>() {
 
@@ -30,7 +29,7 @@ class MainListAdapter(
         setPictureToSelectedOrDefault(item, holder.image)
         holder.name.text = item.name
         holder.age.text = RabbitDetails.getAge(item.birth)
-        holder.itemView.setOnClickListener { onSelected.onItemClick(item) }
+        holder.itemView.setOnClickListener { onSelectedItem.onItemClick(item) }
     }
 
     override fun getItemCount(): Int = values.size

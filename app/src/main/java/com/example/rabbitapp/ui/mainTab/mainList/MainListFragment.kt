@@ -12,9 +12,7 @@ import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.ui.mainTab.add.OnSelected
 
 class MainListFragment : Fragment() {
 
@@ -36,7 +34,7 @@ class MainListFragment : Fragment() {
         mainListViewModel.clearSelected()
 
         binding.fragmentHomeListInclude.fragmentListRecyclerView.adapter =
-            MainListAdapter(mainListViewModel.getAll(), object : OnSelected {
+            MainListAdapter(mainListViewModel.getAll(), object : OnSelectedItem {
                 override fun onItemClick(item: HomeListItem) {
                     if (item is Rabbit) {
                         mainListViewModel.selectedRabbit = item
