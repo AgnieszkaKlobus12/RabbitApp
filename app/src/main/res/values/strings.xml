@@ -45,4 +45,7 @@
     <string name="cannot_add_more_rabbits_to_litter">Nie można dodać wiecej królików niż wynosi rozmiar miotu</string>
     <string name="rabbits_belonging_to_litter">Króliki należące do miotu:</string>
     <string name="litter_edit_warn_message">Uwaga! Zmiana daty urodzenia lub rodziców miotu spowoduje taką samą zmianę we wszystkich królikach należących do tego miotu!</string>
+    <string name="vaccine">Szczepionka:</string>
+    <string name="vaccination_date">Data szczepienia:</string>
+    <string name="dose">Dawka:</string>
 </resources>
