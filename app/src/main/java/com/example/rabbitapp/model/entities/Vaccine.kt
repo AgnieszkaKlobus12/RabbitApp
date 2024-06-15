@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class Vaccine(
     @PrimaryKey val id: Long,
-    val disease: String,
-    val vaccineName: String
+    val vaccineName: String,
+    val vaccineDescription: String
 )
