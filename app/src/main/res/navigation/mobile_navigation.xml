@@ -44,6 +44,9 @@
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
         <action
+            android:id="@+id/action_addRabbitFragment_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment" />
+        <action
             android:id="@+id/action_addRabbitFragment_to_pickFatherListFragment"
             app:destination="@id/pickFatherListFragment" />
         <action
@@ -58,6 +61,9 @@
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_addLitterFragment_to_litterDetailsFragment"
+            app:destination="@id/litterDetailsFragment" />
         <action
             android:id="@+id/action_addLitterFragment_to_pickMotherListFragment"
             app:destination="@id/pickMotherListFragment" />
@@ -79,6 +85,9 @@
         android:label="@string/rabbit_details"
         tools:layout="@layout/fragment_rabbit_details" >
         <action
+            android:id="@+id/action_rabbitDetailsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
             android:id="@+id/action_rabbitDetailsFragment_to_addRabbitFragment"
             app:destination="@id/addRabbitFragment" />
     </fragment>
@@ -87,6 +96,9 @@
         android:name="com.example.rabbitapp.ui.mainTab.show.LitterDetailsFragment"
         android:label="@string/litter_details"
         tools:layout="@layout/fragment_litter_details" >
+        <action
+            android:id="@+id/action_litterDetailsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_addLitterFragment"
             app:destination="@id/addLitterFragment" />

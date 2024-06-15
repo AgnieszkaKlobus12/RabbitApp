@@ -137,7 +137,9 @@ class LitterAddFragment : FragmentWithPicture() {
                     viewModel.update(rabbit)
                 }
             }
-            view.findNavController().navigate(R.id.action_addLitterFragment_to_navigation_home)
+            viewModel.selectedLitter = id.let { viewModel.getLitterFromId(it) }
+            view.findNavController()
+                .navigate(R.id.action_addLitterFragment_to_litterDetailsFragment)
         }
     }
 

@@ -122,7 +122,7 @@ class RabbitAddFragment : FragmentWithPicture() {
                 return@OnClickListener
             }
             val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
-            viewModel.save(
+            val rabbitId: Long = viewModel.save(
                 Rabbit(
                     viewModel.selectedRabbit?.id ?: 0,
                     binding.addRabbitName.text.toString(),
@@ -135,7 +135,9 @@ class RabbitAddFragment : FragmentWithPicture() {
                     viewModel.selectedLitter?.id
                 )
             )
-            view.findNavController().navigate(R.id.action_addRabbitFragment_to_navigation_home)
+            viewModel.selectedRabbit = rabbitId.let { viewModel.getRabbitFromId(it) }
+            view.findNavController()
+                .navigate(R.id.action_addRabbitFragment_to_rabbitDetailsFragment)
         }
     }
 

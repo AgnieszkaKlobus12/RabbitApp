@@ -90,7 +90,8 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                     setPositiveButton(R.string.ok) { dialog, _ ->
                         dialog.dismiss()
                         viewModel.deleteCurrentlySelectedRabbit()
-                        activity?.supportFragmentManager?.popBackStack()
+                        view?.findNavController()
+                            ?.navigate(R.id.action_rabbitDetailsFragment_to_navigation_home)
                     }
                     setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()

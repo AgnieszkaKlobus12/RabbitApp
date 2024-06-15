@@ -51,6 +51,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 }
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -122,7 +123,8 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     setPositiveButton(R.string.ok) { dialog, _ ->
                         dialog.dismiss()
                         viewModel.deleteCurrentlySelectedLitter()
-                        activity?.supportFragmentManager?.popBackStack()
+                        view?.findNavController()
+                            ?.navigate(R.id.action_litterDetailsFragment_to_navigation_home)
                     }
                     setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()

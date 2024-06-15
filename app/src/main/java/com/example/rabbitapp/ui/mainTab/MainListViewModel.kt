@@ -30,8 +30,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         litterRepository = LitterService(database.litterRepository())
     }
 
-    fun save(rabbit: Rabbit) {
-        rabbitRepository.save(rabbit)
+    fun save(rabbit: Rabbit): Long {
+        return rabbitRepository.save(rabbit)
     }
 
     fun update(rabbit: Rabbit) {
