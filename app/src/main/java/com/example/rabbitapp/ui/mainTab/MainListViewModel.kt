@@ -92,6 +92,11 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
     }
 
+    fun deleteVaccine(id: Long?) {
+        Log.d("ViewModel", "Vaccine $selectedRabbit deleted.")
+        id?.let { vaccinesRepository.deleteWithId(it) }
+    }
+
     fun getAllRabbitsExcept(gender: Gender, ids: List<Long>): List<HomeListItem> {
         return rabbitRepository.getAllWithGenderExcept(gender, ids)
     }
@@ -103,8 +108,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         selectedLitter = null
     }
 
-    //vaccines
-
     fun getAllVaccines(): List<Vaccine> {
         return vaccinesRepository.getAll()
     }
@@ -112,5 +115,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     fun getVaccine(id: Long): Vaccine? {
         return vaccinesRepository.getById(id)
     }
+
 }
 

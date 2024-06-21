@@ -16,4 +16,8 @@ class VaccineService(private val vaccineDao: VaccineDao) {
     fun save(vaccine: Vaccine): Long {
         return vaccineDao.insert(vaccine)
     }
+
+    fun deleteWithId(id: Long) {
+        vaccineDao.delete(id)
+    }
 }

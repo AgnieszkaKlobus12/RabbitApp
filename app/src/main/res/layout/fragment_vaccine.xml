@@ -24,5 +24,26 @@
         android:layout_margin="@dimen/default_margin"
         android:text="@string/unknown" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/vaccine_details_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/vaccine_details_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/edit" />
+    </LinearLayout>
+
 
 </LinearLayout>

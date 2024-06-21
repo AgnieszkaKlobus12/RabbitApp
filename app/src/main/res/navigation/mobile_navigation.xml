@@ -42,16 +42,14 @@
         android:name="com.example.rabbitapp.ui.vaccines.VaccineEditFragment"
         android:label="@string/edit_vaccine"
         tools:layout="@layout/fragment_vaccine_edit">
+        <argument
+            android:name="vaccine_id"
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_navigation_vaccine_edit_to_vaccine_list"
             app:destination="@id/navigation_vaccine_list" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.rabbitapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/fragment_vaccine_details"
@@ -62,7 +60,19 @@
             android:name="vaccine_id"
             android:defaultValue="0L"
             app:argType="long" />
+        <action
+            android:id="@+id/action_navigation_vaccine_details_to_vaccineEditFragment"
+            app:destination="@id/fragment_vaccine_edit" />
+        <action
+            android:id="@+id/action_navigation_vaccine_details_to_vaccineListFragment"
+            app:destination="@id/navigation_vaccine_list" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.rabbitapp.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/addRabbitFragment"
