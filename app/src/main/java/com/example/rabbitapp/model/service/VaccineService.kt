@@ -12,4 +12,8 @@ class VaccineService(private val vaccineDao: VaccineDao) {
     fun getById(id: Long): Vaccine? {
         return vaccineDao.getVaccineFromId(id)
     }
+
+    fun save(vaccine: Vaccine): Long {
+        return vaccineDao.insert(vaccine)
+    }
 }

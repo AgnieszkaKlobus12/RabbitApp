@@ -51,7 +51,7 @@
         android:contentDescription="@string/add_rabbit"
         android:src="@drawable/rabbit"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/add_new_main_button"
+        app:layout_constraintBottom_toTopOf="@id/add_new_vaccine_button"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

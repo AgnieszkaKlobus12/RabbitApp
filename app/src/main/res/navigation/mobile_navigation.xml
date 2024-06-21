@@ -27,11 +27,24 @@
     <fragment
         android:id="@+id/navigation_vaccine_list"
         android:name="com.example.rabbitapp.ui.vaccines.VaccineListFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/vaccines"
         tools:layout="@layout/fragment_vaccine_list">
         <action
             android:id="@+id/action_navigation_vaccine_list_to_vaccineDetailsFragment"
             app:destination="@id/fragment_vaccine_details" />
+        <action
+            android:id="@+id/action_navigation_vaccine_list_to_vaccineEditFragment"
+            app:destination="@id/fragment_vaccine_edit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_vaccine_edit"
+        android:name="com.example.rabbitapp.ui.vaccines.VaccineEditFragment"
+        android:label="@string/edit_vaccine"
+        tools:layout="@layout/fragment_vaccine_edit">
+        <action
+            android:id="@+id/action_navigation_vaccine_edit_to_vaccine_list"
+            app:destination="@id/navigation_vaccine_list" />
     </fragment>
 
     <fragment

@@ -46,6 +46,10 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return litterRepository.save(litter)
     }
 
+    fun save(vaccine: Vaccine): Long {
+        return vaccinesRepository.save(vaccine)
+    }
+
     fun getAll(): List<HomeListItem> {
         val listRabbit = getAllRabbitsExcept()
         val listLitter = litterRepository.getAll()

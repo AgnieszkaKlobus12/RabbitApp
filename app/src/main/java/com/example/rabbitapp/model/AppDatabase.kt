@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class],
-    version = 12
+    version = 13
 )
 abstract class AppDatabase : RoomDatabase() {
 

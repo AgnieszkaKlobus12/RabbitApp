@@ -29,7 +29,7 @@ class VaccineListAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class VaccineListItemView(iv: View) : RecyclerView.ViewHolder(iv) {
-        val name: TextView = iv.findViewById(R.id.home_list_item_name)
+        val name: TextView = iv.findViewById(R.id.vaccine_list_item_name)
     }
 
 }

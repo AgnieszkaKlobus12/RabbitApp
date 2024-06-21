@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccineListBinding
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
@@ -41,6 +42,11 @@ class VaccineListFragment : Fragment() {
                         )
                 }
             })
+
+        binding.addNewVaccineButton.setOnClickListener {
+            view.findNavController()
+                .navigate(R.id.action_navigation_vaccine_list_to_vaccineEditFragment)
+        }
     }
 
     override fun onDestroyView() {

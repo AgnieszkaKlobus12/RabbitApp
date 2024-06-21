@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Vaccine(
-    @PrimaryKey val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val name: String,
     val description: String
 )

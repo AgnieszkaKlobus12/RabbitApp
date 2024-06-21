@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.vaccines.VaccineFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_vaccine_edit_vaccine_name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/fragment_vaccine_edit_vaccine_description_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fragment_vaccine_edit_vaccine_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/vaccine_name"
+            android:textSize="@dimen/bigger_text"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/fragment_vaccine_edit_vaccine_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/unknown"
+            android:textSize="@dimen/bigger_text"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fragment_vaccine_edit_vaccine_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/vaccine_description"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/fragment_vaccine_edit_vaccine_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_vaccine_edit_vaccine_name_layout" />
+
+    <EditText
+        android:id="@+id/fragment_vaccine_edit_vaccine_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin"
+        android:gravity="center|top"
+        android:inputType="textMultiLine"
+        android:text="@string/your_description"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintBottom_toTopOf="@id/add_vaccine_save_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_vaccine_edit_vaccine_description_label" />
+
+    <Button
+        android:id="@+id/add_vaccine_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_vaccine_edit_vaccine_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

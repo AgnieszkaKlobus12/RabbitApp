@@ -50,4 +50,8 @@
     <string name="dose">Dawka:</string>
     <string name="vaccine_details">Szczegóły szczepionki</string>
     <string name="vaccines">Szczepionki</string>
+    <string name="vaccine_name">Nazwa szczepionki: </string>
+    <string name="vaccine_description">Opis szczepionki. W jakim wieku powinna być podana, na co działa, jakie jest dawkowanie?</string>
+    <string name="your_description">Twój opis (kliknij żeby zmienić)</string>
+    <string name="edit_vaccine">Edytuj szczepionkę</string>
 </resources>
