@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_rabbit_list">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_rabbit_list"
         android:name="com.example.rabbitapp.ui.mainTab.mainList.MainListFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_main_list">
@@ -29,12 +29,34 @@
         android:name="com.example.rabbitapp.ui.vaccines.VaccineListFragment"
         android:label="@string/vaccines"
         tools:layout="@layout/fragment_vaccine_list">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_navigation_vaccine_list_to_vaccineDetailsFragment"
             app:destination="@id/fragment_vaccine_details" />
         <action
             android:id="@+id/action_navigation_vaccine_list_to_vaccineEditFragment"
             app:destination="@id/fragment_vaccine_edit" />
+        <action
+            android:id="@+id/action_navigation_vaccine_list_to_vaccinateFragment"
+            app:destination="@id/fragment_vaccinate" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_vaccinate"
+        android:name="com.example.rabbitapp.ui.vaccines.VaccinateFragment"
+        android:label="@string/vaccinate"
+        tools:layout="@layout/fragment_vaccinate">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="vaccine_id"
+            android:defaultValue="0L"
+            app:argType="long" />
     </fragment>
 
     <fragment
@@ -81,11 +103,11 @@
         tools:layout="@layout/fragment_add_rabbit">
         <action
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_rabbit_list" />
         <action
             android:id="@+id/action_addRabbitFragment_to_rabbitDetailsFragment"
             app:destination="@id/rabbitDetailsFragment"
-            app:popUpTo="@id/navigation_home"
+            app:popUpTo="@id/navigation_rabbit_list"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addRabbitFragment_to_pickFatherListFragment"
@@ -101,11 +123,11 @@
         tools:layout="@layout/fragment_add_litter">
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_rabbit_list" />
         <action
             android:id="@+id/action_addLitterFragment_to_litterDetailsFragment"
             app:destination="@id/litterDetailsFragment"
-            app:popUpTo="@id/navigation_home"
+            app:popUpTo="@id/navigation_rabbit_list"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addLitterFragment_to_pickMotherListFragment"
@@ -129,10 +151,13 @@
         tools:layout="@layout/fragment_rabbit_details">
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_rabbit_list" />
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_addRabbitFragment"
             app:destination="@id/addRabbitFragment" />
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_vaccineListFragment"
+            app:destination="@id/navigation_vaccine_list" />
     </fragment>
     <fragment
         android:id="@+id/litterDetailsFragment"
@@ -141,7 +166,7 @@
         tools:layout="@layout/fragment_litter_details">
         <action
             android:id="@+id/action_litterDetailsFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_rabbit_list" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_addLitterFragment"
             app:destination="@id/addLitterFragment" />

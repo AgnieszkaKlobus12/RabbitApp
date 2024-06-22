@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -20,6 +23,31 @@ class RabbitDetailsFragment : FragmentWithPicture() {
     private var _binding: FragmentRabbitDetailsBinding? = null
     private val binding get() = _binding!!
     private val parentSelectService: ParentSelectService = ParentSelectService()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.rabbit_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.navigation_vaccinate_rabbit -> {
+                view?.findNavController()
+                    ?.navigate(
+                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineListFragment(
+                            viewModel.selectedRabbit!!.id
+                        )
+                    )
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

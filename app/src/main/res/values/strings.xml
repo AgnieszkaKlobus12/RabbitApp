@@ -55,4 +55,6 @@
     <string name="vaccine_description">Opis szczepionki. W jakim wieku powinna być podana, na co działa, jakie jest dawkowanie?</string>
     <string name="your_description">Twój opis (kliknij żeby zmienić)</string>
     <string name="edit_vaccine">Edytuj szczepionkę</string>
+    <string name="add_vaccination">Dodaj szczepienie</string>
+    <string name="vaccinate">Zaszczep</string>
 </resources>

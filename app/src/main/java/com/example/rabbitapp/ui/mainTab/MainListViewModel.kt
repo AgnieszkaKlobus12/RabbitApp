@@ -82,6 +82,11 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return litter
     }
 
+    fun getItem(id: Long): HomeListItem? {
+        val rabbit = rabbitRepository.getRabbitFromId(id)
+        return rabbit ?: litterRepository.getLitterFromId(id)
+    }
+
     fun deleteCurrentlySelectedRabbit() {
         Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
         selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }

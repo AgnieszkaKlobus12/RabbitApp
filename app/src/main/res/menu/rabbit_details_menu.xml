@@ -2,11 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_add_rabbit"
-        android:title="@string/add_rabbit_to_litter" />
-
-    <item
-        android:id="@+id/navigation_vaccinate_litter"
+        android:id="@+id/navigation_vaccinate_rabbit"
         android:title="@string/add_vaccination" />
 
 </menu>
