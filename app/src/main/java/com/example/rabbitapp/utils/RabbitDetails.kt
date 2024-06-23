@@ -25,7 +25,7 @@ class RabbitDetails {
             }
         }
 
-        fun getBirthDateString(birthdate: Long): String? {
+        fun getDateString(birthdate: Long): String? {
             return LocalDate.ofEpochDay(birthdate).format(formatter)
         }
 

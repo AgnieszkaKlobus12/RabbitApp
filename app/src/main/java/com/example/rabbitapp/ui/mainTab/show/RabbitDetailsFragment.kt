@@ -12,8 +12,11 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
+import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
+import com.example.rabbitapp.ui.vaccines.OnSelectedVaccination
+import com.example.rabbitapp.ui.vaccines.VaccinationsListAdapter
 import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.RabbitDetails
 
@@ -45,6 +48,16 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                 true
             }
 
+            R.id.navigation_edit_rabbit -> {
+                moveToEditRabbit()
+                true
+            }
+
+            R.id.navigation_delete_rabbit -> {
+                deleteRabbit()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -61,6 +74,27 @@ class RabbitDetailsFragment : FragmentWithPicture() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.selectedRabbit?.id?.let {
+            val vaccinations = viewModel.getAllVaccinationsForRabbit(it)
+            if (vaccinations.isNotEmpty()) {
+                binding.fragmentRabbitDetailsIncludeVaccinations.root.visibility = View.VISIBLE
+                binding.fragmentRabbitDetailsIncludeVaccinations.fragmentVaccinationsListRecyclerView.adapter =
+                    VaccinationsListAdapter(
+                        viewModel,
+                        viewModel.getAllVaccinationsForRabbit(viewModel.selectedRabbit!!.id),
+                        object : OnSelectedVaccination {
+                            override fun onItemClick(item: Vaccinated) {
+                                view.findNavController()
+                                    .navigate(
+                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineFragment(
+                                            item.fkVaccine
+                                        )
+                                    )
+                            }
+                        })
+            }
+        }
+
         setPictureToSelectedOrDefault(
             binding.rabbitDetailsImage,
             viewModel.selectedRabbit,
@@ -73,7 +107,7 @@ class RabbitDetailsFragment : FragmentWithPicture() {
         binding.rabbitDetailsSex.text =
             getGenderTranslated(viewModel.selectedRabbit?.sex)
         binding.rabbitDetailsBirth.text =
-            viewModel.selectedRabbit?.let { RabbitDetails.getBirthDateString(it.birth) }
+            viewModel.selectedRabbit?.let { RabbitDetails.getDateString(it.birth) }
 
         viewModel.selectedRabbit?.let {
             parentSelectService.displayParentOrUnknown(
@@ -98,9 +132,6 @@ class RabbitDetailsFragment : FragmentWithPicture() {
             )
             Log.d("RabbitDetailsFragment", "Litter added ${viewModel.selectedLitter}")
         }
-
-        binding.rabbitDetailsDeleteButton.setOnClickListener(deleteRabbit())
-        binding.rabbitDetailsEditButton.setOnClickListener(moveToEditRabbit())
     }
 
     private fun moveToEditRabbit(): View.OnClickListener {

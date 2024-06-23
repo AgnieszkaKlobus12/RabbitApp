@@ -12,13 +12,13 @@ import com.example.rabbitapp.model.entities.Vaccine
         ForeignKey(
             entity = Rabbit::class,
             parentColumns = ["id"],
-            childColumns = ["fkItem"],
+            childColumns = ["fkRabbit"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = Litter::class,
             parentColumns = ["id"],
-            childColumns = ["fkItem"],
+            childColumns = ["fkLitter"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
@@ -29,9 +29,10 @@ import com.example.rabbitapp.model.entities.Vaccine
         )]
 )
 data class Vaccinated(
-    @PrimaryKey val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val date: Long,
     val dose: String,
-    var fkItem: Long,
+    var fkRabbit: Long?,
+    var fkLitter: Long?,
     var fkVaccine: Long
 )

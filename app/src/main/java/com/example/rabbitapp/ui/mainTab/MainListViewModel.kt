@@ -8,6 +8,7 @@ import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.model.service.LitterService
 import com.example.rabbitapp.model.service.RabbitService
 import com.example.rabbitapp.model.service.VaccineService
@@ -31,7 +32,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         val database = AppDatabase.getInstance(application)
         rabbitRepository = RabbitService(database.rabbitRepository())
         litterRepository = LitterService(database.litterRepository())
-        vaccinesRepository = VaccineService(database.vaccineRepository())
+        vaccinesRepository =
+            VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
     }
 
     fun save(rabbit: Rabbit): Long {
@@ -48,6 +50,28 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun save(vaccine: Vaccine): Long {
         return vaccinesRepository.save(vaccine)
+    }
+
+    fun save(vaccinated: Vaccinated): Long {
+        val vaccinatedId = vaccinesRepository.save(vaccinated)
+        if (vaccinated.fkLitter != null) {
+            val litter = getLitterFromId(vaccinated.fkLitter!!)
+            if (litter != null) {
+                getAllRabbitFromLitter(litter.id).forEach {
+                    vaccinesRepository.save(
+                        Vaccinated(
+                            0L,
+                            vaccinated.date,
+                            vaccinated.dose,
+                            it.id,
+                            null,
+                            vaccinated.fkVaccine
+                        )
+                    )
+                }
+            }
+        }
+        return vaccinatedId;
     }
 
     fun getAll(): List<HomeListItem> {
@@ -82,11 +106,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return litter
     }
 
-    fun getItem(id: Long): HomeListItem? {
-        val rabbit = rabbitRepository.getRabbitFromId(id)
-        return rabbit ?: litterRepository.getLitterFromId(id)
-    }
-
     fun deleteCurrentlySelectedRabbit() {
         Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
         selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }
@@ -119,6 +138,14 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun getVaccine(id: Long): Vaccine? {
         return vaccinesRepository.getById(id)
+    }
+
+    fun getAllVaccinationsForRabbit(id: Long): List<Vaccinated> {
+        return vaccinesRepository.getAllVaccinationsForRabbit(id)
+    }
+
+    fun getAllVaccinationsForLitter(id: Long): List<Vaccinated> {
+        return vaccinesRepository.getAllVaccinationsForLitter(id)
     }
 
 }

@@ -14,10 +14,13 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
+import com.example.rabbitapp.ui.vaccines.OnSelectedVaccination
+import com.example.rabbitapp.ui.vaccines.VaccinationsListAdapter
 import com.example.rabbitapp.utils.RabbitDetails
 
 
@@ -51,6 +54,26 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 }
                 true
             }
+            R.id.navigation_vaccinate_litter -> {
+                view?.findNavController()
+                    ?.navigate(
+                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToVaccineListFragment(
+                            0L,
+                            viewModel.selectedLitter!!.id
+                        )
+                    )
+                true
+            }
+
+            R.id.navigation_edit_litter -> {
+                moveToEditLitter()
+                true
+            }
+
+            R.id.navigation_delete_litter -> {
+                deleteLitter()
+                true
+            }
 
             else -> super.onOptionsItemSelected(item)
         }
@@ -79,7 +102,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
         binding.litterDetailsName.text = viewModel.selectedLitter?.name
         binding.litterDetailsAmount.text = viewModel.selectedLitter?.size.toString()
         binding.litterDetailsBirth.text =
-            viewModel.selectedLitter?.let { RabbitDetails.getBirthDateString(it.birth) }
+            viewModel.selectedLitter?.let { RabbitDetails.getDateString(it.birth) }
 
         viewModel.selectedLitter?.let {
             parentSelectService.displayParentOrUnknown(
@@ -104,8 +127,27 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     })
             }
         }
-        binding.litterDetailsDeleteButton.setOnClickListener(deleteLitter())
-        binding.litterDetailsEditButton.setOnClickListener(moveToEditLitter())
+
+        viewModel.selectedLitter?.id?.let {
+            val vaccinations = viewModel.getAllVaccinationsForLitter(it)
+            if (vaccinations.isNotEmpty()) {
+                binding.fragmentLitterDetailsIncludeVaccinations.root.visibility = View.VISIBLE
+                binding.fragmentLitterDetailsIncludeVaccinations.fragmentVaccinationsListRecyclerView.adapter =
+                    VaccinationsListAdapter(
+                        viewModel,
+                        viewModel.getAllVaccinationsForLitter(viewModel.selectedLitter!!.id),
+                        object : OnSelectedVaccination {
+                            override fun onItemClick(item: Vaccinated) {
+                                view.findNavController()
+                                    .navigate(
+                                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToVaccineFragment(
+                                            item.fkVaccine
+                                        )
+                                    )
+                            }
+                        })
+            }
+        }
     }
 
     private fun moveToEditLitter(): View.OnClickListener {

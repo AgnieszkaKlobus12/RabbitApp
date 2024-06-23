@@ -9,4 +9,12 @@
         android:id="@+id/navigation_vaccinate_litter"
         android:title="@string/add_vaccination" />
 
+    <item
+        android:id="@+id/navigation_edit_litter"
+        android:title="@string/edit" />
+
+    <item
+        android:id="@+id/navigation_delete_litter"
+        android:title="@string/delete" />
+
 </menu>

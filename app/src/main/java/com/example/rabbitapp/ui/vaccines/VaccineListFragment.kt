@@ -37,7 +37,7 @@ class VaccineListFragment : Fragment() {
         binding.fragmentListRecyclerView.adapter =
             VaccineListAdapter(viewModel.getAllVaccines(), object : OnSelectedVaccine {
                 override fun onItemClick(item: Vaccine) {
-                    if (args.rabbitId == 0L) {
+                    if (args.rabbitId == 0L && args.litterId == 0L) {
                         view.findNavController()
                             .navigate(
                                 VaccineListFragmentDirections.actionNavigationVaccineListToVaccineDetailsFragment(
@@ -48,8 +48,9 @@ class VaccineListFragment : Fragment() {
                         view.findNavController()
                             .navigate(
                                 VaccineListFragmentDirections.actionNavigationVaccineListToVaccinateFragment(
-                                    item.id,
-                                    args.rabbitId
+                                    args.rabbitId,
+                                    args.litterId,
+                                    item.id
                                 )
                             )
                     }

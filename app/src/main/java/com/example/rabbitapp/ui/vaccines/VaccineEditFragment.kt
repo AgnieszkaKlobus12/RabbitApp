@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccineEditBinding
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
@@ -48,8 +47,7 @@ class VaccineEditFragment : Fragment() {
                     binding.fragmentVaccineEditVaccineDescription.text.toString()
                 )
             )
-            view.findNavController()
-                .navigate(R.id.action_navigation_vaccine_edit_to_vaccine_list)
+            view.findNavController().popBackStack()
         }
     }
 

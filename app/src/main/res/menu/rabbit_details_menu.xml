@@ -5,4 +5,12 @@
         android:id="@+id/navigation_vaccinate_rabbit"
         android:title="@string/add_vaccination" />
 
+    <item
+        android:id="@+id/navigation_edit_rabbit"
+        android:title="@string/edit" />
+
+    <item
+        android:id="@+id/navigation_delete_rabbit"
+        android:title="@string/delete" />
+
 </menu>

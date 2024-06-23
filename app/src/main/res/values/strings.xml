@@ -57,4 +57,5 @@
     <string name="edit_vaccine">Edytuj szczepionkę</string>
     <string name="add_vaccination">Dodaj szczepienie</string>
     <string name="vaccinate">Zaszczep</string>
+    <string name="vaccinations_list">Lista podanych szczepionek</string>
 </resources>

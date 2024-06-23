@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/big_margin"
+    android:layout_marginTop="@dimen/small_margin"
+    android:background="?android:colorSecondary"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/vaccination_list_item_vaccine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"
+            android:text="@string/unknown"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/vaccination_list_item_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:text="@string/vaccination_date" />
+
+            <TextView
+                android:id="@+id/vaccination_list_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:text="@string/unknown" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/vaccination_list_item_dose_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:text="@string/dose" />
+
+            <TextView
+                android:id="@+id/vaccination_list_dose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:text="@string/unknown" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

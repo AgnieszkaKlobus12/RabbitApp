@@ -10,7 +10,7 @@
         android:id="@+id/litter_details_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/litter_details_delete_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -114,7 +114,6 @@
                         android:layout_margin="@dimen/default_margin"
                         android:text="@string/unknown" />
                 </TableRow>
-
             </TableLayout>
 
             <include
@@ -133,34 +132,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_litter_details_include_vaccinations"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_litter_details_include_parents" />
 
+            <include
+                android:id="@+id/fragment_litter_details_include_vaccinations"
+                layout="@layout/vaccines_list_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_litter_details_include_litter_items" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/litter_details_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/litter_details_edit_button"
-        app:layout_constraintTop_toBottomOf="@+id/litter_details_scroll_view" />
-
-    <Button
-        android:id="@+id/litter_details_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/edit"
-        app:layout_constraintBaseline_toBaselineOf="@id/litter_details_delete_button"
-        app:layout_constraintLeft_toRightOf="@id/litter_details_delete_button"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

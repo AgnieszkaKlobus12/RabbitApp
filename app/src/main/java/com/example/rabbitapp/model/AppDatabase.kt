@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.dao.LitterDao
 import com.example.rabbitapp.model.dao.RabbitDao
+import com.example.rabbitapp.model.dao.VaccinatedDao
 import com.example.rabbitapp.model.dao.VaccineDao
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
@@ -20,13 +21,14 @@ import kotlinx.coroutines.withContext
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class],
-    version = 13
+    version = 15
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun rabbitRepository(): RabbitDao
     abstract fun litterRepository(): LitterDao
     abstract fun vaccineRepository(): VaccineDao
+    abstract fun vaccinatedRepository(): VaccinatedDao
 
     @DelicateCoroutinesApi
     companion object {
