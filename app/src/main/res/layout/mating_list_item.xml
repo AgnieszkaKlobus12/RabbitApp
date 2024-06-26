@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/big_margin"
+    android:layout_marginTop="@dimen/small_margin"
+    android:background="?android:colorSecondary"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_name1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/unknown"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mating_list_item_and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/and"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mating_list_item_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/unknown"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_numbers_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/tiny_margin"
+            android:text="@string/unknown_numbers"
+            android:textSize="@dimen/small_text" />
+
+
+        <TextView
+            android:id="@+id/mating_list_item_numbers_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/tiny_margin"
+            android:text="@string/unknown_numbers"
+            android:textSize="@dimen/small_text" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_mating_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/tiny_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/mating_mate" />
+
+        <TextView
+            android:id="@+id/mating_list_item_mating_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/tiny_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/unknown" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_birt_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/estimated_birth_date" />
+
+        <TextView
+            android:id="@+id/mating_list_item_birth_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/unknown" />
+    </LinearLayout>
+</LinearLayout>

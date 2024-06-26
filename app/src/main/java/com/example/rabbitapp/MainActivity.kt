@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_rabbit_list,
                 R.id.navigation_vaccine_list,
-                R.id.navigation_notifications
+                R.id.navigation_matings
             ), binding.mainActivityDrawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

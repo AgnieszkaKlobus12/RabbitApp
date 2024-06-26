@@ -58,4 +58,14 @@
     <string name="add_vaccination">Dodaj szczepienie</string>
     <string name="vaccinate">Zaszczep</string>
     <string name="vaccinations_list">Lista podanych szczepionek</string>
+    <string name="and">i</string>
+    <string name="mating_mate">Data krycia:</string>
+    <string name="estimated_birth_date">Spodziewana data wykocenia:</string>
+    <string name="unknown_numbers">Brak numerów</string>
+    <string name="matings">Krycia</string>
+    <string name="add_mating">Dodaj krycie</string>
+    <string name="date">Data:</string>
+    <string name="mating_date">Data pokrycia:</string>
+    <string name="born_litter">Urodzony miot</string>
+    <string name="rabbits_and_litters">Króliki i mioty</string>
 </resources>

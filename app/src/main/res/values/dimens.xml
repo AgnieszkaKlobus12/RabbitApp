@@ -6,7 +6,9 @@
     <dimen name="table_section_margin">20dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="small_margin">10dp</dimen>
+    <dimen name="tiny_margin">5dp</dimen>
     <dimen name="bigger_text">18sp</dimen>
     <dimen name="default_text">13sp</dimen>
+    <dimen name="small_text">10sp</dimen>
 
 </resources>

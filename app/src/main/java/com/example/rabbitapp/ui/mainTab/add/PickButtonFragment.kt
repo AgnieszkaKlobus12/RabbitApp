@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.rabbitapp.databinding.SelectButtonLayoutBinding
 import com.example.rabbitapp.utils.Gender
 
-class PickButtonFragment(private val gender: Gender, private val startSelect: StartSelect) :
+class PickButtonFragment(private val gender: Gender?, private val startSelect: StartSelect) :
     Fragment() {
     private var _binding: SelectButtonLayoutBinding? = null
     private val binding get() = _binding!!

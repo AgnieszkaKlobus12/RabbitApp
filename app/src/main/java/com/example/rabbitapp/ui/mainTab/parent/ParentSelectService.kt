@@ -35,7 +35,7 @@ class ParentSelectService {
             transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
-                override fun select(gender: Gender) {
+                override fun select(gender: Gender?) {
                     parentSelect(
                         gender,
                         pickMotherListFragment,
@@ -53,7 +53,7 @@ class ParentSelectService {
             transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
-                override fun select(gender: Gender) {
+                override fun select(gender: Gender?) {
                     parentSelect(
                         gender,
                         pickMotherListFragment,
@@ -136,7 +136,7 @@ class ParentSelectService {
     }
 
     fun parentSelect(
-        parentGender: Gender,
+        parentGender: Gender?,
         pickMotherListFragment: Int,
         pickFatherListFragment: Int,
         childFragmentManager: FragmentManager, view: View?

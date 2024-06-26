@@ -5,7 +5,7 @@
         <item
             android:id="@+id/navigation_rabbit_list"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/title_home" />
+            android:title="@string/rabbits_and_litters" />
 
         <item
             android:id="@+id/navigation_vaccine_list"
@@ -13,9 +13,9 @@
             android:title="@string/vaccines" />
 
         <item
-            android:id="@+id/navigation_notifications"
-            android:icon="@drawable/ic_notifications_black_24dp"
-            android:title="@string/title_notifications" />
+            android:id="@+id/navigation_matings"
+            android:icon="@drawable/icons8_love_100"
+            android:title="@string/matings" />
     </group>
 
 </menu>

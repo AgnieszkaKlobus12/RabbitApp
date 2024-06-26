@@ -4,6 +4,6 @@ import com.example.rabbitapp.utils.Gender
 
 interface StartSelect {
 
-    fun select(gender: Gender)
+    fun select(gender: Gender?)
 
 }

@@ -6,12 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.dao.LitterDao
+import com.example.rabbitapp.model.dao.MatingDao
 import com.example.rabbitapp.model.dao.RabbitDao
 import com.example.rabbitapp.model.dao.VaccinatedDao
 import com.example.rabbitapp.model.dao.VaccineDao
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +22,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Database(
-    entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class],
-    version = 15
+    entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class, Mating::class],
+    version = 17
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -29,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun litterRepository(): LitterDao
     abstract fun vaccineRepository(): VaccineDao
     abstract fun vaccinatedRepository(): VaccinatedDao
+    abstract fun matingRepository(): MatingDao
 
     @DelicateCoroutinesApi
     companion object {

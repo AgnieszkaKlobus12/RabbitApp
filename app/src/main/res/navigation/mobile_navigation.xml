@@ -109,10 +109,30 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.rabbitapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_matings"
+        android:name="com.example.rabbitapp.ui.matings.MatingListFragment"
+        android:label="@string/matings"
+        tools:layout="@layout/fragment_mating">
+        <action
+            android:id="@+id/action_navigation_home_to_addMatingFragment"
+            app:destination="@id/addMatingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addMatingFragment"
+        android:name="com.example.rabbitapp.ui.matings.AddMatingFragment"
+        android:label="@string/add_mating"
+        tools:layout="@layout/fragment_add_mating">
+        <action
+            android:id="@+id/action_addMatingFragment_to_pickMotherListFragment"
+            app:destination="@id/pickMotherListFragment" />
+        <action
+            android:id="@+id/action_addMatingFragment_to_pickLitterListFragment"
+            app:destination="@id/pickLitterListFragment" />
+        <action
+            android:id="@+id/action_addMatingFragment_to_pickFatherListFragment"
+            app:destination="@id/pickFatherListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addRabbitFragment"
@@ -158,6 +178,10 @@
         android:id="@+id/pickFatherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickFatherListFragment"
         android:label="PickFatherListFragment" />
+    <fragment
+        android:id="@+id/pickLitterListFragment"
+        android:name="com.example.rabbitapp.ui.matings.PickLitterListFragment"
+        android:label="PickLitterListFragment" />
     <fragment
         android:id="@+id/pickMotherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickMotherListFragment"

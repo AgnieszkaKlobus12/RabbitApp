@@ -8,8 +8,10 @@ import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.model.service.LitterService
+import com.example.rabbitapp.model.service.MatingService
 import com.example.rabbitapp.model.service.RabbitService
 import com.example.rabbitapp.model.service.VaccineService
 import com.example.rabbitapp.utils.Gender
@@ -21,6 +23,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     private val rabbitRepository: RabbitService
     private val litterRepository: LitterService
     private val vaccinesRepository: VaccineService
+    private val matingRepository: MatingService
 
     var selectedMother: Rabbit? = null
     var selectedFather: Rabbit? = null
@@ -34,6 +37,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         litterRepository = LitterService(database.litterRepository())
         vaccinesRepository =
             VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
+        matingRepository = MatingService(database.matingRepository())
     }
 
     fun save(rabbit: Rabbit): Long {
@@ -146,6 +150,18 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun getAllVaccinationsForLitter(id: Long): List<Vaccinated> {
         return vaccinesRepository.getAllVaccinationsForLitter(id)
+    }
+
+    fun getAllMatings(): List<Mating> {
+        return matingRepository.getAll()
+    }
+
+    fun save(mating: Mating): Long {
+        return matingRepository.save(mating)
+    }
+
+    fun getAllLitters(): List<HomeListItem> {
+        return litterRepository.getAll()
     }
 
 }
