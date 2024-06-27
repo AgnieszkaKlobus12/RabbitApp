@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_birth_completed"
+        android:title="@string/end" />
+
+    <item
+        android:id="@+id/navigation_edit_mating"
+        android:title="@string/edit" />
+
+    <item
+        android:id="@+id/navigation_delete_mating"
+        android:title="@string/delete" />
+
+</menu>

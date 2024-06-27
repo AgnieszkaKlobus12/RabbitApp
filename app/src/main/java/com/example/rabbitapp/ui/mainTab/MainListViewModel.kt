@@ -164,5 +164,13 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return litterRepository.getAll()
     }
 
+    fun getMating(matingId: Long): Mating? {
+        return matingRepository.getMatingFromId(matingId)
+    }
+
+    fun deleteMating(id: Long) {
+        return matingRepository.deleteWithId(id)
+    }
+
 }
 

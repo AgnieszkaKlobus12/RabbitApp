@@ -3,6 +3,7 @@ package com.example.rabbitapp.ui.matings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
@@ -30,7 +31,17 @@ class MatingListAdapter(
         holder.numbersMother.text = item.fkMother?.let { viewModel.getRabbitFromId(it)?.earNumber }
         holder.numbersFather.text = item.fkFather?.let { viewModel.getRabbitFromId(it)?.earNumber }
         holder.matingDate.text = RabbitDetails.getDateString(item.matingDate)
-        holder.expectedBirthDate.text = RabbitDetails.getDateString(item.matingDate + 30)
+        if (item.fkLitter == null) {
+            holder.expectedBirthDate.text = RabbitDetails.getDateString(item.matingDate + 30)
+            holder.actualBirthDateView.visibility = View.GONE
+            holder.litterView.visibility = View.GONE
+            holder.divider.visibility = View.GONE
+        } else {
+            holder.birthDateView.visibility = View.GONE
+            holder.actualBirthDate.text = item.birthDate.let { RabbitDetails.getDateString(it) }
+            holder.litter.text = item.fkLitter?.let { viewModel.getLitterFromId(it)?.name }
+            holder.divider.visibility = View.VISIBLE
+        }
         holder.itemView.setOnClickListener { onSelectedItem.onItemClick(item) }
     }
 
@@ -43,6 +54,13 @@ class MatingListAdapter(
         val numbersMother: TextView = iv.findViewById(R.id.mating_list_item_numbers_1)
         val matingDate: TextView = iv.findViewById(R.id.mating_list_item_mating_date)
         val expectedBirthDate: TextView = iv.findViewById(R.id.mating_list_item_birth_date)
+        val actualBirthDate: TextView = iv.findViewById(R.id.mating_list_item_actual_birth_date)
+        val litter: TextView = iv.findViewById(R.id.mating_list_item_birth_litter)
+        val litterView: LinearLayout = iv.findViewById(R.id.mating_list_item_litter_view)
+        val birthDateView: LinearLayout = iv.findViewById(R.id.expected_birt_date_view)
+        val actualBirthDateView: LinearLayout =
+            iv.findViewById(R.id.mating_list_item_actual_birth_date_view)
+        val divider: View = iv.findViewById(R.id.divider2)
     }
 
 }

@@ -111,7 +111,7 @@ class RabbitDetailsFragment : FragmentWithPicture() {
 
         viewModel.selectedRabbit?.let {
             parentSelectService.displayParentOrUnknown(
-                it,
+                it.fkMother, it.fkFather,
                 childFragmentManager,
                 viewModel
             )

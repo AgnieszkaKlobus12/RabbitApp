@@ -97,6 +97,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/expected_birt_date_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -116,5 +117,61 @@
             android:layout_marginHorizontal="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
             android:text="@string/unknown" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/mating_list_item_actual_birth_date_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_actual_birt_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/tiny_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/birth_date_label" />
+
+        <TextView
+            android:id="@+id/mating_list_item_actual_birth_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginTop="@dimen/tiny_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/unknown" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mating_list_item_litter_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mating_list_item_birt_litter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/born_litter"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mating_list_item_birth_litter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/unknown"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

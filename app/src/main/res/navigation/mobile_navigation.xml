@@ -87,6 +87,11 @@
             android:defaultValue="0L"
             app:argType="long" />
         <action
+            android:id="@+id/action_navigation_vaccine_edit_to_vaccineDetailsFragment"
+            app:destination="@id/fragment_vaccine_details"
+            app:popUpTo="@id/navigation_vaccine_list"
+            app:popUpToInclusive="false" />
+        <action
             android:id="@+id/action_navigation_vaccine_edit_to_vaccine_list"
             app:destination="@id/navigation_vaccine_list" />
     </fragment>
@@ -116,6 +121,9 @@
         <action
             android:id="@+id/action_navigation_home_to_addMatingFragment"
             app:destination="@id/addMatingFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detailsMatingFragment"
+            app:destination="@id/matingDetailsFragment" />
     </fragment>
 
     <fragment
@@ -123,6 +131,10 @@
         android:name="com.example.rabbitapp.ui.matings.AddMatingFragment"
         android:label="@string/add_mating"
         tools:layout="@layout/fragment_add_mating">
+        <argument
+            android:name="mating_id"
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_addMatingFragment_to_pickMotherListFragment"
             app:destination="@id/pickMotherListFragment" />
@@ -132,6 +144,11 @@
         <action
             android:id="@+id/action_addMatingFragment_to_pickFatherListFragment"
             app:destination="@id/pickFatherListFragment" />
+        <action
+            android:id="@+id/action_addMatingFragment_to_matingDetailsFragment"
+            app:destination="@id/matingDetailsFragment"
+            app:popUpTo="@id/navigation_matings"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -227,6 +244,22 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_vaccineFragment"
             app:destination="@id/fragment_vaccine_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/matingDetailsFragment"
+        android:name="com.example.rabbitapp.ui.matings.MatingDetailsFragment"
+        android:label="@string/mating_details"
+        tools:layout="@layout/fragment_mating_details">
+        <argument
+            android:name="mating_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_matingDetailsFragment_to_editMatingsFragment"
+            app:destination="@id/addMatingFragment" />
+        <action
+            android:id="@+id/action_matingDetailsFragment_to_matingsListFragment"
+            app:destination="@id/navigation_matings" />
     </fragment>
 
 </navigation>

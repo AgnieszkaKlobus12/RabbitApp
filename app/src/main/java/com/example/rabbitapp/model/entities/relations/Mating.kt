@@ -30,7 +30,7 @@ import com.example.rabbitapp.model.entities.Rabbit
 data class Mating(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val matingDate: Long,
-    val birthDate: Long?,
+    val birthDate: Long,
     var fkMother: Long?,
     var fkFather: Long?,
     var fkLitter: Long?

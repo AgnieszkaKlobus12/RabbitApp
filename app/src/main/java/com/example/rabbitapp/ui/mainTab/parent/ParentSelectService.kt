@@ -69,23 +69,23 @@ class ParentSelectService {
     }
 
     fun displayParentOrUnknown(
-        showingItem: HomeListItem,
+        fkMother: Long?, fkFather: Long?,
         childFragmentManager: FragmentManager,
         viewModel: MainListViewModel,
     ) {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (showingItem.fkMother != null) {
+        if (fkMother != null) {
             val selectedMotherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(showingItem.fkMother!!)!!)
+                HomeListItemFragment(viewModel.getRabbitFromId(fkMother)!!)
             transaction.replace(R.id.add_mother_fragment, selectedMotherFragment)
         } else {
             val unknownParentFragment = UnknownParentFragment()
             transaction.replace(R.id.add_mother_fragment, unknownParentFragment)
         }
 
-        if (showingItem.fkFather != null) {
+        if (fkFather != null) {
             val selectedFatherFragment =
-                HomeListItemFragment(viewModel.getRabbitFromId(showingItem.fkFather!!)!!)
+                HomeListItemFragment(viewModel.getRabbitFromId(fkFather)!!)
             transaction.replace(R.id.add_father_fragment, selectedFatherFragment)
         } else {
             val unknownParentFragment = UnknownParentFragment()

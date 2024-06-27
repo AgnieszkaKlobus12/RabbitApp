@@ -40,14 +40,19 @@ class VaccineEditFragment : Fragment() {
         }
 
         binding.addVaccineSaveButton.setOnClickListener {
-            viewModel.save(
+            val savedId = viewModel.save(
                 Vaccine(
                     vaccine?.id ?: 0,
                     binding.fragmentVaccineEditVaccineName.text.toString(),
                     binding.fragmentVaccineEditVaccineDescription.text.toString()
                 )
             )
-            view.findNavController().popBackStack()
+            view.findNavController()
+                .navigate(
+                    VaccineEditFragmentDirections.actionNavigationVaccineEditToVaccineDetailsFragment(
+                        savedId
+                    )
+                )
         }
     }
 

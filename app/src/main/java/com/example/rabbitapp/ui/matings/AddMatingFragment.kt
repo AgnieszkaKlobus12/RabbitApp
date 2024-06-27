@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddMatingBinding
 import com.example.rabbitapp.model.entities.relations.Mating
@@ -20,11 +21,14 @@ import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
 import com.example.rabbitapp.ui.mainTab.add.StartSelect
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class AddMatingFragment : Fragment() {
+
+    private val args: AddMatingFragmentArgs by navArgs()
 
     private var _binding: FragmentAddMatingBinding? = null
     private val binding get() = _binding!!
@@ -39,10 +43,22 @@ class AddMatingFragment : Fragment() {
     ): View {
         _binding = FragmentAddMatingBinding.inflate(inflater, container, false)
 
-        val formattedMatingDate = LocalDate.now().format(dateFormatter)
-        binding.addMatingDate.text = Editable.Factory.getInstance().newEditable(formattedMatingDate)
-        val formattedDate = LocalDate.now().plusDays(30).format(dateFormatter)
-        binding.matingDateBirth.text = Editable.Factory.getInstance().newEditable(formattedDate)
+        if (args.matingId != 0L) {
+            val mating = viewModel.getMating(args.matingId)
+            binding.addMatingDate.text = Editable.Factory.getInstance()
+                .newEditable(RabbitDetails.getDateString(mating!!.matingDate))
+            binding.matingDateBirth.text = Editable.Factory.getInstance()
+                .newEditable(RabbitDetails.getDateString(mating.birthDate))
+            viewModel.selectedLitter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
+            viewModel.selectedFather = mating.fkFather?.let { viewModel.getRabbitFromId(it) }
+            viewModel.selectedMother = mating.fkMother?.let { viewModel.getRabbitFromId(it) }
+        } else {
+            val formattedMatingDate = LocalDate.now().format(dateFormatter)
+            binding.addMatingDate.text =
+                Editable.Factory.getInstance().newEditable(formattedMatingDate)
+            val formattedDate = LocalDate.now().plusDays(30).format(dateFormatter)
+            binding.matingDateBirth.text = Editable.Factory.getInstance().newEditable(formattedDate)
+        }
 
         return binding.root
     }
@@ -51,9 +67,9 @@ class AddMatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addMatingSaveButton.setOnClickListener {
-            viewModel.save(
+            val id = viewModel.save(
                 Mating(
-                    0,
+                    args.matingId.takeUnless { it == 0L } ?: 0,
                     LocalDate.parse(binding.addMatingDate.text.toString(), dateFormatter)
                         .toEpochDay(),
                     LocalDate.parse(binding.matingDateBirth.text.toString(), dateFormatter)
@@ -63,8 +79,9 @@ class AddMatingFragment : Fragment() {
                     viewModel.selectedLitter?.id
                 )
             )
-            view.findNavController()
-                .navigate(R.id.action_addMatingFragment_to_matingDetailsFragment)
+            view.findNavController().navigate(
+                AddMatingFragmentDirections.actionAddMatingFragmentToMatingDetailsFragment(id)
+            )
         }
 
         parentSelectService.displaySelectParentFragment(

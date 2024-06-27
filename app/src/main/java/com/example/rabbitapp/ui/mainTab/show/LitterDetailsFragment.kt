@@ -106,7 +106,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
 
         viewModel.selectedLitter?.let {
             parentSelectService.displayParentOrUnknown(
-                it,
+                it.fkMother, it.fkFather,
                 childFragmentManager,
                 viewModel
             )
