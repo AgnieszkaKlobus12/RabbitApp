@@ -19,6 +19,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/archive_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:minWidth="120dp"
+                android:text="@string/archive"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/fragment_add_mating_include_parents"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <include
                 android:id="@+id/fragment_add_mating_include_parents"
                 layout="@layout/pick_parents_fragment"
@@ -27,7 +40,7 @@
                 app:layout_constraintBottom_toTopOf="@id/table_mating_data"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/archive_switch" />
 
             <TableLayout
                 android:id="@+id/table_mating_data"
@@ -91,6 +104,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/table_mating_data" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

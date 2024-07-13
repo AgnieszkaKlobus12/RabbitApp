@@ -172,5 +172,10 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return matingRepository.deleteWithId(id)
     }
 
+    fun getAllNotArchivedMating(): List<Mating> {
+        return matingRepository.getAllNotArchived()
+
+    }
+
 }
 

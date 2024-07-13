@@ -3,6 +3,7 @@ package com.example.rabbitapp.ui.matings
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,6 +22,8 @@ import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.RabbitDetails
+import java.time.LocalDate
+
 
 class MatingDetailsFragment : Fragment() {
 
@@ -39,6 +42,7 @@ class MatingDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMatingDetailsBinding.inflate(inflater, container, false)
         mating = viewModel.getMating(args.matingId)
+        Log.d("MatingDetailsFragment", "onCreateView: $mating")
         return binding.root
     }
 
@@ -49,17 +53,42 @@ class MatingDetailsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.mating_details_menu, menu)
+
+        if (mating?.archived == true) {
+            val item = menu.findItem(R.id.navigation_archive)
+            item.setVisible(false)
+        }
+        if (mating?.fkLitter != null) {
+            val item = menu.findItem(R.id.navigation_birth_completed)
+            item.setVisible(false)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_birth_completed -> {
-//                view?.findNavController()
-//                    ?.navigate(
-//                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineListFragment(
-//                            viewModel.selectedRabbit!!.id
-//                        )
-//                    )
+                // przekieruj do add litter z parametrami, przerób add litter na nowy sposób otrzymywania parametrów, powrót z add litter do edycji tego tutaj :)
+                true
+            }
+
+            R.id.navigation_archive -> {
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            mating?.let { it1 -> viewModel.save(it1.copy(archived = true)) }
+                            refresh()
+                        }
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_archive_matting_message)
+                    }
+                    builder.create()
+                }
+                alertDialog.show()
                 true
             }
 
@@ -99,7 +128,6 @@ class MatingDetailsFragment : Fragment() {
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         parentSelectService.displayParentOrUnknown(
@@ -109,6 +137,7 @@ class MatingDetailsFragment : Fragment() {
             viewModel
         )
         displayLitterIfSelected()
+        handleExpirationAndArchie()
 
         val formattedMatingDate = mating?.matingDate?.let { RabbitDetails.getDateString(it) }
         binding.addMatingDate.text =
@@ -129,6 +158,19 @@ class MatingDetailsFragment : Fragment() {
         }
     }
 
+    private fun handleExpirationAndArchie() {
+        if (mating?.archived == true || mating?.fkLitter != null) {
+            binding.fragmentMatingDetailsArchived.visibility = View.VISIBLE
+        } else {
+            binding.fragmentMatingDetailsArchived.visibility = View.GONE
+            if (LocalDate.ofEpochDay(mating!!.matingDate).plusDays(60).isBefore(LocalDate.now())) {
+                binding.overtimeMessage.visibility = View.VISIBLE
+            } else {
+                binding.overtimeMessage.visibility = View.GONE
+            }
+        }
+    }
+
     private fun displayLitterIfSelected() {
         if (mating?.fkLitter != null) {
             val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
@@ -138,5 +180,10 @@ class MatingDetailsFragment : Fragment() {
         } else {
             binding.fragmentMatingIncludeLitter.root.visibility = View.GONE
         }
+    }
+
+    private fun refresh() {
+        fragmentManager?.beginTransaction()?.detach(this)?.commitNow();
+        fragmentManager?.beginTransaction()?.attach(this)?.commitNow();
     }
 }

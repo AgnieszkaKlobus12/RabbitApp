@@ -32,7 +32,10 @@ class MatingListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fragmentMatingListRecyclerView.adapter =
-            MatingListAdapter(viewModel, viewModel.getAllMatings(), object : OnSelectedMating {
+            MatingListAdapter(
+                viewModel,
+                viewModel.getAllNotArchivedMating(),
+                object : OnSelectedMating {
                 override fun onItemClick(item: Mating) {
                     view.findNavController()
                         .navigate(

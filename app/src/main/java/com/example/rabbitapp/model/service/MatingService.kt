@@ -21,4 +21,8 @@ class MatingService(private val matingDao: MatingDao) {
         return matingDao.getMatingFromId(id)
     }
 
+    fun getAllNotArchived(): List<Mating> {
+        return matingDao.getAllNotArchived()
+    }
+
 }

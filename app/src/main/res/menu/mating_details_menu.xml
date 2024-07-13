@@ -3,7 +3,11 @@
 
     <item
         android:id="@+id/navigation_birth_completed"
-        android:title="@string/end" />
+        android:title="@string/add_litter" />
+
+    <item
+        android:id="@+id/navigation_archive"
+        android:title="@string/archive" />
 
     <item
         android:id="@+id/navigation_edit_mating"

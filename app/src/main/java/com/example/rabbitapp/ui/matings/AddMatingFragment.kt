@@ -42,7 +42,7 @@ class AddMatingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddMatingBinding.inflate(inflater, container, false)
-
+        viewModel.clearSelected()
         if (args.matingId != 0L) {
             val mating = viewModel.getMating(args.matingId)
             binding.addMatingDate.text = Editable.Factory.getInstance()
@@ -52,6 +52,10 @@ class AddMatingFragment : Fragment() {
             viewModel.selectedLitter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
             viewModel.selectedFather = mating.fkFather?.let { viewModel.getRabbitFromId(it) }
             viewModel.selectedMother = mating.fkMother?.let { viewModel.getRabbitFromId(it) }
+            if (mating.archived) {
+                binding.archiveSwitch.visibility = View.VISIBLE
+                binding.archiveSwitch.isChecked = true
+            }
         } else {
             val formattedMatingDate = LocalDate.now().format(dateFormatter)
             binding.addMatingDate.text =
@@ -74,6 +78,7 @@ class AddMatingFragment : Fragment() {
                         .toEpochDay(),
                     LocalDate.parse(binding.matingDateBirth.text.toString(), dateFormatter)
                         .toEpochDay(),
+                    binding.archiveSwitch.isChecked,
                     viewModel.selectedMother?.id,
                     viewModel.selectedFather?.id,
                     viewModel.selectedLitter?.id

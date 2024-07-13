@@ -37,6 +37,7 @@
     <string name="confirm_delete_rabbit_message">Czy na pewno chcesz usunąć królika? Ta operacja jest nieodwracalna!</string>
     <string name="confirm_delete_litter_message">Czy na pewno chcesz usunąć miot? Ta operacja jest nieodwracalna!</string>
     <string name="confirm_delete_matting_message">Czy na pewno chcesz usunąć pokrycie? Ta operacja jest nieodwracalna!</string>
+    <string name="confirm_archive_matting_message">Czy na pewno chcesz zaarchiwizować pokrycie? Nie będzie ono dłużej wyświetlanie na liście!</string>
     <string name="litter_placeholder">Króliczaki</string>
     <string name="error_empty">To pole nie może być puste</string>
     <string name="gender_empty">Płeć musi być wybrana!</string>
@@ -71,4 +72,8 @@
     <string name="rabbits_and_litters">Króliki i mioty</string>
     <string name="mating_details">Szczegóły miotu</string>
     <string name="end">Zakończ</string>
+    <string name="overtime_for_mating_consider_archiving">Minęło ponad 45 dni od pokrycia. Zarchiwizuj pokrycie, aby je ukryć lub dodaj miot, jeśli zakończyło się owocnie.</string>
+    <string name="archived">Zarchiwizowane!</string>
+    <string name="archive">Archiwizuj</string>
+    <string name="add">dodaj</string>
 </resources>

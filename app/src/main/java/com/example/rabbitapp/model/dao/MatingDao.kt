@@ -28,4 +28,7 @@ interface MatingDao {
     @Query("select * from Mating where id = :id")
     fun getMatingFromId(id: Long): Mating?
 
+    @Query("select * from Mating where archived = 0")
+    fun getAllNotArchived(): List<Mating>
+
 }

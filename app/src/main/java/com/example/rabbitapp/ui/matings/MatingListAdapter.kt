@@ -26,8 +26,12 @@ class MatingListAdapter(
 
     override fun onBindViewHolder(holder: MatingItemView, position: Int) {
         val item = values[position]
-        holder.nameMother.text = item.fkMother?.let { viewModel.getRabbitFromId(it)?.name }
-        holder.nameFather.text = item.fkFather?.let { viewModel.getRabbitFromId(it)?.name }
+        if (item.fkMother != null) {
+            holder.nameMother.text = item.fkMother?.let { viewModel.getRabbitFromId(it)?.name }
+        }
+        if (item.fkFather != null) {
+            holder.nameFather.text = item.fkFather?.let { viewModel.getRabbitFromId(it)?.name }
+        }
         holder.numbersMother.text = item.fkMother?.let { viewModel.getRabbitFromId(it)?.earNumber }
         holder.numbersFather.text = item.fkFather?.let { viewModel.getRabbitFromId(it)?.earNumber }
         holder.matingDate.text = RabbitDetails.getDateString(item.matingDate)
