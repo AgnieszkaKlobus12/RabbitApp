@@ -6,6 +6,10 @@
         android:title="@string/add_vaccination" />
 
     <item
+        android:id="@+id/navigation_rabbit_add_mating"
+        android:title="@string/add_mating" />
+
+    <item
         android:id="@+id/navigation_edit_rabbit"
         android:title="@string/edit" />
 

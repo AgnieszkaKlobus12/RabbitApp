@@ -12,9 +12,12 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
+import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
+import com.example.rabbitapp.ui.matings.MatingListAdapter
+import com.example.rabbitapp.ui.matings.OnSelectedMating
 import com.example.rabbitapp.ui.vaccines.OnSelectedVaccination
 import com.example.rabbitapp.ui.vaccines.VaccinationsListAdapter
 import com.example.rabbitapp.utils.Gender
@@ -43,6 +46,26 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                     ?.navigate(
                         RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineListFragment(
                             viewModel.selectedRabbit!!.id
+                        )
+                    )
+                true
+            }
+
+            R.id.navigation_rabbit_add_mating -> {
+                view?.findNavController()
+                    ?.navigate(
+                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToAddMatingFragment(
+                            0L,
+                            if (viewModel.selectedRabbit?.sex == "FEMALE") {
+                                viewModel.selectedRabbit!!.id
+                            } else {
+                                0L
+                            },
+                            if (viewModel.selectedRabbit?.sex == "MALE") {
+                                viewModel.selectedRabbit!!.id
+                            } else {
+                                0L
+                            }
                         )
                     )
                 true
@@ -81,13 +104,34 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                 binding.fragmentRabbitDetailsIncludeVaccinations.fragmentVaccinationsListRecyclerView.adapter =
                     VaccinationsListAdapter(
                         viewModel,
-                        viewModel.getAllVaccinationsForRabbit(viewModel.selectedRabbit!!.id),
+                        vaccinations,
                         object : OnSelectedVaccination {
                             override fun onItemClick(item: Vaccinated) {
                                 view.findNavController()
                                     .navigate(
                                         RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineFragment(
                                             item.fkVaccine
+                                        )
+                                    )
+                            }
+                        })
+            }
+        }
+
+        viewModel.selectedRabbit?.id?.let {
+            val matings = viewModel.getAllMatingsForRabbit(it)
+            if (matings.isNotEmpty()) {
+                binding.fragmentRabbitDetailsIncludeMatings.root.visibility = View.VISIBLE
+                binding.fragmentRabbitDetailsIncludeMatings.fragmentMatingListRecyclerView.adapter =
+                    MatingListAdapter(
+                        viewModel,
+                        matings,
+                        object : OnSelectedMating {
+                            override fun onItemClick(item: Mating) {
+                                view.findNavController()
+                                    .navigate(
+                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToMatingFragment(
+                                            item.id
                                         )
                                     )
                             }

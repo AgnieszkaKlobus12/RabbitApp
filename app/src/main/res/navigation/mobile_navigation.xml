@@ -135,6 +135,14 @@
             android:name="mating_id"
             android:defaultValue="0L"
             app:argType="long" />
+        <argument
+            android:name="mother_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="father_id"
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_addMatingFragment_to_pickMotherListFragment"
             app:destination="@id/pickMotherListFragment" />
@@ -147,8 +155,8 @@
         <action
             android:id="@+id/action_addMatingFragment_to_matingDetailsFragment"
             app:destination="@id/matingDetailsFragment"
-            app:popUpTo="@id/navigation_matings"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/addMatingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -226,6 +234,12 @@
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_vaccineFragment"
             app:destination="@id/fragment_vaccine_details" />
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_matingFragment"
+            app:destination="@id/matingDetailsFragment" />
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_addMatingFragment"
+            app:destination="@id/addMatingFragment" />
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_vaccineListFragment"
             app:destination="@id/navigation_vaccine_list" />

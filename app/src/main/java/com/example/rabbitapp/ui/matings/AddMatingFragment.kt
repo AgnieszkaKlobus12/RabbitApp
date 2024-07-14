@@ -43,16 +43,31 @@ class AddMatingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddMatingBinding.inflate(inflater, container, false)
-        viewModel.clearSelected()
+        if (args.fatherId != 0L) {
+            if (viewModel.selectedFather == null) {
+                viewModel.selectedFather = viewModel.getRabbitFromId(args.fatherId)
+            }
+        }
+        if (args.motherId != 0L) {
+            if (viewModel.selectedMother == null) {
+                viewModel.selectedMother = viewModel.getRabbitFromId(args.motherId)
+            }
+        }
         if (args.matingId != 0L) {
             val mating = viewModel.getMating(args.matingId)
             binding.addMatingDate.text = Editable.Factory.getInstance()
                 .newEditable(RabbitDetails.getDateString(mating!!.matingDate))
             binding.matingDateBirth.text = Editable.Factory.getInstance()
                 .newEditable(RabbitDetails.getDateString(mating.birthDate))
-            viewModel.selectedLitter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
-            viewModel.selectedFather = mating.fkFather?.let { viewModel.getRabbitFromId(it) }
-            viewModel.selectedMother = mating.fkMother?.let { viewModel.getRabbitFromId(it) }
+            if (viewModel.selectedLitter == null) {
+                viewModel.selectedLitter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
+            }
+            if (viewModel.selectedFather == null) {
+                viewModel.selectedFather = mating.fkFather?.let { viewModel.getRabbitFromId(it) }
+            }
+            if (viewModel.selectedMother == null) {
+                viewModel.selectedMother = mating.fkMother?.let { viewModel.getRabbitFromId(it) }
+            }
             if (mating.archived) {
                 binding.archiveSwitch.visibility = View.VISIBLE
                 binding.archiveSwitch.isChecked = true

@@ -174,7 +174,10 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun getAllNotArchivedMating(): List<Mating> {
         return matingRepository.getAllNotArchived()
+    }
 
+    fun getAllMatingsForRabbit(id: Long): List<Mating> {
+        return matingRepository.getAllMatingsForRabbit(id)
     }
 
 }

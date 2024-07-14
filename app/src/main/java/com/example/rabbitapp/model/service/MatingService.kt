@@ -25,4 +25,8 @@ class MatingService(private val matingDao: MatingDao) {
         return matingDao.getAllNotArchived()
     }
 
+    fun getAllMatingsForRabbit(id: Long): List<Mating> {
+        return matingDao.getAllMatingsForRabbit(id)
+    }
+
 }
