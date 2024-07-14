@@ -6,17 +6,24 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddLitterBinding
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class LitterAddFragment : FragmentWithPicture() {
+
+    private val args: LitterAddFragmentArgs by navArgs()
+    private var mating: Mating? = null
+
     private var _binding: FragmentAddLitterBinding? = null
     private val binding get() = _binding!!
 
@@ -29,6 +36,9 @@ class LitterAddFragment : FragmentWithPicture() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddLitterBinding.inflate(inflater, container, false)
+        if (args.matingId != 0L) {
+            mating = viewModel.getMating(args.matingId)
+        }
 
         setGalleryLauncher(binding.addLitterPicture)
 
@@ -36,8 +46,14 @@ class LitterAddFragment : FragmentWithPicture() {
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
         if (viewModel.selectedLitter != null) {
-            parentSelectService.setParents(viewModel.selectedLitter, viewModel)
+            parentSelectService.setParents(
+                viewModel,
+                viewModel.selectedLitter!!.fkMother,
+                viewModel.selectedLitter!!.fkFather
+            )
             setFieldsToSelectedLitter()
+        } else if (mating != null) {
+            parentSelectService.setParents(viewModel, mating!!.fkMother, mating!!.fkFather)
         }
 
         setPictureToSelectedOrDefault(
@@ -63,19 +79,42 @@ class LitterAddFragment : FragmentWithPicture() {
             }
         }
 
-        parentSelectService.displaySelectParentFragment(
-            R.id.action_addLitterFragment_to_pickMotherListFragment,
-            R.id.action_addLitterFragment_to_pickFatherListFragment,
-            childFragmentManager,
-            viewModel, view
-        )
-        parentSelectService.setOnClickListenersParents(
-            childFragmentManager,
-            view,
-            binding.fragmentAddLitterIncludeParents,
-            R.id.action_addLitterFragment_to_pickMotherListFragment,
-            R.id.action_addLitterFragment_to_pickFatherListFragment
-        )
+        if (mating == null) {
+            parentSelectService.setOnClickListenersParents(
+                childFragmentManager,
+                view,
+                binding.fragmentAddLitterIncludeParents,
+                R.id.action_addLitterFragment_to_pickMotherListFragment,
+                R.id.action_addLitterFragment_to_pickFatherListFragment
+            )
+            parentSelectService.displaySelectParentFragment(
+                R.id.action_addLitterFragment_to_pickMotherListFragment,
+                R.id.action_addLitterFragment_to_pickFatherListFragment,
+                childFragmentManager,
+                viewModel, view
+            )
+        } else {
+            parentSelectService.displayParentOrUnknown(
+                mating?.fkMother,
+                mating?.fkFather,
+                childFragmentManager,
+                viewModel
+            )
+            binding.fragmentAddLitterIncludeParents.addMotherFragment.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Nie można zmienić! Musi pokrywać się z podanym w pokryciu",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            binding.fragmentAddLitterIncludeParents.addFatherFragment.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Nie można zmienić! Musi pokrywać się z podanym w pokryciu",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -123,23 +162,41 @@ class LitterAddFragment : FragmentWithPicture() {
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id
                 )
             )
-            rabbitList.forEach { rabbit: Rabbit ->
-                run {
-                    rabbit.birth =
-                        LocalDate.parse(
+            if (mating != null) {
+                viewModel.save(
+                    mating!!.copy(
+                        fkLitter = id,
+                        birthDate = LocalDate.parse(
                             binding.addLitterDate.text.toString(),
                             dateFormatter
+                        ).toEpochDay()
+                    )
+                )
+                view?.findNavController()
+                    ?.navigate(
+                        LitterAddFragmentDirections.actionAddLitterFragmentToMatingDetailsFragment(
+                            mating!!.id
                         )
-                            .toEpochDay()
-                    rabbit.fkFather = viewModel.selectedFather?.id
-                    rabbit.fkMother = viewModel.selectedMother?.id
-                    rabbit.fkLitter = id
-                    viewModel.update(rabbit)
+                    )
+            } else {
+                rabbitList.forEach { rabbit: Rabbit ->
+                    run {
+                        rabbit.birth =
+                            LocalDate.parse(
+                                binding.addLitterDate.text.toString(),
+                                dateFormatter
+                            )
+                                .toEpochDay()
+                        rabbit.fkFather = viewModel.selectedFather?.id
+                        rabbit.fkMother = viewModel.selectedMother?.id
+                        rabbit.fkLitter = id
+                        viewModel.update(rabbit)
+                    }
                 }
+                viewModel.selectedLitter = id.let { viewModel.getLitterFromId(it) }
+                view.findNavController()
+                    .navigate(R.id.action_addLitterFragment_to_litterDetailsFragment)
             }
-            viewModel.selectedLitter = id.let { viewModel.getLitterFromId(it) }
-            view.findNavController()
-                .navigate(R.id.action_addLitterFragment_to_litterDetailsFragment)
         }
     }
 

@@ -24,6 +24,8 @@ class PickButtonFragment(private val gender: Gender?, private val startSelect: S
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.defaultButton.setOnClickListener { startSelect.select(gender) }
+        if (binding.defaultButton.isEnabled) {
+            binding.defaultButton.setOnClickListener { startSelect.select(gender) }
+        }
     }
 }

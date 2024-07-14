@@ -176,6 +176,15 @@
         android:name="com.example.rabbitapp.ui.mainTab.add.LitterAddFragment"
         android:label="@string/add_litter"
         tools:layout="@layout/fragment_add_litter">
+        <argument
+            android:name="mating_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_addLitterFragment_to_matingDetailsFragment"
+            app:destination="@id/matingDetailsFragment"
+            app:popUpTo="@id/navigation_matings"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"
             app:destination="@id/navigation_rabbit_list" />
@@ -257,6 +266,9 @@
         <action
             android:id="@+id/action_matingDetailsFragment_to_editMatingsFragment"
             app:destination="@id/addMatingFragment" />
+        <action
+            android:id="@+id/action_matingDetailsFragment_to_addLitterFragment"
+            app:destination="@id/addLitterFragment" />
         <action
             android:id="@+id/action_matingDetailsFragment_to_matingsListFragment"
             app:destination="@id/navigation_matings" />

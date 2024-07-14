@@ -39,11 +39,19 @@ class RabbitAddFragment : FragmentWithPicture() {
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
         if (viewModel.selectedRabbit != null) {
-            parentSelectService.setParents(viewModel.selectedRabbit, viewModel)
+            parentSelectService.setParents(
+                viewModel,
+                viewModel.selectedRabbit!!.fkMother,
+                viewModel.selectedRabbit!!.fkFather
+            )
             setFieldsToSelectedRabbit()
         }
         if (viewModel.selectedLitter != null) {
-            parentSelectService.setParents(viewModel.selectedLitter, viewModel)
+            parentSelectService.setParents(
+                viewModel,
+                viewModel.selectedLitter!!.fkMother,
+                viewModel.selectedLitter!!.fkFather
+            )
             setLitterItem()
         }
 

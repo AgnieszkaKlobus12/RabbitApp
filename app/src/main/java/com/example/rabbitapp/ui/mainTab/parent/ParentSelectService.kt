@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.PickParentsFragmentBinding
-import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
@@ -153,14 +152,14 @@ class ParentSelectService {
         transaction.commit()
     }
 
-    fun setParents(item: HomeListItem?, viewModel: MainListViewModel) {
+    fun setParents(viewModel: MainListViewModel, motherId: Long?, fatherId: Long?) {
         if (viewModel.selectedMother == null) {
             viewModel.selectedMother =
-                item?.fkMother?.let { viewModel.getRabbitFromId(it) }
+                motherId?.let { viewModel.getRabbitFromId(it) }
         }
         if (viewModel.selectedFather == null) {
             viewModel.selectedFather =
-                item?.fkFather?.let { viewModel.getRabbitFromId(it) }
+                fatherId?.let { viewModel.getRabbitFromId(it) }
         }
     }
 }

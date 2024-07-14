@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -71,6 +72,18 @@ class AddMatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addMatingSaveButton.setOnClickListener {
+            if (viewModel.selectedLitter != null) {
+                viewModel.save(
+                    viewModel.selectedLitter!!.copy(
+                        birth = LocalDate.parse(
+                            binding.matingDateBirth.text.toString(),
+                            dateFormatter
+                        ).toEpochDay(),
+                        fkFather = viewModel.selectedFather?.id,
+                        fkMother = viewModel.selectedMother?.id,
+                    )
+                )
+            }
             val id = viewModel.save(
                 Mating(
                     args.matingId.takeUnless { it == 0L } ?: 0,
@@ -95,17 +108,59 @@ class AddMatingFragment : Fragment() {
             childFragmentManager,
             viewModel, view
         )
-        parentSelectService.setOnClickListenersParents(
-            childFragmentManager,
-            view,
-            binding.fragmentAddMatingIncludeParents,
-            R.id.action_addMatingFragment_to_pickMotherListFragment,
-            R.id.action_addMatingFragment_to_pickFatherListFragment
-        )
 
-        binding.matingDateBirth.setOnClickListener {
-            showDatePickerDialog(binding.matingDateBirth)
+        if (viewModel.selectedLitter != null) {
+            binding.fragmentAddMatingIncludeParents.addMotherFragment.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                parentSelectService.parentSelect(
+                    Gender.FEMALE,
+                    R.id.action_addMatingFragment_to_pickMotherListFragment,
+                    R.id.action_addMatingFragment_to_pickFatherListFragment,
+                    childFragmentManager,
+                    view
+                )
+            }
+            binding.fragmentAddMatingIncludeParents.addFatherFragment.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                parentSelectService.parentSelect(
+                    Gender.MALE,
+                    R.id.action_addMatingFragment_to_pickMotherListFragment,
+                    R.id.action_addMatingFragment_to_pickFatherListFragment,
+                    childFragmentManager,
+                    view
+                )
+            }
+
+            binding.matingDateBirth.setOnClickListener {
+                showDatePickerDialog(binding.matingDateBirth)
+                Toast.makeText(
+                    context,
+                    "Uwaga! Zmiana daty urodzenia spowoduje zmianę w miocie!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            parentSelectService.setOnClickListenersParents(
+                childFragmentManager,
+                view,
+                binding.fragmentAddMatingIncludeParents,
+                R.id.action_addMatingFragment_to_pickMotherListFragment,
+                R.id.action_addMatingFragment_to_pickFatherListFragment
+            )
+
+            binding.matingDateBirth.setOnClickListener {
+                showDatePickerDialog(binding.matingDateBirth)
+            }
         }
+
         binding.addMatingDate.setOnClickListener {
             showDatePickerDialog(binding.addMatingDate)
         }

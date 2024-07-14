@@ -67,7 +67,12 @@ class MatingDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_birth_completed -> {
-                // przekieruj do add litter z parametrami, przerób add litter na nowy sposób otrzymywania parametrów, powrót z add litter do edycji tego tutaj :)
+                view?.findNavController()
+                    ?.navigate(
+                        MatingDetailsFragmentDirections.actionMatingDetailsFragmentToAddLitterFragment(
+                            mating!!.id
+                        )
+                    )
                 true
             }
 
@@ -159,11 +164,13 @@ class MatingDetailsFragment : Fragment() {
     }
 
     private fun handleExpirationAndArchie() {
-        if (mating?.archived == true || mating?.fkLitter != null) {
+        if (mating?.archived == true) {
             binding.fragmentMatingDetailsArchived.visibility = View.VISIBLE
         } else {
             binding.fragmentMatingDetailsArchived.visibility = View.GONE
-            if (LocalDate.ofEpochDay(mating!!.matingDate).plusDays(60).isBefore(LocalDate.now())) {
+            if (LocalDate.ofEpochDay(mating!!.matingDate).plusDays(60)
+                    .isBefore(LocalDate.now()) && mating!!.fkLitter == null
+            ) {
                 binding.overtimeMessage.visibility = View.VISIBLE
             } else {
                 binding.overtimeMessage.visibility = View.GONE
@@ -174,8 +181,11 @@ class MatingDetailsFragment : Fragment() {
     private fun displayLitterIfSelected() {
         if (mating?.fkLitter != null) {
             val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-            val selectedLitterFragment = HomeListItemFragment(viewModel.selectedLitter!!)
-            transaction.replace(R.id.add_litter_fragment, selectedLitterFragment)
+            val selectedLitterFragment = viewModel.getLitterFromId(mating!!.fkLitter!!)
+                ?.let { HomeListItemFragment(it) }
+            if (selectedLitterFragment != null) {
+                transaction.replace(R.id.add_litter_fragment, selectedLitterFragment)
+            }
             transaction.commit()
         } else {
             binding.fragmentMatingIncludeLitter.root.visibility = View.GONE
