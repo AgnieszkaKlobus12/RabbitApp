@@ -127,6 +127,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_sicknesses"
+        android:name="com.example.rabbitapp.ui.sicknesses.SicknessesListFragment"
+        android:label="@string/sicknesses"
+        tools:layout="@layout/fragment_sicknesses_list"></fragment>
+
+    <fragment
         android:id="@+id/addMatingFragment"
         android:name="com.example.rabbitapp.ui.matings.AddMatingFragment"
         android:label="@string/add_mating"
