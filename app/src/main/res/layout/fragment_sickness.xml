@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.sicknesses.SicknessFragment">
+
+    <TextView
+        android:id="@+id/fragment_sickness_sickness_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/unknown"
+        android:textSize="@dimen/bigger_text"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fragment_sickness_edit_sickness_symptoms_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/symptoms"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fragment_sickness_edit_sickness_symptoms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tiny_margin"
+        android:text="@string/unknown" />
+
+    <TextView
+        android:id="@+id/fragment_sickness_edit_sickness_treatment_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/treatment"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fragment_sickness_edit_sickness_treatment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tiny_margin"
+        android:text="@string/unknown" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/sickness_details_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/sickness_details_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/edit" />
+    </LinearLayout>
+
+
+</LinearLayout>

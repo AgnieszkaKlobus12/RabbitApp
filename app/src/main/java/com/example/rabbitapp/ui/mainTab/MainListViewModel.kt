@@ -7,12 +7,14 @@ import com.example.rabbitapp.model.AppDatabase
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.model.service.LitterService
 import com.example.rabbitapp.model.service.MatingService
 import com.example.rabbitapp.model.service.RabbitService
+import com.example.rabbitapp.model.service.SicknessService
 import com.example.rabbitapp.model.service.VaccineService
 import com.example.rabbitapp.utils.Gender
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -24,6 +26,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     private val litterRepository: LitterService
     private val vaccinesRepository: VaccineService
     private val matingRepository: MatingService
+    private val sickRepository: SicknessService
 
     var selectedMother: Rabbit? = null
     var selectedFather: Rabbit? = null
@@ -38,6 +41,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         vaccinesRepository =
             VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
         matingRepository = MatingService(database.matingRepository())
+        sickRepository = SicknessService(database.sickRepository(), database.sicknessRepository())
     }
 
     fun save(rabbit: Rabbit): Long {
@@ -178,6 +182,22 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun getAllMatingsForRabbit(id: Long): List<Mating> {
         return matingRepository.getAllMatingsForRabbit(id)
+    }
+
+    fun getAllSicknesses(): List<Sickness> {
+        return sickRepository.getAllSicknesses()
+    }
+
+    fun getSickness(sicknessId: Long): Sickness? {
+        return sickRepository.getSicknessFromId(sicknessId)
+    }
+
+    fun save(sickness: Sickness): Long {
+        return sickRepository.save(sickness)
+    }
+
+    fun deleteSickness(id: Long) {
+        return sickRepository.deleteWithId(id)
     }
 
 }

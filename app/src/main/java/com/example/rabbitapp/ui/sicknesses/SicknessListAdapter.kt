@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.vaccines
+package com.example.rabbitapp.ui.sicknesses
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,21 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
-import com.example.rabbitapp.model.entities.Vaccine
+import com.example.rabbitapp.model.entities.Sickness
 
-class VaccineListAdapter(
-    private val values: List<Vaccine>,
-    private val onSelectedVaccine: OnSelectedVaccine
+class SicknessListAdapter(
+    private val values: List<Sickness>,
+    private val onSelectedVaccine: OnSelectedSickness
 ) :
-    RecyclerView.Adapter<VaccineListAdapter.VaccineListItemView>() {
+    RecyclerView.Adapter<SicknessListAdapter.SicknessListItemView>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VaccineListItemView {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SicknessListItemView {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.simple_list_item, parent, false)
-        return VaccineListItemView(itemView)
+        return SicknessListItemView(itemView)
     }
 
-    override fun onBindViewHolder(holder: VaccineListItemView, position: Int) {
+    override fun onBindViewHolder(holder: SicknessListItemView, position: Int) {
         val item = values[position]
         holder.name.text = item.name
         holder.itemView.setOnClickListener { onSelectedVaccine.onItemClick(item) }
@@ -28,7 +28,7 @@ class VaccineListAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class VaccineListItemView(iv: View) : RecyclerView.ViewHolder(iv) {
+    inner class SicknessListItemView(iv: View) : RecyclerView.ViewHolder(iv) {
         val name: TextView = iv.findViewById(R.id.simple_list_item_name)
     }
 
