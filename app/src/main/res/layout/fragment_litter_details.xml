@@ -143,10 +143,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/fragment_litter_details_include_sicknesses"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_litter_details_include_litter_items" />
+
+            <include
+                android:id="@+id/fragment_litter_details_include_sicknesses"
+                layout="@layout/sicknesses_list_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_litter_details_include_vaccinations" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

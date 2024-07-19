@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.sicknesses.SicknessDetailsFragment">
+
+    <ScrollView
+        android:id="@+id/details_sickness_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/details_sickness_save_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/fragment_details_sickness_rabbit"
+                layout="@layout/home_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                app:layout_constraintBottom_toTopOf="@id/details_sickness_sickness_details"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/details_sickness_sickness_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:background="?android:colorSecondary"
+                android:orientation="vertical"
+                android:padding="@dimen/small_margin"
+                app:layout_constraintBottom_toTopOf="@id/details_sickness_date_start"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_sickness_rabbit">
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_sickness_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/tiny_margin"
+                    android:text="@string/unknown"
+                    android:textSize="@dimen/bigger_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_sickness_symptoms_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/symptoms"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_sickness_symptoms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/tiny_margin"
+                    android:text="@string/unknown" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_sickness_treatment_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/treatment"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_sickness_treatment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/tiny_margin"
+                    android:text="@string/unknown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/details_sickness_date_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/details_sickness_date_end"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_sickness_sickness_details">
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_date_start_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_marginVertical="@dimen/tiny_margin"
+                    android:text="@string/sickness_start_date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:text="@string/unknown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/details_sickness_date_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/fragment_details_sickness_sickness_description_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_sickness_date_start">
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_date_end_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_marginVertical="@dimen/tiny_margin"
+                    android:text="@string/sickness_end_date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_details_sickness_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:text="@string/unknown" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_details_sickness_sickness_description_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/big_margin"
+                android:text="@string/additional_description"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/fragment_details_sickness_sickness_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_sickness_date_end" />
+
+            <TextView
+                android:id="@+id/fragment_details_sickness_sickness_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_marginTop="@dimen/tiny_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:text="@string/unknown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_details_sickness_sickness_description_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

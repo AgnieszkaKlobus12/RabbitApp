@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessesListBinding
 import com.example.rabbitapp.model.entities.Sickness
@@ -14,6 +15,8 @@ import com.example.rabbitapp.ui.mainTab.MainListViewModel
 
 
 class SicknessesListFragment : Fragment() {
+
+    private val args: SicknessesListFragmentArgs by navArgs()
 
     private var _binding: FragmentSicknessesListBinding? = null
     private val viewModel: MainListViewModel by activityViewModels()
@@ -35,12 +38,23 @@ class SicknessesListFragment : Fragment() {
         binding.fragmentSicknessesListRecyclerView.adapter =
             SicknessListAdapter(viewModel.getAllSicknesses(), object : OnSelectedSickness {
                 override fun onItemClick(item: Sickness) {
-                    view.findNavController()
-                        .navigate(
-                            SicknessesListFragmentDirections.actionNavigationSicknessesToSicknessDetailsFragment(
-                                item.id
+                    if (args.rabbitId == 0L && args.litterId == 0L) {
+                        view.findNavController()
+                            .navigate(
+                                SicknessesListFragmentDirections.actionNavigationSicknessesToSicknessDetailsFragment(
+                                    item.id
+                                )
                             )
-                        )
+                    } else {
+                        view.findNavController()
+                            .navigate(
+                                SicknessesListFragmentDirections.actionNavigationSicknessesToAddSicknessFragment(
+                                    args.rabbitId,
+                                    args.litterId,
+                                    item.id
+                                )
+                            )
+                    }
                 }
             })
 

@@ -126,11 +126,63 @@
             app:destination="@id/matingDetailsFragment" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/navigation_sick_details"
+        android:name="com.example.rabbitapp.ui.sicknesses.SicknessDetailsFragment"
+        android:label="@string/sicknesses"
+        tools:layout="@layout/fragment_sick_details">
+        <argument
+            android:name="sick_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_sicknesses"
+        android:name="com.example.rabbitapp.ui.sicknesses.AddSicknessFragment"
+        android:label="@string/sicknesses"
+        tools:layout="@layout/fragment_add_sickness">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="sickness_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_navigation_add_sickness_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment"
+            app:popUpTo="@id/rabbitDetailsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_add_sickness_to_litterDetailsFragment"
+            app:destination="@id/litterDetailsFragment"
+            app:popUpTo="@id/litterDetailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_sicknesses"
         android:name="com.example.rabbitapp.ui.sicknesses.SicknessesListFragment"
         android:label="@string/sicknesses"
         tools:layout="@layout/fragment_sicknesses_list">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_navigation_sicknesses_to_addSicknessFragment"
+            app:destination="@id/navigation_add_sicknesses" />
         <action
             android:id="@+id/action_navigation_sicknesses_to_editSicknessFragment"
             app:destination="@id/navigation_edit_sickness" />
@@ -281,6 +333,9 @@
             android:id="@+id/action_rabbitDetailsFragment_to_vaccineFragment"
             app:destination="@id/fragment_vaccine_details" />
         <action
+            android:id="@+id/action_rabbitDetailsFragment_to_sick_detailsFragment"
+            app:destination="@id/navigation_sick_details" />
+        <action
             android:id="@+id/action_rabbitDetailsFragment_to_matingFragment"
             app:destination="@id/matingDetailsFragment" />
         <action
@@ -289,6 +344,9 @@
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_vaccineListFragment"
             app:destination="@id/navigation_vaccine_list" />
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_sicknessesListFragment"
+            app:destination="@id/navigation_sicknesses" />
     </fragment>
     <fragment
         android:id="@+id/litterDetailsFragment"
@@ -298,6 +356,9 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_navigation_home"
             app:destination="@id/navigation_rabbit_list" />
+        <action
+            android:id="@+id/action_litteretailsFragment_to_sick_detailsFragment"
+            app:destination="@id/navigation_sick_details" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_addLitterFragment"
             app:destination="@id/addLitterFragment" />
@@ -310,6 +371,9 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_vaccineListFragment"
             app:destination="@id/navigation_vaccine_list" />
+        <action
+            android:id="@+id/action_litterDetailsFragment_to_sicknessListFragment"
+            app:destination="@id/navigation_sicknesses" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_vaccineFragment"
             app:destination="@id/fragment_vaccine_details" />

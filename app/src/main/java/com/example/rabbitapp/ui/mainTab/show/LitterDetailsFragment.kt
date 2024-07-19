@@ -14,11 +14,14 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
+import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
+import com.example.rabbitapp.ui.sicknesses.OnSelectedSick
+import com.example.rabbitapp.ui.sicknesses.SickListAdapter
 import com.example.rabbitapp.ui.vaccines.OnSelectedVaccination
 import com.example.rabbitapp.ui.vaccines.VaccinationsListAdapter
 import com.example.rabbitapp.utils.RabbitDetails
@@ -54,6 +57,18 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 }
                 true
             }
+
+            R.id.navigation_litter_sickness -> {
+                view?.findNavController()
+                    ?.navigate(
+                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToSicknessListFragment(
+                            0L,
+                            viewModel.selectedLitter!!.id
+                        )
+                    )
+                true
+            }
+
             R.id.navigation_vaccinate_litter -> {
                 view?.findNavController()
                     ?.navigate(
@@ -125,6 +140,27 @@ class LitterDetailsFragment : FragmentWithPicture() {
                             }
                         }
                     })
+            }
+        }
+
+        viewModel.selectedLitter?.id?.let {
+            val sicknesses = viewModel.getAllSicknessesForLitter(it)
+            if (sicknesses.isNotEmpty()) {
+                binding.fragmentLitterDetailsIncludeSicknesses.root.visibility = View.VISIBLE
+                binding.fragmentLitterDetailsIncludeSicknesses.fragmentSicknessesListRecyclerView.adapter =
+                    SickListAdapter(
+                        viewModel,
+                        sicknesses,
+                        object : OnSelectedSick {
+                            override fun onItemClick(item: Sick) {
+                                view.findNavController()
+                                    .navigate(
+                                        LitterDetailsFragmentDirections.actionLitteretailsFragmentToSickDetailsFragment(
+                                            item.id
+                                        )
+                                    )
+                            }
+                        })
             }
         }
 

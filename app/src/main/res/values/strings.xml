@@ -83,4 +83,9 @@
     <string name="treatment">Leczenie:</string>
     <string name="edit_sickness">Edytuj chorobę</string>
     <string name="confirm_delete_sickness_message">Czy na pewno chcesz usunąć pokrycie? Ta operacja jest nieodwracalna!</string>
+    <string name="add_sickness">Dodaj chorobę</string>
+    <string name="sickness_start_date">Data początku choroby:</string>
+    <string name="sickness_end_date">Data końca choroby:</string>
+    <string name="additional_description">Dodatkowy opis:</string>
+    <string name="sicknesses_list">Lista chorób</string>
 </resources>

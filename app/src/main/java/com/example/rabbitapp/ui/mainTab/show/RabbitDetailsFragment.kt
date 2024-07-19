@@ -13,11 +13,14 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
 import com.example.rabbitapp.model.entities.relations.Mating
+import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.ui.matings.MatingListAdapter
 import com.example.rabbitapp.ui.matings.OnSelectedMating
+import com.example.rabbitapp.ui.sicknesses.OnSelectedSick
+import com.example.rabbitapp.ui.sicknesses.SickListAdapter
 import com.example.rabbitapp.ui.vaccines.OnSelectedVaccination
 import com.example.rabbitapp.ui.vaccines.VaccinationsListAdapter
 import com.example.rabbitapp.utils.Gender
@@ -46,6 +49,17 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                     ?.navigate(
                         RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineListFragment(
                             viewModel.selectedRabbit!!.id
+                        )
+                    )
+                true
+            }
+
+            R.id.navigation_rabbit_sickness -> {
+                view?.findNavController()
+                    ?.navigate(
+                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToSicknessesListFragment(
+                            viewModel.selectedRabbit!!.id,
+                            0L
                         )
                     )
                 true
@@ -111,6 +125,27 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                                     .navigate(
                                         RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineFragment(
                                             item.fkVaccine
+                                        )
+                                    )
+                            }
+                        })
+            }
+        }
+
+        viewModel.selectedRabbit?.id?.let {
+            val sicknesses = viewModel.getAllSicknessesForRabbit(it)
+            if (sicknesses.isNotEmpty()) {
+                binding.fragmentRabbitDetailsIncludeSicknesses.root.visibility = View.VISIBLE
+                binding.fragmentRabbitDetailsIncludeSicknesses.fragmentSicknessesListRecyclerView.adapter =
+                    SickListAdapter(
+                        viewModel,
+                        sicknesses,
+                        object : OnSelectedSick {
+                            override fun onItemClick(item: Sick) {
+                                view.findNavController()
+                                    .navigate(
+                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToSickDetailsFragment(
+                                            item.id
                                         )
                                     )
                             }

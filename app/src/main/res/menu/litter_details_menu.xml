@@ -6,6 +6,10 @@
         android:title="@string/add_rabbit_to_litter" />
 
     <item
+        android:id="@+id/navigation_litter_sickness"
+        android:title="@string/add_sickness" />
+
+    <item
         android:id="@+id/navigation_vaccinate_litter"
         android:title="@string/add_vaccination" />
 

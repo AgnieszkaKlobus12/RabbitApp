@@ -10,6 +10,7 @@ import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.model.entities.relations.Mating
+import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.model.service.LitterService
 import com.example.rabbitapp.model.service.MatingService
@@ -198,6 +199,22 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun deleteSickness(id: Long) {
         return sickRepository.deleteWithId(id)
+    }
+
+    fun save(sick: Sick): Long {
+        return sickRepository.save(sick)
+    }
+
+    fun getAllSicknessesForRabbit(it: Long): List<Sick> {
+        return sickRepository.getAllSickForRabbit(it)
+    }
+
+    fun getAllSicknessesForLitter(it: Long): List<Sick> {
+        return sickRepository.getAllSickForLitter(it)
+    }
+
+    fun getSick(sickId: Long): Sick? {
+        return sickRepository.getSickFromId(sickId)
     }
 
 }

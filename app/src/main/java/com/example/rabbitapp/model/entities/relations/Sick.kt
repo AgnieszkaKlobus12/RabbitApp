@@ -31,7 +31,8 @@ import com.example.rabbitapp.model.entities.Sickness
 data class Sick(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val startDate: Long,
-    val endDate: Long,
+    val endDate: Long?,
+    val description: String,
     var fkRabbit: Long?,
     var fkLitter: Long?,
     var fkSickness: Long
