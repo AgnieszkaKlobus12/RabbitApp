@@ -1,10 +1,15 @@
 package com.example.rabbitapp.ui.sicknesses
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSickDetailsBinding
@@ -27,6 +32,60 @@ class SicknessDetailsFragment : FragmentWithPicture() {
     private var _binding: FragmentSickDetailsBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.sick_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.navigation_edit_sick -> {
+                view?.findNavController()
+                    ?.navigate(
+                        SicknessDetailsFragmentDirections.navigationSickDetailsToAddSicknessFragment(
+                            0L, 0L, 0L,
+                            sick!!.id
+                        )
+                    )
+                true
+            }
+
+            R.id.navigation_delete_sick -> {
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deleteSick(sick!!.id)
+                            if (sick?.fkLitter != null) {
+                                view?.findNavController()
+                                    ?.navigate(R.id.navigation_sick_details_to_litterDetailsFragment)
+                            } else {
+                                view?.findNavController()
+                                    ?.navigate(R.id.navigation_sick_details_to_rabbitDetailsFragment)
+                            }
+                        }
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_delete_sick_message)
+                    }
+                    builder.create()
+                }
+                alertDialog.show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +94,12 @@ class SicknessDetailsFragment : FragmentWithPicture() {
         val root: View = binding.root
 
         sick = viewModel.getSick(args.sickId)
-        item = sick?.fkRabbit?.let { viewModel.getRabbitFromId(it) }
-        item = sick?.fkLitter?.let { viewModel.getLitterFromId(it) }
-        sickness = sick?.fkSickness?.let { viewModel.getSickness(it) }
+        item = if (sick!!.fkRabbit != null) {
+            sick!!.fkRabbit?.let { viewModel.getRabbitFromId(it) }
+        } else {
+            sick!!.fkLitter?.let { viewModel.getLitterFromId(it) }
+        }
+        sickness = sick!!.fkSickness.let { viewModel.getSickness(it) }
         return root
     }
 

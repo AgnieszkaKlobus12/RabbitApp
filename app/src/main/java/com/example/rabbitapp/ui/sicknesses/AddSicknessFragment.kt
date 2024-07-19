@@ -8,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddSicknessBinding
 import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.model.entities.Litter
+import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
@@ -25,6 +28,7 @@ class AddSicknessFragment : FragmentWithPicture() {
 
     private val args: AddSicknessFragmentArgs by navArgs()
 
+    private var sick: Sick? = null
     private var item: HomeListItem? = null
     private var sickness: Sickness? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
@@ -40,12 +44,25 @@ class AddSicknessFragment : FragmentWithPicture() {
 
         if (args.rabbitId != 0L) {
             item = viewModel.getRabbitFromId(args.rabbitId)
-            Log.d("VaccinateFragment", "rabbit: $item")
+            Log.d("AddSicknessFragment", "rabbit: $item")
         } else {
             item = viewModel.getLitterFromId(args.litterId)
-            Log.d("VaccinateFragment", "litter: $item")
+            Log.d("AddSicknessFragment", "litter: $item")
         }
         sickness = viewModel.getSickness(args.sicknessId)
+        if (args.sickId != 0L) {
+            sick = viewModel.getSick(args.sickId)
+            Log.d("AddSicknessFragment", "sick: $sick")
+            sickness = sick?.let { viewModel.getSickness(it.fkSickness) }
+            item = if (sick!!.fkLitter != null) {
+                sick!!.fkLitter?.let { viewModel.getLitterFromId(it) }
+            } else {
+                sick!!.fkRabbit?.let { viewModel.getRabbitFromId(it) }
+
+            }
+            Log.d("AddSicknessFragment", "item: $item")
+
+        }
         return root
     }
 
@@ -70,6 +87,18 @@ class AddSicknessFragment : FragmentWithPicture() {
             R.drawable.rabbit_back
         )
 
+        binding.fragmentAddSicknessRabbit.root.setOnClickListener {
+            Toast.makeText(
+                context,
+                getString(R.string.cannot_change_remove_and_add_again), Toast.LENGTH_SHORT
+            ).show()
+        }
+        binding.addSicknessSicknessDetails.setOnClickListener {
+            Toast.makeText(
+                context,
+                getString(R.string.cannot_change_remove_and_add_again), Toast.LENGTH_SHORT
+            ).show()
+        }
         binding.fragmentAddSicknessSicknessName.text = sickness!!.name
         binding.fragmentAddSicknessSicknessTreatment.text = sickness!!.treatment
         binding.fragmentAddSicknessSicknessSymptoms.text = sickness!!.symptoms
@@ -77,7 +106,7 @@ class AddSicknessFragment : FragmentWithPicture() {
         binding.addSicknessSaveButton.setOnClickListener {
             viewModel.save(
                 Sick(
-                    0L,
+                    sick?.id ?: 0L,
                     LocalDate.parse(
                         binding.fragmentAddSicknessStartDate.text.toString(),
                         dateFormatter
@@ -92,12 +121,20 @@ class AddSicknessFragment : FragmentWithPicture() {
                         null
                     },
                     binding.fragmentAddSicknessSicknessDescription.text.toString(),
-                    args.rabbitId.takeIf { it != 0L },
-                    args.litterId.takeIf { it != 0L },
+                    if (item is Rabbit) {
+                        item!!.id
+                    } else {
+                        null
+                    },
+                    if (item is Litter) {
+                        item!!.id
+                    } else {
+                        null
+                    },
                     sickness!!.id
                 )
             )
-            if (args.rabbitId != 0L) {
+            if (item is Rabbit) {
                 view.findNavController()
                     .navigate(R.id.action_navigation_add_sickness_to_rabbitDetailsFragment)
             } else {

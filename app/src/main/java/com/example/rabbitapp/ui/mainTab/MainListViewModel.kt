@@ -217,5 +217,9 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return sickRepository.getSickFromId(sickId)
     }
 
+    fun deleteSick(id: Long) {
+        sickRepository.deleteSickWithId(id)
+    }
+
 }
 

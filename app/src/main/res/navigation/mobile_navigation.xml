@@ -136,6 +136,19 @@
             android:name="sick_id"
             android:defaultValue="0L"
             app:argType="long" />
+        <action
+            android:id="@+id/navigation_sick_details_to_addSicknessFragment"
+            app:destination="@id/navigation_add_sicknesses" />
+        <action
+            android:id="@+id/navigation_sick_details_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment"
+            app:popUpTo="@id/rabbitDetailsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/navigation_sick_details_to_litterDetailsFragment"
+            app:destination="@id/litterDetailsFragment"
+            app:popUpTo="@id/litterDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -153,6 +166,10 @@
             app:argType="long" />
         <argument
             android:name="sickness_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="sick_id"
             android:defaultValue="0L"
             app:argType="long" />
         <action

@@ -39,5 +39,9 @@ class SicknessService(private val sickDao: SickDao, private val sicknessDao: Sic
         return sickDao.getSickFromId(sickId)
     }
 
+    fun deleteSickWithId(id: Long) {
+        sickDao.delete(id)
+    }
+
 
 }
