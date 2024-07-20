@@ -49,8 +49,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/tiny_margin"
+        android:layout_marginHorizontal="@dimen/tiny_margin"
+        android:layout_marginTop="@dimen/tiny_margin"
+        android:layout_marginBottom="@dimen/default_margin"
         android:text="@string/unknown" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/fragment_sickness_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/tiny_margin"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/fragment_sickness_sick"
+        layout="@layout/sick_list_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/fragment_sickness_divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/tiny_margin"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"

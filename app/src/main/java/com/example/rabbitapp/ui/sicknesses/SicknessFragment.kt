@@ -11,8 +11,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessBinding
+import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
+import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 
 class SicknessFragment : Fragment() {
 
@@ -48,6 +51,20 @@ class SicknessFragment : Fragment() {
                     )
                 )
         }
+
+        val sick = viewModel.getAllWithSickness(sickness!!.id)
+        if (sick.isNotEmpty()) {
+            binding.fragmentSicknessSick.root.visibility = View.VISIBLE
+            binding.fragmentSicknessDivider.visibility = View.VISIBLE
+            binding.fragmentSicknessDivider2.visibility = View.VISIBLE
+        }
+
+        binding.fragmentSicknessSick.fragmentSickListRecyclerView.adapter =
+            MainListAdapter(sick, object : OnSelectedItem {
+                override fun onItemClick(item: HomeListItem) {
+                    //nothing
+                }
+            })
 
         binding.sicknessDetailsDeleteButton.setOnClickListener {
             val alertDialog = requireActivity().let {

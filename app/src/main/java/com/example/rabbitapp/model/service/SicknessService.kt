@@ -43,5 +43,12 @@ class SicknessService(private val sickDao: SickDao, private val sicknessDao: Sic
         sickDao.delete(id)
     }
 
+    fun getAllRabbitsWithSickness(id: Long): List<Long> {
+        return sickDao.getAllRabbitsWithSickness(id);
+    }
+
+    fun getAllLittersWithSickness(id: Long): List<Long> {
+        return sickDao.getAllLittersWithSickness(id);
+    }
 
 }

@@ -29,4 +29,10 @@ interface SickDao {
 
     @Query("select * from Sick where fkLitter = :fkLitter")
     fun getAllSickForLitter(fkLitter: Long): List<Sick>
+
+    @Query("select fkRabbit from Sick where fkSickness = :id and fkRabbit not null")
+    fun getAllRabbitsWithSickness(id: Long): List<Long>
+
+    @Query("select fkLitter from Sick where fkSickness = :id and fkLitter not null")
+    fun getAllLittersWithSickness(id: Long): List<Long>
 }

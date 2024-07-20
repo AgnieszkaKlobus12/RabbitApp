@@ -221,5 +221,16 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         sickRepository.deleteSickWithId(id)
     }
 
+    fun getAllWithSickness(id: Long): List<HomeListItem> {
+        val list: MutableList<HomeListItem> = mutableListOf()
+        list.addAll(
+            sickRepository.getAllRabbitsWithSickness(id)
+                .mapNotNull { rabbitId -> rabbitRepository.getRabbitFromId(rabbitId) })
+        list.addAll(
+            sickRepository.getAllLittersWithSickness(id)
+                .mapNotNull { rabbitId -> litterRepository.getLitterFromId(rabbitId) })
+        return list
+    }
+
 }
 

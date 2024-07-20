@@ -90,4 +90,5 @@
     <string name="sicknesses_list">Lista chorób</string>
     <string name="cannot_change_remove_and_add_again">Nie można zmienić!! Usuń i utwórz ponownie</string>
     <string name="confirm_delete_sick_message">Czy na pewno chcesz usunąć? Ta operacja jest nieodwracalna!</string>
+    <string name="sick_list">Lista chorych</string>
 </resources>
