@@ -176,8 +176,8 @@ class LitterDetailsFragment : FragmentWithPicture() {
                             override fun onItemClick(item: Vaccinated) {
                                 view.findNavController()
                                     .navigate(
-                                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToVaccineFragment(
-                                            item.fkVaccine
+                                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToVaccinateDetailsFragment(
+                                            item.id
                                         )
                                     )
                             }

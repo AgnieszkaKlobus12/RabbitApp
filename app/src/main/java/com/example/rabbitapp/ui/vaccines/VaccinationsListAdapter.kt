@@ -28,7 +28,12 @@ class VaccinationsListAdapter(
         val item = values[position]
         holder.name.text = viewModel.getVaccine(item.fkVaccine)?.name
         holder.date.text = RabbitDetails.getDateString(item.date)
-        holder.dose.text = item.dose
+        if (item.nextDoseDate != null) {
+            holder.nextDate.text = item.nextDoseDate.let { RabbitDetails.getDateString(it) }
+        } else {
+            holder.nextDate.visibility = View.GONE
+        }
+        holder.doseNumber.text = item.doseNumber.toString()
         holder.itemView.setOnClickListener { onSelectedItem.onItemClick(item) }
     }
 
@@ -36,8 +41,10 @@ class VaccinationsListAdapter(
 
     inner class VaccinationsListItemView(iv: View) : RecyclerView.ViewHolder(iv) {
         val name: TextView = iv.findViewById(R.id.vaccination_list_item_vaccine_name)
-        val date: TextView = iv.findViewById(R.id.vaccination_list_date)
-        val dose: TextView = iv.findViewById(R.id.vaccination_list_dose)
+        val date: TextView = iv.findViewById(R.id.vaccination_list_item_vaccination_date)
+        val nextDate: TextView = iv.findViewById(R.id.vaccination_list_item_date_next)
+        val doseNumber: TextView = iv.findViewById(R.id.vaccination_list_item_dose_number)
+
     }
 
 }

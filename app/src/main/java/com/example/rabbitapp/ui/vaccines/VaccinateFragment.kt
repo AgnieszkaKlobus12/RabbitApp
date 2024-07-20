@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccinateBinding
 import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.model.entities.Litter
+import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import com.example.rabbitapp.ui.mainTab.add.FragmentWithPicture
@@ -27,6 +29,7 @@ class VaccinateFragment : FragmentWithPicture() {
 
     private var item: HomeListItem? = null
     private var vaccine: Vaccine? = null
+    private var vaccinated: Vaccinated? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     private var _binding: FragmentVaccinateBinding? = null
     private val binding get() = _binding!!
@@ -38,14 +41,26 @@ class VaccinateFragment : FragmentWithPicture() {
         _binding = FragmentVaccinateBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        if (args.rabbitId != 0L) {
-            item = viewModel.getRabbitFromId(args.rabbitId)
-            Log.d("VaccinateFragment", "rabbit: $item")
+        if (args.vaccinatedId != 0L) {
+            vaccinated = viewModel.getVaccinatedFromId(args.vaccinatedId)
+            if (vaccinated!!.fkRabbit != null) {
+                item = viewModel.getRabbitFromId(vaccinated!!.fkRabbit!!)
+                Log.d("VaccinateFragment", "rabbit: $item")
+            } else {
+                item = viewModel.getLitterFromId(vaccinated!!.fkLitter!!)
+                Log.d("VaccinateFragment", "litter: $item")
+            }
+            vaccine = viewModel.getVaccine(vaccinated!!.fkVaccine)
         } else {
-            item = viewModel.getLitterFromId(args.litterId)
-            Log.d("VaccinateFragment", "litter: $item")
+            if (args.rabbitId != 0L) {
+                item = viewModel.getRabbitFromId(args.rabbitId)
+                Log.d("VaccinateFragment", "rabbit: $item")
+            } else {
+                item = viewModel.getLitterFromId(args.litterId)
+                Log.d("VaccinateFragment", "litter: $item")
+            }
+            vaccine = viewModel.getVaccine(args.vaccineId)
         }
-        vaccine = viewModel.getVaccine(args.vaccineId)
         return root
     }
 
@@ -53,10 +68,32 @@ class VaccinateFragment : FragmentWithPicture() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fragmentVaccinateDate.text = Editable.Factory.getInstance().newEditable(
-            LocalDate.ofEpochDay(item!!.birth).format(dateFormatter)
+            LocalDate.now().format(dateFormatter)
         )
+
+        if (vaccinated != null) {
+            if (vaccinated!!.nextDoseDate != null) {
+                binding.fragmentVaccinateDateNextDose.text =
+                    Editable.Factory.getInstance().newEditable(
+                        vaccinated!!.nextDoseDate?.let {
+                            LocalDate.ofEpochDay(it).format(dateFormatter)
+                        }
+                    )
+            }
+            binding.fragmentVaccinateDate.text = Editable.Factory.getInstance().newEditable(
+                LocalDate.ofEpochDay(vaccinated!!.date).format(dateFormatter)
+            )
+            binding.vaccinatedDoseDescription.text =
+                Editable.Factory.getInstance().newEditable(vaccinated!!.dose)
+            binding.fragmentVaccinateDoseNumber.text =
+                Editable.Factory.getInstance().newEditable(vaccinated!!.doseNumber.toString())
+        }
+
         binding.fragmentVaccinateDate.setOnClickListener {
             showDatePickerDialog(binding.fragmentVaccinateDate)
+        }
+        binding.fragmentVaccinateDateNextDose.setOnClickListener {
+            showDatePickerDialog(binding.fragmentVaccinateDateNextDose)
         }
         binding.fragmentVaccinateRabbit.homeListItemAge.text = RabbitDetails.getAge(item!!.birth)
         binding.fragmentVaccinateRabbit.homeListItemName.text = item!!.name
@@ -72,16 +109,33 @@ class VaccinateFragment : FragmentWithPicture() {
         binding.vaccinateSaveButton.setOnClickListener {
             viewModel.save(
                 Vaccinated(
-                    0L,
+                    vaccinated.takeIf { it != null }?.id ?: 0L,
                     LocalDate.parse(binding.fragmentVaccinateDate.text.toString(), dateFormatter)
                         .toEpochDay(),
+                    if (binding.fragmentVaccinateDateNextDose.text.toString() != getString(R.string.unknown)) {
+                        LocalDate.parse(
+                            binding.fragmentVaccinateDateNextDose.text.toString(),
+                            dateFormatter
+                        ).toEpochDay()
+                    } else {
+                        null
+                    },
                     binding.vaccinatedDoseDescription.text.toString(),
-                    args.rabbitId.takeIf { it != 0L },
-                    args.litterId.takeIf { it != 0L },
+                    binding.fragmentVaccinateDoseNumber.text.toString().toInt(),
+                    if (item is Rabbit) {
+                        item!!.id
+                    } else {
+                        null
+                    },
+                    if (item is Litter) {
+                        item!!.id
+                    } else {
+                        null
+                    },
                     vaccine!!.id
                 )
             )
-            if (args.rabbitId != 0L) {
+            if (item is Rabbit) {
                 view.findNavController()
                     .navigate(R.id.action_navigation_vaccinate_to_rabbitDetailsFragment)
             } else {

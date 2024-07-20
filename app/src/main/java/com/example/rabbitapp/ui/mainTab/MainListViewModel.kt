@@ -71,7 +71,9 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
                         Vaccinated(
                             0L,
                             vaccinated.date,
+                            vaccinated.nextDoseDate,
                             vaccinated.dose,
+                            vaccinated.doseNumber,
                             it.id,
                             null,
                             vaccinated.fkVaccine
@@ -228,6 +230,25 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
                 .mapNotNull { rabbitId -> rabbitRepository.getRabbitFromId(rabbitId) })
         list.addAll(
             sickRepository.getAllLittersWithSickness(id)
+                .mapNotNull { rabbitId -> litterRepository.getLitterFromId(rabbitId) })
+        return list
+    }
+
+    fun getVaccinatedFromId(vaccinatedId: Long): Vaccinated? {
+        return vaccinesRepository.getVaccinatedById(vaccinatedId)
+    }
+
+    fun deleteVaccinated(id: Long) {
+        vaccinesRepository.deleteVaccinatedWithId(id)
+    }
+
+    fun getAllVaccinated(id: Long): List<HomeListItem> {
+        val list: MutableList<HomeListItem> = mutableListOf()
+        list.addAll(
+            vaccinesRepository.getAllRabbitsVaccinatedWith(id)
+                .mapNotNull { rabbitId -> rabbitRepository.getRabbitFromId(rabbitId) })
+        list.addAll(
+            vaccinesRepository.getAllLittersVaccinatedWith(id)
                 .mapNotNull { rabbitId -> litterRepository.getLitterFromId(rabbitId) })
         return list
     }

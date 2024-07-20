@@ -29,4 +29,10 @@ interface VaccinatedDao {
 
     @Query("select * from Vaccinated where fkLitter = :fkLitter")
     fun getAllVaccinationsForLitter(fkLitter: Long): List<Vaccinated>
+
+    @Query("select distinct fkRabbit from Vaccinated where fkVaccine = :id and fkRabbit not null")
+    fun getAllRabbitsVaccinatedWith(id: Long): List<Long>
+
+    @Query("select distinct fkLitter from Vaccinated where fkVaccine = :id and fkLitter not null")
+    fun getAllLittersVaccinatedWith(id: Long): List<Long>
 }

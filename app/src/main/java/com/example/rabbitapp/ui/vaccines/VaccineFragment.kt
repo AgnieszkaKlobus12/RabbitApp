@@ -11,8 +11,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccineBinding
+import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
+import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 
 class VaccineFragment : Fragment() {
 
@@ -38,6 +41,20 @@ class VaccineFragment : Fragment() {
 
         binding.fragmentVaccineVaccineName.text = vaccine?.name
         binding.fragmentVaccineVaccineDescription.text = vaccine?.description
+
+        val vaccinated = viewModel.getAllVaccinated(vaccine!!.id)
+        if (vaccinated.isNotEmpty()) {
+            binding.fragmentVaccineVaccinated.root.visibility = View.VISIBLE
+            binding.fragmentVaccineDivider.visibility = View.VISIBLE
+            binding.fragmentVaccineDivider2.visibility = View.VISIBLE
+        }
+
+        binding.fragmentVaccineVaccinated.fragmentVaccinatedListRecyclerView.adapter =
+            MainListAdapter(vaccinated, object : OnSelectedItem {
+                override fun onItemClick(item: HomeListItem) {
+                    //nothing
+                }
+            })
 
         binding.vaccineDetailsEditButton.setOnClickListener {
             view.findNavController()

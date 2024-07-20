@@ -34,4 +34,20 @@ class VaccineService(private val vaccineDao: VaccineDao, private val vaccinatedD
     fun getAllVaccinationsForLitter(fkLitter: Long): List<Vaccinated> {
         return vaccinatedDao.getAllVaccinationsForLitter(fkLitter)
     }
+
+    fun getVaccinatedById(vaccinatedId: Long): Vaccinated? {
+        return vaccinatedDao.getVaccinatedFromId(vaccinatedId)
+    }
+
+    fun deleteVaccinatedWithId(id: Long) {
+        vaccinatedDao.delete(id)
+    }
+
+    fun getAllRabbitsVaccinatedWith(id: Long): List<Long> {
+        return vaccinatedDao.getAllRabbitsVaccinatedWith(id)
+    }
+
+    fun getAllLittersVaccinatedWith(id: Long): List<Long> {
+        return vaccinatedDao.getAllLittersVaccinatedWith(id)
+    }
 }

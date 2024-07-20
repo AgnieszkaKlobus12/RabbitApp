@@ -5,65 +5,86 @@
     android:layout_marginHorizontal="@dimen/big_margin"
     android:layout_marginTop="@dimen/small_margin"
     android:background="?android:colorSecondary"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/vaccination_list_item_vaccine_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginVertical="@dimen/small_margin"
+        android:text="@string/unknown"
+        android:textAlignment="center"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/vaccination_list_item_vaccine_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin"
-            android:text="@string/unknown"
-            android:textStyle="bold" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/big_margin"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:background="?android:colorSecondary"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:orientation="horizontal">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/vaccination_list_item_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
                 android:text="@string/vaccination_date" />
 
             <TextView
-                android:id="@+id/vaccination_list_date"
+                android:id="@+id/vaccination_list_item_vaccination_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
                 android:text="@string/unknown" />
-        </LinearLayout>
+        </TableRow>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:orientation="horizontal">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/vaccination_list_item_dose_label"
+                android:id="@+id/vaccination_list_item_date_next_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:text="@string/dose" />
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
+                android:text="@string/next_dose_date" />
 
             <TextView
-                android:id="@+id/vaccination_list_dose"
+                android:id="@+id/vaccination_list_item_date_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
                 android:text="@string/unknown" />
-        </LinearLayout>
-    </LinearLayout>
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/vaccination_list_item_dose_numb_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
+                android:text="@string/already_given_doses" />
+
+            <TextView
+                android:id="@+id/vaccination_list_item_dose_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:layout_weight="1"
+                android:text="@string/unknown" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

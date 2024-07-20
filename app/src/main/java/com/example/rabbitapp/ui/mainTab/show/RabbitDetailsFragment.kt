@@ -123,8 +123,8 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                             override fun onItemClick(item: Vaccinated) {
                                 view.findNavController()
                                     .navigate(
-                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccineFragment(
-                                            item.fkVaccine
+                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToVaccinateDetailsFragment(
+                                            item.id
                                         )
                                     )
                             }

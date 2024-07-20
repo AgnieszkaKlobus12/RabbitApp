@@ -91,4 +91,9 @@
     <string name="cannot_change_remove_and_add_again">Nie można zmienić!! Usuń i utwórz ponownie</string>
     <string name="confirm_delete_sick_message">Czy na pewno chcesz usunąć? Ta operacja jest nieodwracalna!</string>
     <string name="sick_list">Lista chorych</string>
+    <string name="next_dose_date">Data kolejnej dawki:</string>
+    <string name="already_given_doses">Podane dawki:</string>
+    <string name="_1">1</string>
+    <string name="vaccinate_details">Szczegóły szczepienia</string>
+    <string name="vaccinated_list">Lista zaszczepionych</string>
 </resources>
