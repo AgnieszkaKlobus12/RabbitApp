@@ -93,6 +93,18 @@ class RabbitAddFragment : FragmentWithPicture() {
                 getString(R.string.illegal_parent_change)
             )
         }
+
+        binding.addRabbitDeathSwitch.setOnCheckedChangeListener { _, isChecked ->
+            run {
+                if (isChecked) {
+                    binding.addRabbitDeathDateRow.visibility = View.VISIBLE
+                    binding.addRabbitCageNumbersRow.visibility = View.GONE
+                } else {
+                    binding.addRabbitDeathDateRow.visibility = View.GONE
+                    binding.addRabbitCageNumbersRow.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -117,6 +129,15 @@ class RabbitAddFragment : FragmentWithPicture() {
         )
         binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
         binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
+        if (viewModel.selectedRabbit!!.deathDate != null) {
+            binding.addRabbitDeathDate.text = Editable.Factory.getInstance().newEditable(
+                viewModel.selectedRabbit!!.deathDate?.let {
+                    LocalDate.ofEpochDay(it).format(dateFormatter)
+                }
+            )
+        }
+        binding.addRabbitDeathSwitch.isChecked = viewModel.selectedRabbit!!.deathDate != null
+        binding.addRabbitCageNumbers.setText(viewModel.selectedRabbit!!.cageNumber.toString())
         if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
             binding.addRabbitGenderFemale.isChecked = true
         } else {
@@ -138,9 +159,20 @@ class RabbitAddFragment : FragmentWithPicture() {
                         .toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
+                    if (binding.addRabbitCageNumbers.text.toString().isEmpty()) {
+                        null
+                    } else {
+                        binding.addRabbitCageNumbers.text.toString().toInt()
+                    },
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
-                    viewModel.selectedLitter?.id
+                    viewModel.selectedLitter?.id,
+                    if (binding.addRabbitDeathSwitch.isChecked) {
+                        LocalDate.parse(binding.addRabbitDeathDate.text.toString(), dateFormatter)
+                            .toEpochDay()
+                    } else {
+                        null
+                    }
                 )
             )
             viewModel.selectedRabbit = rabbitId.let { viewModel.getRabbitFromId(it) }

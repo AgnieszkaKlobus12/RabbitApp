@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'androidx.room'
 }
 
 android {
@@ -35,12 +36,17 @@ android {
     buildFeatures {
         viewBinding true
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    def room_version = "2.2.3"
+    implementation 'androidx.test.ext:junit-ktx:1.2.1'
+    implementation 'androidx.room:room-testing:2.6.1'
+    def room_version = "2.6.1"
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

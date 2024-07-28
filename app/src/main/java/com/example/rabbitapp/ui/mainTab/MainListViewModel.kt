@@ -253,5 +253,13 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return list
     }
 
+    fun markRabbitAsDead(rabbitId: Long, date: Long) {
+        rabbitRepository.markRabbitAsDead(rabbitId, date)
+    }
+
+    fun markLitterAsDead(litterId: Long, date: Long) {
+        litterRepository.markLitterAsDead(litterId, date)
+    }
+
 }
 

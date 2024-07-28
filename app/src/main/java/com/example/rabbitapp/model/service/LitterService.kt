@@ -21,4 +21,11 @@ class LitterService(private val litterDao: LitterDao) {
         return litterDao.getLitterFromId(id)
     }
 
+    fun markLitterAsDead(litterId: Long, date: Long) {
+        val litter = litterDao.getLitterFromId(litterId)
+        if (litter != null) {
+            litterDao.update(litter.copy(deathDate = date))
+        }
+    }
+
 }

@@ -1,10 +1,12 @@
 package com.example.rabbitapp.ui.mainTab.mainList
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
@@ -30,6 +32,14 @@ class MainListAdapter(
         holder.name.text = item.name
         holder.age.text = RabbitDetails.getAge(item.birth)
         holder.itemView.setOnClickListener { onSelectedItem.onItemClick(item) }
+        if (item.deathDate != null) {
+            holder.background.rootView.setBackgroundColor(Color.parseColor("#808080"))
+        }
+        if (item.cageNumber != null) {
+            holder.cageNumber.text = item.cageNumber.toString()
+        } else {
+            holder.cageNumber.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -38,6 +48,8 @@ class MainListAdapter(
         val image: ImageView = iv.findViewById(R.id.home_list_item_picture)
         val name: TextView = iv.findViewById(R.id.home_list_item_name)
         val age: TextView = iv.findViewById(R.id.home_list_item_age)
+        val cageNumber: TextView = iv.findViewById(R.id.home_list_item_cage_number)
+        val background: LinearLayout = iv.findViewById(R.id.home_list_item_background)
     }
 
     private fun setPictureToSelectedOrDefault(item: HomeListItem, image: ImageView) {

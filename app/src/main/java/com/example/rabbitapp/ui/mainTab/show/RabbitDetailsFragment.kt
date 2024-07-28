@@ -40,6 +40,10 @@ class RabbitDetailsFragment : FragmentWithPicture() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.rabbit_details_menu, menu)
+        if (viewModel.selectedRabbit?.deathDate != null) {
+            val item = menu.findItem(R.id.navigation_kill_rabbit)
+            item.setVisible(false)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,13 +89,43 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                 true
             }
 
+            R.id.navigation_kill_rabbit -> {
+                view?.findNavController()
+                    ?.navigate(
+                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToMarkDead(
+                            viewModel.selectedRabbit!!.id, 0L
+                        )
+                    )
+                true
+            }
+
             R.id.navigation_edit_rabbit -> {
-                moveToEditRabbit()
+                Log.d("RabbitDetailsFragment", "Edit rabbit")
+                view?.findNavController()
+                    ?.navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
                 true
             }
 
             R.id.navigation_delete_rabbit -> {
-                deleteRabbit()
+                Log.d("RabbitDetailsFragment", "Delete rabbit")
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deleteCurrentlySelectedRabbit()
+                            view?.findNavController()
+                                ?.navigate(R.id.action_rabbitDetailsFragment_to_navigation_home)
+                        }
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_delete_rabbit_message)
+                    }
+                    builder.create()
+                }
+                alertDialog.show()
                 true
             }
 
@@ -187,7 +221,18 @@ class RabbitDetailsFragment : FragmentWithPicture() {
             getGenderTranslated(viewModel.selectedRabbit?.sex)
         binding.rabbitDetailsBirth.text =
             viewModel.selectedRabbit?.let { RabbitDetails.getDateString(it.birth) }
-
+        if (viewModel.selectedRabbit?.deathDate != null) {
+            binding.rabbitDetailsDeathRow.visibility = View.VISIBLE
+            binding.rabbitDetailsDeath.text =
+                viewModel.selectedRabbit?.let { RabbitDetails.getDateString(it.deathDate!!) }
+        } else {
+            binding.rabbitDetailsDeathRow.visibility = View.GONE
+        }
+        if (viewModel.selectedRabbit?.cageNumber != null) {
+            binding.rabbitDetailsCageNumber.text = viewModel.selectedRabbit?.cageNumber.toString()
+        } else {
+            binding.rabbitDetailsCageNumber.text = ""
+        }
         viewModel.selectedRabbit?.let {
             parentSelectService.displayParentOrUnknown(
                 it.fkMother, it.fkFather,
@@ -210,36 +255,6 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                 R.drawable.rabbit_2_back
             )
             Log.d("RabbitDetailsFragment", "Litter added ${viewModel.selectedLitter}")
-        }
-    }
-
-    private fun moveToEditRabbit(): View.OnClickListener {
-        return View.OnClickListener { view ->
-            view.findNavController()
-                .navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
-        }
-    }
-
-    private fun deleteRabbit(): View.OnClickListener {
-        return View.OnClickListener {
-            val alertDialog = requireActivity().let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                        viewModel.deleteCurrentlySelectedRabbit()
-                        view?.findNavController()
-                            ?.navigate(R.id.action_rabbitDetailsFragment_to_navigation_home)
-                    }
-                    setNegativeButton(R.string.cancel) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setTitle(R.string.alert)
-                    setMessage(R.string.confirm_delete_rabbit_message)
-                }
-                builder.create()
-            }
-            alertDialog.show()
         }
     }
 

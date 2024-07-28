@@ -115,6 +115,18 @@ class LitterAddFragment : FragmentWithPicture() {
                 ).show()
             }
         }
+
+        binding.addLitterDeathSwitch.setOnCheckedChangeListener { _, isChecked ->
+            run {
+                if (isChecked) {
+                    binding.addLitterDeathDateRow.visibility = View.VISIBLE
+                    binding.addLitterCageNumbersRow.visibility = View.GONE
+                } else {
+                    binding.addLitterDeathDateRow.visibility = View.GONE
+                    binding.addLitterCageNumbersRow.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -137,6 +149,15 @@ class LitterAddFragment : FragmentWithPicture() {
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(
             LocalDate.ofEpochDay(viewModel.selectedLitter!!.birth).format(dateFormatter)
         )
+        if (viewModel.selectedLitter!!.deathDate != null) {
+            binding.addLitterDeathDate.text = Editable.Factory.getInstance().newEditable(
+                viewModel.selectedRabbit!!.deathDate?.let {
+                    LocalDate.ofEpochDay(it).format(dateFormatter)
+                }
+            )
+        }
+        binding.addLitterDeathSwitch.isChecked = viewModel.selectedLitter!!.deathDate != null
+        binding.addLitterCageNumbers.setText(viewModel.selectedLitter!!.cageNumber.toString())
         binding.addLitterName.setText(viewModel.selectedLitter!!.name)
         binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
     }
@@ -158,8 +179,19 @@ class LitterAddFragment : FragmentWithPicture() {
                     LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter)
                         .toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
+                    if (binding.addLitterCageNumbers.text.toString().isEmpty()) {
+                        null
+                    } else {
+                        binding.addLitterCageNumbers.text.toString().toInt()
+                    },
                     path,
-                    viewModel.selectedMother?.id, viewModel.selectedFather?.id
+                    viewModel.selectedMother?.id, viewModel.selectedFather?.id,
+                    if (binding.addLitterDeathSwitch.isChecked) {
+                        LocalDate.parse(binding.addLitterDeathDate.text.toString(), dateFormatter)
+                            .toEpochDay()
+                    } else {
+                        null
+                    }
                 )
             )
             if (mating != null) {

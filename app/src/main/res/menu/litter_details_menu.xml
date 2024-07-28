@@ -14,6 +14,10 @@
         android:title="@string/add_vaccination" />
 
     <item
+        android:id="@+id/navigation_kill_litter"
+        android:title="@string/mark_as_dead" />
+
+    <item
         android:id="@+id/navigation_edit_litter"
         android:title="@string/edit" />
 

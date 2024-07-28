@@ -26,10 +26,21 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/add_rabbit_picture"
+                app:layout_constraintBottom_toTopOf="@id/add_rabbit_death_switch"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/add_rabbit_death_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dead"
+                app:layout_constraintBottom_toTopOf="@id/add_rabbit_picture"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_add_rabbit_belong_to"
+                app:srcCompat="@drawable/rabbit_back" />
 
             <ImageView
                 android:id="@+id/add_rabbit_picture"
@@ -39,7 +50,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_add_rabbit_belong_to"
+                app:layout_constraintTop_toBottomOf="@id/add_rabbit_death_switch"
                 app:srcCompat="@drawable/rabbit_back" />
 
             <TableLayout
@@ -53,6 +64,7 @@
                 app:layout_constraintTop_toBottomOf="@id/add_rabbit_picture">
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/add_rabbit_name_label"
                         android:layout_width="wrap_content"
@@ -91,6 +103,26 @@
                         android:gravity="center" />
                 </TableRow>
 
+                <TableRow android:id="@+id/add_rabbit_death_date_row">
+
+                    <TextView
+                        android:id="@+id/add_rabbit_death_date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:text="@string/death_date" />
+
+                    <TextView
+                        android:id="@+id/add_rabbit_death_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:gravity="center" />
+                </TableRow>
+
                 <TableRow>
 
                     <TextView
@@ -103,6 +135,26 @@
 
                     <EditText
                         android:id="@+id/add_rabbit_numbers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number" />
+                </TableRow>
+
+                <TableRow android:id="@+id/add_rabbit_cage_numbers_row">
+
+                    <TextView
+                        android:id="@+id/add_rabbit_cage_numbers_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/table_margin"
+                        android:layout_weight="1"
+                        android:text="@string/cage_number" />
+
+                    <EditText
+                        android:id="@+id/add_rabbit_cage_numbers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/table_margin"

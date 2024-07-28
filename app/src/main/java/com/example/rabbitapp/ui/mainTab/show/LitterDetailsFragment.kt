@@ -40,6 +40,10 @@ class LitterDetailsFragment : FragmentWithPicture() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.litter_details_menu, menu)
+        if (viewModel.selectedLitter?.deathDate != null) {
+            val item = menu.findItem(R.id.navigation_kill_litter)
+            item.setVisible(false)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,13 +84,41 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 true
             }
 
+            R.id.navigation_kill_litter -> {
+                view?.findNavController()
+                    ?.navigate(
+                        LitterDetailsFragmentDirections.actionLitterDetailsFragmentToMarkDead(
+                            0L, viewModel.selectedLitter!!.id
+                        )
+                    )
+                true
+            }
+
             R.id.navigation_edit_litter -> {
-                moveToEditLitter()
+                view?.findNavController()
+                    ?.navigate(R.id.action_litterDetailsFragment_to_addLitterFragment)
                 true
             }
 
             R.id.navigation_delete_litter -> {
-                deleteLitter()
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deleteCurrentlySelectedLitter()
+                            view?.findNavController()
+                                ?.navigate(R.id.action_litterDetailsFragment_to_navigation_home)
+                        }
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_delete_litter_message)
+                    }
+                    builder.create()
+                }
+                alertDialog.show()
                 true
             }
 
@@ -118,7 +150,18 @@ class LitterDetailsFragment : FragmentWithPicture() {
         binding.litterDetailsAmount.text = viewModel.selectedLitter?.size.toString()
         binding.litterDetailsBirth.text =
             viewModel.selectedLitter?.let { RabbitDetails.getDateString(it.birth) }
-
+        if (viewModel.selectedLitter?.deathDate != null) {
+            binding.litterDetailsDeathRow.visibility = View.VISIBLE
+            binding.litterDetailsDeath.text =
+                viewModel.selectedLitter?.let { RabbitDetails.getDateString(it.deathDate!!) }
+        } else {
+            binding.litterDetailsDeathRow.visibility = View.GONE
+        }
+        if (viewModel.selectedLitter?.cageNumber != null) {
+            binding.litterDetailsCageNumber.text = viewModel.selectedLitter?.cageNumber.toString()
+        } else {
+            binding.litterDetailsCageNumber.text = ""
+        }
         viewModel.selectedLitter?.let {
             parentSelectService.displayParentOrUnknown(
                 it.fkMother, it.fkFather,
@@ -183,36 +226,6 @@ class LitterDetailsFragment : FragmentWithPicture() {
                             }
                         })
             }
-        }
-    }
-
-    private fun moveToEditLitter(): View.OnClickListener {
-        return View.OnClickListener { view ->
-            view.findNavController()
-                .navigate(R.id.action_litterDetailsFragment_to_addLitterFragment)
-        }
-    }
-
-    private fun deleteLitter(): View.OnClickListener {
-        return View.OnClickListener {
-            val alertDialog = requireActivity().let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                        viewModel.deleteCurrentlySelectedLitter()
-                        view?.findNavController()
-                            ?.navigate(R.id.action_litterDetailsFragment_to_navigation_home)
-                    }
-                    setNegativeButton(R.string.cancel) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setTitle(R.string.alert)
-                    setMessage(R.string.confirm_delete_litter_message)
-                }
-                builder.create()
-            }
-            alertDialog.show()
         }
     }
 

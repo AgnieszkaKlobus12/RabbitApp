@@ -25,6 +25,31 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_mark_dead"
+        android:name="com.example.rabbitapp.ui.mainTab.show.MarkAsDeadFragment"
+        android:label="@string/mark_as_dead"
+        tools:layout="@layout/fragment_mark_as_dead">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/navigation_mark_dead_to_litterDetailsFragment"
+            app:destination="@id/litterDetailsFragment"
+            app:popUpTo="@id/litterDetailsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/navigation_mark_dead_to_rabbitDetailsFragment"
+            app:destination="@id/rabbitDetailsFragment"
+            app:popUpTo="@id/rabbitDetailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_vaccine_list"
         android:name="com.example.rabbitapp.ui.vaccines.VaccineListFragment"
         android:label="@string/vaccines"
@@ -153,7 +178,6 @@
             android:id="@+id/action_navigation_home_to_detailsMatingFragment"
             app:destination="@id/matingDetailsFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/navigation_sick_details"
@@ -327,6 +351,7 @@
             android:id="@+id/action_addRabbitFragment_to_pickMotherListFragment"
             app:destination="@id/pickMotherListFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addLitterFragment"
         android:name="com.example.rabbitapp.ui.mainTab.add.LitterAddFragment"
@@ -356,18 +381,22 @@
             android:id="@+id/action_addLitterFragment_to_pickFatherListFragment"
             app:destination="@id/pickFatherListFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/pickFatherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickFatherListFragment"
         android:label="PickFatherListFragment" />
+
     <fragment
         android:id="@+id/pickLitterListFragment"
         android:name="com.example.rabbitapp.ui.matings.PickLitterListFragment"
         android:label="PickLitterListFragment" />
+
     <fragment
         android:id="@+id/pickMotherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickMotherListFragment"
         android:label="PickMotherListFragment" />
+
     <fragment
         android:id="@+id/rabbitDetailsFragment"
         android:name="com.example.rabbitapp.ui.mainTab.show.RabbitDetailsFragment"
@@ -376,6 +405,9 @@
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_navigation_home"
             app:destination="@id/navigation_rabbit_list" />
+        <action
+            android:id="@+id/action_rabbitDetailsFragment_to_mark_dead"
+            app:destination="@id/navigation_mark_dead" />
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_addRabbitFragment"
             app:destination="@id/addRabbitFragment" />
@@ -398,6 +430,7 @@
             android:id="@+id/action_rabbitDetailsFragment_to_sicknessesListFragment"
             app:destination="@id/navigation_sicknesses" />
     </fragment>
+
     <fragment
         android:id="@+id/litterDetailsFragment"
         android:name="com.example.rabbitapp.ui.mainTab.show.LitterDetailsFragment"
@@ -406,6 +439,9 @@
         <action
             android:id="@+id/action_litterDetailsFragment_to_navigation_home"
             app:destination="@id/navigation_rabbit_list" />
+        <action
+            android:id="@+id/action_litterDetailsFragment_to_mark_dead"
+            app:destination="@id/navigation_mark_dead" />
         <action
             android:id="@+id/action_litteretailsFragment_to_sick_detailsFragment"
             app:destination="@id/navigation_sick_details" />
@@ -428,6 +464,7 @@
             android:id="@+id/action_litterDetailsFragment_to_vaccinateDetailsFragment"
             app:destination="@id/fragment_vaccinate_details" />
     </fragment>
+
     <fragment
         android:id="@+id/matingDetailsFragment"
         android:name="com.example.rabbitapp.ui.matings.MatingDetailsFragment"

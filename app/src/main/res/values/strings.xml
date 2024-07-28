@@ -96,4 +96,8 @@
     <string name="_1">1</string>
     <string name="vaccinate_details">Szczegóły szczepienia</string>
     <string name="vaccinated_list">Lista zaszczepionych</string>
+    <string name="cage_number">Numer klatki:</string>
+    <string name="death_date">Data śmierci:</string>
+    <string name="dead">Martwy</string>
+    <string name="mark_as_dead">Oznacz jako martwego</string>
 </resources>

@@ -37,4 +37,11 @@ class RabbitService(private val rabbitDao: RabbitDao) {
         return rabbitDao.getAllFromLitter(id)
     }
 
+    fun markRabbitAsDead(rabbitId: Long, date: Long) {
+        val rabbit = rabbitDao.getRabbitFromId(rabbitId)
+        if (rabbit != null) {
+            rabbitDao.update(rabbit.copy(deathDate = date))
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.dao.LitterDao
 import com.example.rabbitapp.model.dao.MatingDao
@@ -20,14 +21,10 @@ import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.model.entities.relations.Vaccinated
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class, Mating::class, Sickness::class, Sick::class],
-    version = 24
+    version = 26
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -43,6 +40,19 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: AppDatabase? = null
 
+        val MIGRATION_24_25 = object : Migration(24, 25) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE Rabbit ADD COLUMN deathDate INTEGER")
+            }
+        }
+        val MIGRATION_25_26 = object : Migration(25, 26) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE Rabbit ADD COLUMN cageNumber INTEGER")
+                db.execSQL("ALTER TABLE Litter ADD COLUMN cageNumber INTEGER")
+                db.execSQL("ALTER TABLE Litter ADD COLUMN deathDate INTEGER")
+            }
+        }
+
         @Synchronized
         fun getInstance(ctx: Context): AppDatabase {
             if (INSTANCE == null)
@@ -50,74 +60,12 @@ abstract class AppDatabase : RoomDatabase() {
                     ctx.applicationContext, AppDatabase::class.java,
                     "app_database"
                 )
+                    .addMigrations(MIGRATION_24_25, MIGRATION_25_26)
                     .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
                     .allowMainThreadQueries()
                     .build()
             return INSTANCE!!
         }
 
-        private val roomCallback = object : Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                GlobalScope.launch(Dispatchers.IO) {
-                    populateDatabase(INSTANCE!!)
-                }
-            }
-
-            private suspend fun populateDatabase(db: AppDatabase) {
-                db.let { db ->
-                    withContext(Dispatchers.IO) {
-                        val rabbitRepository = db.rabbitRepository()
-                        val litterRepository = db.litterRepository()
-                        // every table needs to be cleared to avoid redundant data
-                        rabbitRepository.deleteAll()
-                        litterRepository.deleteAll()
-
-                        //test data
-                        rabbitRepository.insert(
-                            Rabbit(
-                                1,
-                                "Misiek",
-                                19144,
-                                "MALE",
-                                "101",
-                                null,
-                                null,
-                                null,
-                                null
-                            )
-                        )
-                        rabbitRepository.insert(
-                            Rabbit(
-                                2,
-                                "Zuzia",
-                                19844,
-                                "FEMALE",
-                                "102",
-                                null,
-                                null,
-                                null,
-                                null
-                            )
-                        )
-                        litterRepository.insert(Litter(3, "Miot", 19844, 3, null, 1, 2))
-                        rabbitRepository.insert(
-                            Rabbit(
-                                4,
-                                "Miotka",
-                                19844,
-                                "FEMALE",
-                                "103",
-                                null,
-                                1,
-                                2,
-                                3
-                            )
-                        )
-                    }
-                }
-            }
-        }
     }
 }

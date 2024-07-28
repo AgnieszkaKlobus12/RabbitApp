@@ -14,6 +14,10 @@
         android:title="@string/add_mating" />
 
     <item
+        android:id="@+id/navigation_kill_rabbit"
+        android:title="@string/mark_as_dead" />
+
+    <item
         android:id="@+id/navigation_edit_rabbit"
         android:title="@string/edit" />
 
