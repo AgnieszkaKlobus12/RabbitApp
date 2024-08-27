@@ -23,4 +23,18 @@
             android:title="@string/sicknesses" />
     </group>
 
+    <group
+        android:checkableBehavior="single"
+        android:title="@string/settings"
+        android:visible="true">
+
+        <item android:enabled="false" />
+
+        <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/settings" />
+
+    </group>
+
 </menu>

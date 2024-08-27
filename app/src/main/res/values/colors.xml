@@ -13,8 +13,11 @@
     <color name="gray_700">#555555</color>
     <color name="pastel_color_light">#F3D0D7</color>
     <color name="pastel_color_variant_light">#ffe4e1</color>
+    <color name="pastel_color_light_dark">#904C77</color>
+
     <color name="pastel_color_dark">#345B63</color>
     <color name="pastel_color_variant_dark">#1D3F4A</color>
+    <color name="pastel_color_variant_dark_light">#4D8793</color>
     <color name="background_light">#F6F5F2</color>
     <color name="background_dark">#152D35</color>
 </resources>

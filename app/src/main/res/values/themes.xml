@@ -19,7 +19,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <item name="android:colorBackground">@color/background_light</item>
-
+        <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -44,4 +44,19 @@
     </style>
 
     <style name="Theme.RabbitApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/pastel_color_light_dark</item>
+    </style>
+
+    <style name="Theme.RabbitApp.GoogleButton">
+        <item name="android:drawableLeft">@drawable/icon_google</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:backgroundTint">#FFFEFEFE</item>
+        <item name="android:textColor">#FF373737</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginHorizontal">25dp</item>
+    </style>
+
 </resources>

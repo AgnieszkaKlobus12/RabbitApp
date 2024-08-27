@@ -18,6 +18,7 @@ import com.example.rabbitapp.model.service.RabbitService
 import com.example.rabbitapp.model.service.SicknessService
 import com.example.rabbitapp.model.service.VaccineService
 import com.example.rabbitapp.utils.Gender
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -34,6 +35,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     var selectedRabbit: Rabbit? = null
     var selectedLitter: Litter? = null
+
+    var googleAccount: GoogleSignInAccount? = null
 
     init {
         val database = AppDatabase.getInstance(application)
@@ -260,6 +263,20 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     fun markLitterAsDead(litterId: Long, date: Long) {
         litterRepository.markLitterAsDead(litterId, date)
     }
+
+    fun loginWithGoogle(
+        account: GoogleSignInAccount?,
+        callback: (success: Boolean) -> Unit
+    ) {
+        account?.let {
+            this.googleAccount = account
+            callback.invoke(true)
+        } ?: run {
+            callback.invoke(false)
+        }
+        Log.d("ViewModel", "Google account: $googleAccount")
+    }
+
 
 }
 

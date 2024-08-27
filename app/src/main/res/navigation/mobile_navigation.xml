@@ -6,6 +6,14 @@
     app:startDestination="@+id/navigation_rabbit_list">
 
     <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.rabbitapp.ui.settings.login.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings">
+
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_rabbit_list"
         android:name="com.example.rabbitapp.ui.mainTab.mainList.MainListFragment"
         android:label="@string/title_home"
