@@ -28,7 +28,9 @@
         android:title="@string/settings"
         android:visible="true">
 
-        <item android:enabled="false" />
+        <item
+            android:enabled="false"
+            android:title="" />
 
         <item
             android:id="@+id/navigation_settings"
