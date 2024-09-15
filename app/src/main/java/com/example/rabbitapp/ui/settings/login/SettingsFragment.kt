@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSettingsBinding
-import com.example.rabbitapp.ui.login.LoginActivity
+import com.example.rabbitapp.ui.synchronization.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 

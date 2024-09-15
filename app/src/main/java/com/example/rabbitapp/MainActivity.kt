@@ -21,10 +21,14 @@ import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.google.api.services.drive.model.File
+import com.google.api.services.drive.model.FileList
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         GlobalScope.launch(Dispatchers.IO) {
-            upload()
+            download()
         }
     }
 
@@ -124,6 +128,69 @@ class MainActivity : AppCompatActivity() {
         } catch (e: UserRecoverableAuthIOException) {
             startActivityForResult(e.intent, 1)
         } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun download() {
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+        val credential = GoogleAccountCredential.usingOAuth2(
+            this,
+            setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
+        )
+        credential.setSelectedAccount(googleSignInAccount!!.account)
+
+        val googleDriveService = Drive.Builder(
+            AndroidHttp.newCompatibleTransport(),
+            GsonFactory(),
+            credential
+        )
+            .setApplicationName(getString(R.string.app_name))
+            .build()
+
+        try {
+            val dbDir = applicationContext.getDatabasePath("app_database").parent
+            val dir = dbDir?.let { java.io.File(it) }
+            if (dir != null) {
+                if (dir.isDirectory) {
+                    val children = dir.list()
+                    if (children != null) {
+                        for (i in children.indices) {
+                            java.io.File(dir, children[i]).delete()
+                        }
+                    }
+                }
+            }
+
+            val dbPath = applicationContext.getDatabasePath("app_database").path
+            val dbPathShm =
+                applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-shm")
+            val dbPathWal =
+                applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+
+            val files: FileList = googleDriveService.files().list()
+                .setSpaces("appDataFolder")
+                .setFields("nextPageToken, files(id, name, createdTime)")
+                .setPageSize(10)
+                .execute()
+            if (files.files.size == 0) Log.e("Synchronisation Error", "No DB file exists in Drive")
+            for (file in files.files) {
+                System.out.printf(
+                    "Found file: %s (%s) %s\n",
+                    file.name, file.id, file.createdTime
+                )
+                if (file.name == "app_database") {
+                    val outputStream: OutputStream = FileOutputStream(dbPath)
+                    googleDriveService.files().get(file.id).executeMediaAndDownloadTo(outputStream)
+                } else if (file.name == "app_database-shm") {
+                    val outputStream: OutputStream = FileOutputStream(dbPathShm)
+                    googleDriveService.files().get(file.id).executeMediaAndDownloadTo(outputStream)
+                } else if (file.name == "app_database-wal") {
+                    val outputStream: OutputStream = FileOutputStream(dbPathWal)
+                    googleDriveService.files().get(file.id).executeMediaAndDownloadTo(outputStream)
+                }
+            }
+        } catch (e: IOException) {
             e.printStackTrace()
         }
     }

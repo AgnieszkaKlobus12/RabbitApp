@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.login
+package com.example.rabbitapp.ui.synchronization
 
 import android.os.Bundle
 import android.view.LayoutInflater
