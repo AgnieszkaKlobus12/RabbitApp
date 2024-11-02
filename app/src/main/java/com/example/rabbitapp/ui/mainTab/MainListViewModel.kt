@@ -19,9 +19,7 @@ import com.example.rabbitapp.model.service.SicknessService
 import com.example.rabbitapp.model.service.VaccineService
 import com.example.rabbitapp.utils.Gender
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import kotlinx.coroutines.DelicateCoroutinesApi
 
-@OptIn(DelicateCoroutinesApi::class)
 class MainListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val rabbitRepository: RabbitService
@@ -36,16 +34,16 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedRabbit: Rabbit? = null
     var selectedLitter: Litter? = null
 
-    var googleAccount: GoogleSignInAccount? = null
+    private var googleAccount: GoogleSignInAccount? = null
 
     init {
         val database = AppDatabase.getInstance(application)
-        rabbitRepository = RabbitService(database.rabbitRepository())
-        litterRepository = LitterService(database.litterRepository())
+        rabbitRepository = RabbitService(database)
+        litterRepository = LitterService(database)
         vaccinesRepository =
-            VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
-        matingRepository = MatingService(database.matingRepository())
-        sickRepository = SicknessService(database.sickRepository(), database.sicknessRepository())
+            VaccineService(database)
+        matingRepository = MatingService(database)
+        sickRepository = SicknessService(database)
     }
 
     fun save(rabbit: Rabbit): Long {
@@ -160,10 +158,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
 
     fun getAllVaccinationsForLitter(id: Long): List<Vaccinated> {
         return vaccinesRepository.getAllVaccinationsForLitter(id)
-    }
-
-    fun getAllMatings(): List<Mating> {
-        return matingRepository.getAll()
     }
 
     fun save(mating: Mating): Long {

@@ -1,30 +1,64 @@
 package com.example.rabbitapp.model.service
 
-import com.example.rabbitapp.model.dao.LitterDao
 import com.example.rabbitapp.model.entities.Litter
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.runBlocking
 
-class LitterService(private val litterDao: LitterDao) {
+class LitterService(private val supabase: SupabaseClient) {
 
     fun getAll(): List<Litter> {
-        return litterDao.getAll()
+        var result: List<Litter>
+        runBlocking {
+            result = supabase.from("litter").select().decodeList<Litter>()
+        }
+        return result
     }
 
     fun deleteWithId(it: Long) {
-        litterDao.deleteWithId(it);
+        runBlocking {
+            supabase.from("litter").delete {
+                filter {
+                    Litter::id eq it
+                }
+            }
+        }
     }
 
     fun save(litter: Litter): Long {
-        return litterDao.insert(litter)
+        var result: Long? = null
+        runBlocking {
+            result = supabase.from("litter").upsert(litter) {
+                select()
+            }.decodeSingle<Litter>().id
+        }
+        return result!!
     }
 
     fun getLitterFromId(id: Long): Litter? {
-        return litterDao.getLitterFromId(id)
+        var result: Litter? = null
+        runBlocking {
+            result = supabase.from("litter").select {
+                filter {
+                    Litter::id eq id
+                }
+            }.decodeSingle<Litter>()
+        }
+        return result
     }
 
     fun markLitterAsDead(litterId: Long, date: Long) {
-        val litter = litterDao.getLitterFromId(litterId)
-        if (litter != null) {
-            litterDao.update(litter.copy(deathDate = date))
+        runBlocking {
+            supabase.from("litter").update(
+                {
+                    Litter::deathDate setTo date
+                }
+            ) {
+                select()
+                filter {
+                    Litter::id eq litterId
+                }
+            }
         }
     }
 

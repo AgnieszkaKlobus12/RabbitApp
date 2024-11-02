@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         GlobalScope.launch(Dispatchers.IO) {
-            download()
         }
     }
 

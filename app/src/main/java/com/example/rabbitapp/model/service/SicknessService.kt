@@ -1,54 +1,131 @@
 package com.example.rabbitapp.model.service
 
-import com.example.rabbitapp.model.dao.SickDao
-import com.example.rabbitapp.model.dao.SicknessDao
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.model.entities.relations.Sick
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.runBlocking
 
-class SicknessService(private val sickDao: SickDao, private val sicknessDao: SicknessDao) {
+class SicknessService(private val supabase: SupabaseClient) {
 
     fun getAllSicknesses(): List<Sickness> {
-        return sicknessDao.getAll();
+        var result: List<Sickness>
+        runBlocking {
+            result = supabase.from("sickness").select().decodeList<Sickness>()
+        }
+        return result
     }
 
     fun getSicknessFromId(sicknessId: Long): Sickness? {
-        return sicknessDao.getSicknessFromId(sicknessId)
+        var result: Sickness? = null
+        runBlocking {
+            result = supabase.from("sickness").select {
+                filter {
+                    Sickness::id eq sicknessId
+                }
+            }.decodeSingle<Sickness>()
+        }
+        return result
     }
 
     fun save(sickness: Sickness): Long {
-        return sicknessDao.insert(sickness)
+        var result: Long? = null
+        runBlocking {
+            result = supabase.from("sickness").upsert(sickness) {
+                select()
+            }.decodeSingle<Sickness>().id
+        }
+        return result!!
     }
 
     fun deleteWithId(id: Long) {
-        sicknessDao.delete(id)
+        runBlocking {
+            supabase.from("sickness").delete {
+                filter {
+                    Sickness::id eq id
+                }
+            }
+        }
     }
 
     fun save(sickness: Sick): Long {
-        return sickDao.insert(sickness)
+        var result: Long? = null
+        runBlocking {
+            result = supabase.from("sick").upsert(sickness) {
+                select()
+            }.decodeSingle<Sick>().id
+        }
+        return result!!
     }
 
     fun getAllSickForRabbit(it: Long): List<Sick> {
-        return sickDao.getAllSickForRabbit(it)
+        var result: List<Sick>
+        runBlocking {
+            result = supabase.from("sick").select {
+                filter {
+                    Sick::fkRabbit eq it
+                }
+            }.decodeList<Sick>()
+        }
+        return result
     }
 
     fun getAllSickForLitter(it: Long): List<Sick> {
-        return sickDao.getAllSickForLitter(it)
+        var result: List<Sick>
+        runBlocking {
+            result = supabase.from("sick").select {
+                filter {
+                    Sick::fkLitter eq it
+                }
+            }.decodeList<Sick>()
+        }
+        return result
     }
 
     fun getSickFromId(sickId: Long): Sick? {
-        return sickDao.getSickFromId(sickId)
+        var result: Sick? = null
+        runBlocking {
+            result = supabase.from("sick").select {
+                filter {
+                    Sick::id eq sickId
+                }
+            }.decodeSingle<Sick>()
+        }
+        return result
     }
 
     fun deleteSickWithId(id: Long) {
-        sickDao.delete(id)
+        runBlocking {
+            supabase.from("sick").delete {
+                filter {
+                    Sick::id eq id
+                }
+            }.decodeSingle<Sick>()
+        }
     }
 
     fun getAllRabbitsWithSickness(id: Long): List<Long> {
-        return sickDao.getAllRabbitsWithSickness(id);
+        var result: List<Long>
+        runBlocking {
+            result = supabase.from("sick").select {
+                filter {
+                    Sick::id eq id
+                }
+            }.decodeList<Sick>().mapNotNull { it.fkRabbit }
+        }
+        return result
     }
 
     fun getAllLittersWithSickness(id: Long): List<Long> {
-        return sickDao.getAllLittersWithSickness(id);
+        var result: List<Long>
+        runBlocking {
+            result = supabase.from("sick").select {
+                filter {
+                    Sick::id eq id
+                }
+            }.decodeList<Sick>().mapNotNull { it.fkLitter }
+        }
+        return result
     }
 
 }
