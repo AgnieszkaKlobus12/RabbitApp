@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -57,6 +58,13 @@ class VaccineFragment : Fragment() {
             })
 
         binding.vaccineDetailsEditButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             view.findNavController()
                 .navigate(
                     VaccineFragmentDirections.actionNavigationVaccineDetailsToVaccineEditFragment(
@@ -66,6 +74,13 @@ class VaccineFragment : Fragment() {
         }
 
         binding.vaccineDetailsDeleteButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             val alertDialog = requireActivity().let {
                 val builder = AlertDialog.Builder(it)
                 builder.apply {

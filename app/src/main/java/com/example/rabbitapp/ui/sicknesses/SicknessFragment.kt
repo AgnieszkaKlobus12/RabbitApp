@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -44,6 +45,13 @@ class SicknessFragment : Fragment() {
         binding.fragmentSicknessEditSicknessSymptoms.text = sickness?.symptoms
 
         binding.sicknessDetailsEditButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             view.findNavController()
                 .navigate(
                     SicknessFragmentDirections.actionNavigationDetailsSicknessToEditSicknessFragment(
@@ -67,6 +75,13 @@ class SicknessFragment : Fragment() {
             })
 
         binding.sicknessDetailsDeleteButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             val alertDialog = requireActivity().let {
                 val builder = AlertDialog.Builder(it)
                 builder.apply {

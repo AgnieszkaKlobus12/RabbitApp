@@ -167,6 +167,13 @@ class LitterAddFragment : FragmentWithPicture() {
             if (!validateFields()) {
                 return@OnClickListener
             }
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@OnClickListener
+            }
             var rabbitList = emptyList<Rabbit>()
             val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
             viewModel.selectedLitter?.id?.let {

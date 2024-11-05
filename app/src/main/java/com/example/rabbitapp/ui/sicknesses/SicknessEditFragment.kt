@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessEditBinding
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.ui.mainTab.MainListViewModel
@@ -41,6 +43,13 @@ class SicknessEditFragment : Fragment() {
         }
 
         binding.addSicknessSaveButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             val savedId = viewModel.save(
                 Sickness(
                     sickness?.id ?: 0,

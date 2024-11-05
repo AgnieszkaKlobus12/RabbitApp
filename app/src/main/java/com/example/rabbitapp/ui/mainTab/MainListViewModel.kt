@@ -36,7 +36,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedRabbit: Rabbit? = null
     var selectedLitter: Litter? = null
 
-    var googleAccount: GoogleSignInAccount? = null
+    private var googleAccount: GoogleSignInAccount? = null
+    private var editable = true
 
     init {
         val database = AppDatabase.getInstance(application)
@@ -46,6 +47,14 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
             VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
         matingRepository = MatingService(database.matingRepository())
         sickRepository = SicknessService(database.sickRepository(), database.sicknessRepository())
+    }
+
+    fun setEditable(editable: Boolean) {
+        this.editable = editable
+    }
+
+    fun getEditable(): Boolean {
+        return editable
     }
 
     fun save(rabbit: Rabbit): Long {

@@ -87,6 +87,13 @@ class AddMatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addMatingSaveButton.setOnClickListener {
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             if (viewModel.selectedLitter != null) {
                 viewModel.save(
                     viewModel.selectedLitter!!.copy(
@@ -126,6 +133,13 @@ class AddMatingFragment : Fragment() {
 
         if (viewModel.selectedLitter != null) {
             binding.fragmentAddMatingIncludeParents.addMotherFragment.setOnClickListener {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
                 Toast.makeText(
                     context,
                     "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
@@ -140,6 +154,13 @@ class AddMatingFragment : Fragment() {
                 )
             }
             binding.fragmentAddMatingIncludeParents.addFatherFragment.setOnClickListener {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
                 Toast.makeText(
                     context,
                     "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
@@ -155,6 +176,13 @@ class AddMatingFragment : Fragment() {
             }
 
             binding.matingDateBirth.setOnClickListener {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
                 showDatePickerDialog(binding.matingDateBirth)
                 Toast.makeText(
                     context,

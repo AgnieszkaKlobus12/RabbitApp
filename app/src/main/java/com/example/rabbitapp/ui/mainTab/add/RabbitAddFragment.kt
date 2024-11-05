@@ -150,6 +150,13 @@ class RabbitAddFragment : FragmentWithPicture() {
             if (!validateFields()) {
                 return@OnClickListener
             }
+            if (!viewModel.getEditable()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.non_editable), Toast.LENGTH_SHORT
+                ).show()
+                return@OnClickListener
+            }
             val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
             val rabbitId: Long = viewModel.save(
                 Rabbit(
