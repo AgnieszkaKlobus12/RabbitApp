@@ -10,10 +10,10 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.PickParentsFragmentBinding
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
 import com.example.rabbitapp.ui.mainTab.add.StartSelect
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.MainListViewModel
 
 class ParentSelectService {
 

@@ -10,10 +10,10 @@ import androidx.fragment.app.activityViewModels
 import com.example.rabbitapp.databinding.ContentHomeListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.MainListViewModel
 
 class PickMotherListFragment : Fragment() {
     private var _binding: ContentHomeListBinding? = null

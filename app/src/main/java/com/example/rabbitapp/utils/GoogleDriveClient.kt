@@ -1,31 +1,40 @@
 package com.example.rabbitapp.utils
 
-import android.app.Activity
+import android.content.Context
 import android.util.Log
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.getString
 import com.example.rabbitapp.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.Scopes
 import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
+import com.google.api.client.http.ByteArrayContent
 import com.google.api.client.http.FileContent
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.google.api.services.drive.model.File
 import com.google.api.services.drive.model.FileList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.time.LocalDateTime
 
-class GoogleDriveClient(private val activity: Activity) {
+class GoogleDriveClient(private val context: Context, private var internetConnection: Boolean) {
 
-    private fun uploadLocalDatabase() {
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(activity.applicationContext)
+    fun setInternetConnection(internetConnection: Boolean) {
+        this.internetConnection = internetConnection
+    }
+
+    fun uploadLocalDatabase() {
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
         val credential = GoogleAccountCredential.usingOAuth2(
-            activity.applicationContext,
+            context,
             setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
         )
         credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -35,59 +44,61 @@ class GoogleDriveClient(private val activity: Activity) {
             GsonFactory(),
             credential
         )
-            .setApplicationName(getString(activity.applicationContext, R.string.app_name))
+            .setApplicationName(getString(context, R.string.app_name))
             .build()
 
-        val dbPath = activity.applicationContext.getDatabasePath("app_database").path
+        val dbPath = context.getDatabasePath("app_database").path
         val dbPathShm =
-            activity.applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-shm")
+            context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
         val dbPathWal =
-            activity.applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-wal")
-
-        val storageFile = File().apply {
-            parents = listOf("appDataFolder")
-            name = "app_database"
-        }
-
-        val storageFileShm = File().apply {
-            parents = listOf("appDataFolder")
-            name = "app_database-shm"
-        }
-
-        val storageFileWal = File().apply {
-            parents = listOf("appDataFolder")
-            name = "app_database-wal"
-        }
+            context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
 
         val filePath = java.io.File(dbPath)
         val filePathShm = dbPathShm?.let { java.io.File(it) }
         val filePathWal = dbPathWal?.let { java.io.File(it) }
-        val mediaContent = FileContent("", filePath)
-        val mediaContentShm = FileContent("", filePathShm)
-        val mediaContentWal = FileContent("", filePathWal)
+        val storageFileContent = FileContent("", filePath)
+        val storageFileShmContent = FileContent("", filePathShm)
+        val storageFileWalContent = FileContent("", filePathWal)
 
         try {
-            val file = googleDriveService.files().create(storageFile, mediaContent).execute()
-            Log.d("Google Drive", "Filename: ${file.name} File ID: ${file.id}")
-
-            val fileShm =
-                googleDriveService.files().create(storageFileShm, mediaContentShm).execute()
-            Log.d("Google Drive", "Filename: ${fileShm.name} File ID: ${fileShm.id}")
-
-            val fileWal =
-                googleDriveService.files().create(storageFileWal, mediaContentWal).execute()
-            Log.d("Google Drive", "Filename: ${fileWal.name} File ID: ${fileWal.id}")
-        } catch (e: UserRecoverableAuthIOException) {
-            startActivityForResult(activity, e.intent, 1, null)
+            uploadOrUpdateFile("app_database", storageFileContent, googleDriveService)
+            uploadOrUpdateFile("app_database-shm", storageFileShmContent, googleDriveService)
+            uploadOrUpdateFile("app_database-wal", storageFileWalContent, googleDriveService)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("Google Drive", "Error: ${e.message}", e)
+        }
+    }
+
+    private fun findFileByName(fileName: String, googleDriveService: Drive): File? {
+        val result = googleDriveService.files().list()
+            .setQ("name = '$fileName' and 'appDataFolder' in parents")
+            .setSpaces("appDataFolder")
+            .execute()
+        return result.files?.firstOrNull()
+    }
+
+    private fun uploadOrUpdateFile(
+        fileName: String,
+        mediaContent: FileContent,
+        googleDriveService: Drive
+    ): File {
+        val existingFile = findFileByName(fileName, googleDriveService)
+        return if (existingFile != null) {
+            googleDriveService.files().update(existingFile.id, null, mediaContent)
+                .execute() //todo not working???
+        } else {
+            val storageFile = File().apply {
+                parents = listOf("appDataFolder")
+                name = fileName
+            }
+            googleDriveService.files().create(storageFile, mediaContent).execute()
         }
     }
 
     fun downloadDatabase() {
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(activity.applicationContext)
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
         val credential = GoogleAccountCredential.usingOAuth2(
-            activity.applicationContext,
+            context,
             setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
         )
         credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -97,11 +108,11 @@ class GoogleDriveClient(private val activity: Activity) {
             GsonFactory(),
             credential
         )
-            .setApplicationName(getString(activity.applicationContext, R.string.app_name))
+            .setApplicationName(getString(context, R.string.app_name))
             .build()
 
         try {
-            val dbDir = activity.applicationContext.getDatabasePath("app_database").parent
+            val dbDir = context.getDatabasePath("app_database").parent
             val dir = dbDir?.let { java.io.File(it) }
             if (dir != null) {
                 if (dir.isDirectory) {
@@ -114,11 +125,11 @@ class GoogleDriveClient(private val activity: Activity) {
                 }
             }
 
-            val dbPath = activity.applicationContext.getDatabasePath("app_database").path
+            val dbPath = context.getDatabasePath("app_database").path
             val dbPathShm =
-                activity.applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-shm")
+                context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
             val dbPathWal =
-                activity.applicationContext.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+                context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
 
             val files: FileList = googleDriveService.files().list()
                 .setSpaces("appDataFolder")
@@ -153,6 +164,98 @@ class GoogleDriveClient(private val activity: Activity) {
             }
         } catch (e: IOException) {
             e.printStackTrace()
+        }
+    }
+
+    fun checkAndClaimDatabaseBlock(): Boolean {
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        val credential = GoogleAccountCredential.usingOAuth2(
+            context,
+            setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
+        )
+        credential.setSelectedAccount(googleSignInAccount!!.account)
+
+        val googleDriveService = Drive.Builder(
+            AndroidHttp.newCompatibleTransport(),
+            GsonFactory(),
+            credential
+        )
+            .setApplicationName(getString(context, R.string.app_name))
+            .build()
+
+        try {
+            val files: FileList = googleDriveService.files().list()
+                .setSpaces("appDataFolder")
+                .setFields("nextPageToken, files(id, name, createdTime)")
+                .setPageSize(10)
+                .execute()
+            for (file in files.files) {
+                when (file.name) {
+                    "data_lock_file" -> {
+                        val outputStream = ByteArrayOutputStream()
+                        googleDriveService.files().get(file.id)
+                            .executeMediaAndDownloadTo(outputStream)
+                        val fileBytes = outputStream.toByteArray()
+                        val dateTime = LocalDateTime.parse(String(fileBytes, Charsets.UTF_8))
+                        if (dateTime.plusMinutes(2).isAfter(LocalDateTime.now())) {
+                            return false
+                        } else {
+                            refreshLock()
+                            return true
+                        }
+                    }
+                }
+            }
+            refreshLock()
+            return true
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    private fun refreshLock() {
+        CoroutineScope(Dispatchers.Default).launch {
+            val googleSignInAccount =
+                GoogleSignIn.getLastSignedInAccount(context)
+            val credential = GoogleAccountCredential.usingOAuth2(
+                context,
+                setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
+            )
+            credential.setSelectedAccount(googleSignInAccount!!.account)
+
+            val googleDriveService = Drive.Builder(
+                AndroidHttp.newCompatibleTransport(),
+                GsonFactory(),
+                credential
+            )
+                .setApplicationName(getString(context, R.string.app_name))
+                .build()
+
+            while (true) {
+                if (internetConnection) {
+                    val files: FileList = googleDriveService.files().list()
+                        .setSpaces("appDataFolder")
+                        .setFields("nextPageToken, files(id, name, createdTime)")
+                        .setPageSize(10)
+                        .execute()
+                    for (file in files.files) {
+                        if (file.name == "data_lock_file")
+                            googleDriveService.files().delete(file.id).execute()
+                    }
+
+                    val storageFile = File().apply {
+                        parents = listOf("appDataFolder")
+                        name = "data_lock_file"
+                    }
+                    val fileBytes = LocalDateTime.now().toString().toByteArray(Charsets.UTF_8)
+                    val byteArrayContent = ByteArrayContent(null, fileBytes)
+                    googleDriveService.files().create(storageFile, byteArrayContent).execute()
+                    Log.d("Synchronisation", "Database lock refreshed")
+                }
+                delay(60 * 1000L)
+            }
         }
     }
 

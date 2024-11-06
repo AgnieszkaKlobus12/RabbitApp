@@ -4,8 +4,15 @@ import com.example.rabbitapp.model.dao.SickDao
 import com.example.rabbitapp.model.dao.SicknessDao
 import com.example.rabbitapp.model.entities.Sickness
 import com.example.rabbitapp.model.entities.relations.Sick
+import com.example.rabbitapp.utils.GoogleDriveClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SicknessService(private val sickDao: SickDao, private val sicknessDao: SicknessDao) {
+class SicknessService(
+    private val sickDao: SickDao, private val sicknessDao: SicknessDao,
+    private val googleDriveClient: GoogleDriveClient
+) {
 
     fun getAllSicknesses(): List<Sickness> {
         return sicknessDao.getAll();
@@ -16,15 +23,26 @@ class SicknessService(private val sickDao: SickDao, private val sicknessDao: Sic
     }
 
     fun save(sickness: Sickness): Long {
-        return sicknessDao.insert(sickness)
+        val result = sicknessDao.insert(sickness)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
+        return result
     }
 
     fun deleteWithId(id: Long) {
         sicknessDao.delete(id)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
     }
 
     fun save(sickness: Sick): Long {
-        return sickDao.insert(sickness)
+        val result = sickDao.insert(sickness)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
+        return result
     }
 
     fun getAllSickForRabbit(it: Long): List<Sick> {
@@ -41,6 +59,9 @@ class SicknessService(private val sickDao: SickDao, private val sicknessDao: Sic
 
     fun deleteSickWithId(id: Long) {
         sickDao.delete(id)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
     }
 
     fun getAllRabbitsWithSickness(id: Long): List<Long> {

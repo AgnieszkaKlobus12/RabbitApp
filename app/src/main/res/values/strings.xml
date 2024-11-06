@@ -118,6 +118,7 @@
     <string name="error_no_user">Użytkownik nie istnieje</string>
     <string name="error_non_unique_login">Login niedostępny</string>
     <string name="log_out">Wyloguj się</string>
-    <string name="internet_error">Brak internetu, dane mogą być nieaktualne. Edycja wyłączona</string>
-    <string name="non_editable">Edycja wyłączona. Brak internetu lub uprawnień</string>
+    <string name="internet_error">Brak internetu, dane mogą być nieaktualne. Edycja wyłączona!</string>
+    <string name="no_lock">Edycja zablokowana. Ktoś inny używa aplikacji!</string>
+    <string name="non_editable">Edycja wyłączona. Brak internetu lub uprawnień!</string>
 </resources>

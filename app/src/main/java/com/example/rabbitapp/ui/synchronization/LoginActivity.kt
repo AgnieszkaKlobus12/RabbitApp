@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rabbitapp.MainActivity
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.ActivityLoginBinding
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.utils.MainListViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException

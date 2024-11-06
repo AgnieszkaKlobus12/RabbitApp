@@ -11,7 +11,7 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMatingBinding
 import com.example.rabbitapp.model.entities.relations.Mating
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.utils.MainListViewModel
 
 class MatingListFragment : Fragment() {
 

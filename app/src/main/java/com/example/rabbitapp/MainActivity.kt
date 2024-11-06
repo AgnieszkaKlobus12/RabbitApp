@@ -14,8 +14,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rabbitapp.databinding.ActivityMainBinding
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
-import com.example.rabbitapp.utils.GoogleDriveClient
+import com.example.rabbitapp.utils.MainListViewModel
 import com.example.rabbitapp.utils.NetworkChangeReceiver
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var googleDriveClient: GoogleDriveClient
     private lateinit var viewModel: MainListViewModel
     private lateinit var networkReceiver: NetworkChangeReceiver
 
@@ -49,14 +47,16 @@ class MainActivity : AppCompatActivity() {
 
         networkReceiver = NetworkChangeReceiver { isConnected ->
             if (isConnected) {
-                viewModel.setEditable(true)
+                viewModel.setInternet(true)
+                viewModel.getGoogleDriveClient().setInternetConnection(true)
             } else {
                 Toast.makeText(
                     this,
                     getString(R.string.internet_error), //todo custom bigger toast
                     Toast.LENGTH_LONG
                 ).show()
-                viewModel.setEditable(false)
+                viewModel.getGoogleDriveClient().setInternetConnection(false)
+                viewModel.setInternet(false)
             }
         }
 
@@ -90,12 +90,21 @@ class MainActivity : AppCompatActivity() {
             binding.navView.visibility = View.VISIBLE
             binding.progressBarMain.visibility = View.GONE
             binding.appBarMain.root.visibility = View.VISIBLE
-            viewModel.setEditable(false)
+            viewModel.setInternet(false)
         } else {
-            viewModel.setEditable(true)
-            googleDriveClient = GoogleDriveClient(this)
+            viewModel.setInternet(true)
             GlobalScope.launch(Dispatchers.IO) {
-                googleDriveClient.downloadDatabase()
+                viewModel.getGoogleDriveClient().downloadDatabase()
+                if (!viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock()) {
+                    viewModel.setLock(false)
+                    runOnUiThread {
+                        Toast.makeText(
+                            applicationContext,
+                            getString(R.string.no_lock), //todo custom bigger toast
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
                 runOnUiThread {
                     binding.navView.visibility = View.VISIBLE
                     binding.progressBarMain.visibility = View.GONE

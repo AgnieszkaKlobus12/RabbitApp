@@ -17,11 +17,11 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddMatingBinding
 import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
 import com.example.rabbitapp.ui.mainTab.add.StartSelect
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
+import com.example.rabbitapp.utils.MainListViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

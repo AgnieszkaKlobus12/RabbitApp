@@ -14,9 +14,9 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Sickness
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
+import com.example.rabbitapp.utils.MainListViewModel
 
 class SicknessFragment : Fragment() {
 

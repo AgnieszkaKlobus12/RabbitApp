@@ -19,8 +19,8 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMatingDetailsBinding
 import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
+import com.example.rabbitapp.utils.MainListViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 

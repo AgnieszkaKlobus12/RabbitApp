@@ -13,7 +13,7 @@ import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.utils.MainListViewModel
 
 class MainListFragment : Fragment() {
 

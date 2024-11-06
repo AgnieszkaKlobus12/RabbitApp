@@ -9,9 +9,9 @@ import androidx.fragment.app.activityViewModels
 import com.example.rabbitapp.databinding.ContentHomeListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
+import com.example.rabbitapp.utils.MainListViewModel
 
 class PickLitterListFragment : Fragment() {
     private var _binding: ContentHomeListBinding? = null

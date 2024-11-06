@@ -1,4 +1,4 @@
-package com.example.rabbitapp.ui.mainTab
+package com.example.rabbitapp.utils
 
 import android.app.Application
 import android.util.Log
@@ -17,7 +17,6 @@ import com.example.rabbitapp.model.service.MatingService
 import com.example.rabbitapp.model.service.RabbitService
 import com.example.rabbitapp.model.service.SicknessService
 import com.example.rabbitapp.model.service.VaccineService
-import com.example.rabbitapp.utils.Gender
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -37,24 +36,43 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedLitter: Litter? = null
 
     private var googleAccount: GoogleSignInAccount? = null
-    private var editable = true
+    private var internet = true
+    private var lock = true
+
+    private var googleDriveClient: GoogleDriveClient = GoogleDriveClient(application, true)
 
     init {
         val database = AppDatabase.getInstance(application)
-        rabbitRepository = RabbitService(database.rabbitRepository())
-        litterRepository = LitterService(database.litterRepository())
+        rabbitRepository = RabbitService(database.rabbitRepository(), googleDriveClient)
+        litterRepository = LitterService(database.litterRepository(), googleDriveClient)
         vaccinesRepository =
-            VaccineService(database.vaccineRepository(), database.vaccinatedRepository())
-        matingRepository = MatingService(database.matingRepository())
-        sickRepository = SicknessService(database.sickRepository(), database.sicknessRepository())
+            VaccineService(
+                database.vaccineRepository(),
+                database.vaccinatedRepository(),
+                googleDriveClient
+            )
+        matingRepository = MatingService(database.matingRepository(), googleDriveClient)
+        sickRepository = SicknessService(
+            database.sickRepository(),
+            database.sicknessRepository(),
+            googleDriveClient
+        )
     }
 
-    fun setEditable(editable: Boolean) {
-        this.editable = editable
+    fun getGoogleDriveClient(): GoogleDriveClient {
+        return googleDriveClient
+    }
+
+    fun setInternet(editable: Boolean) {
+        this.internet = editable
+    }
+
+    fun setLock(lock: Boolean) {
+        this.lock = lock
     }
 
     fun getEditable(): Boolean {
-        return editable
+        return internet && lock
     }
 
     fun save(rabbit: Rabbit): Long {

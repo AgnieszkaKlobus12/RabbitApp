@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessesListBinding
 import com.example.rabbitapp.model.entities.Sickness
-import com.example.rabbitapp.ui.mainTab.MainListViewModel
+import com.example.rabbitapp.utils.MainListViewModel
 
 
 class SicknessesListFragment : Fragment() {

@@ -4,8 +4,15 @@ import com.example.rabbitapp.model.dao.VaccinatedDao
 import com.example.rabbitapp.model.dao.VaccineDao
 import com.example.rabbitapp.model.entities.Vaccine
 import com.example.rabbitapp.model.entities.relations.Vaccinated
+import com.example.rabbitapp.utils.GoogleDriveClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class VaccineService(private val vaccineDao: VaccineDao, private val vaccinatedDao: VaccinatedDao) {
+class VaccineService(
+    private val vaccineDao: VaccineDao, private val vaccinatedDao: VaccinatedDao,
+    private val googleDriveClient: GoogleDriveClient
+) {
 
     fun getAll(): List<Vaccine> {
         return vaccineDao.getAll()
@@ -16,15 +23,26 @@ class VaccineService(private val vaccineDao: VaccineDao, private val vaccinatedD
     }
 
     fun save(vaccine: Vaccine): Long {
-        return vaccineDao.insert(vaccine)
+        val result = vaccineDao.insert(vaccine)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
+        return result
     }
 
     fun save(vaccinated: Vaccinated): Long {
-        return vaccinatedDao.insert(vaccinated)
+        val result = vaccinatedDao.insert(vaccinated)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
+        return result
     }
 
     fun deleteWithId(id: Long) {
         vaccineDao.delete(id)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
     }
 
     fun getAllVaccinationsForRabbit(fkRabbit: Long): List<Vaccinated> {
@@ -41,6 +59,9 @@ class VaccineService(private val vaccineDao: VaccineDao, private val vaccinatedD
 
     fun deleteVaccinatedWithId(id: Long) {
         vaccinatedDao.delete(id)
+        CoroutineScope(Dispatchers.Default).launch {
+            googleDriveClient.uploadLocalDatabase()
+        }
     }
 
     fun getAllRabbitsVaccinatedWith(id: Long): List<Long> {
