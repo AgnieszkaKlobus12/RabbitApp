@@ -86,14 +86,8 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
         try {
             val existingFile = findFileByName(fileName, googleDriveService)
             return if (existingFile != null) {
-//            googleDriveService.files().delete(existingFile.id)
                 googleDriveService.files().update(existingFile.id, null, mediaContent)
-                    .execute() //todo not working???
-//            val storageFile = File().apply {
-//                parents = listOf("appDataFolder")
-//                name = fileName
-//            }
-//            googleDriveService.files().create(storageFile, mediaContent).execute()
+                    .execute()
             } else {
                 val storageFile = File().apply {
                     parents = listOf("appDataFolder")
