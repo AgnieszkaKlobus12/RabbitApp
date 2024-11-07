@@ -40,12 +40,12 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: AppDatabase? = null
 
-        val MIGRATION_24_25 = object : Migration(24, 25) {
+        private val MIGRATION_24_25 = object : Migration(24, 25) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE Rabbit ADD COLUMN deathDate INTEGER")
             }
         }
-        val MIGRATION_25_26 = object : Migration(25, 26) {
+        private val MIGRATION_25_26 = object : Migration(25, 26) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE Rabbit ADD COLUMN cageNumber INTEGER")
                 db.execSQL("ALTER TABLE Litter ADD COLUMN cageNumber INTEGER")

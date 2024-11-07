@@ -52,21 +52,22 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
             context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
         val dbPathWal =
             context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+        val dbPathCache =
+            context.cacheDir.path.plus("/app_database.lck")
 
         val filePath = java.io.File(dbPath)
         val filePathShm = dbPathShm?.let { java.io.File(it) }
         val filePathWal = dbPathWal?.let { java.io.File(it) }
+        val filePathCache = java.io.File(dbPathCache)
         val storageFileContent = FileContent("", filePath)
         val storageFileShmContent = FileContent("", filePathShm)
         val storageFileWalContent = FileContent("", filePathWal)
+        val storageFileCacheContent = FileContent("", filePathCache)
 
-        try {
-            uploadOrUpdateFile("app_database", storageFileContent, googleDriveService)
-            uploadOrUpdateFile("app_database-shm", storageFileShmContent, googleDriveService)
-            uploadOrUpdateFile("app_database-wal", storageFileWalContent, googleDriveService)
-        } catch (e: Exception) {
-            Log.e("Google Drive", "Error: ${e.message}", e)
-        }
+        uploadOrUpdateFile("app_database.lck", storageFileCacheContent, googleDriveService)
+        uploadOrUpdateFile("app_database", storageFileContent, googleDriveService)
+        uploadOrUpdateFile("app_database-shm", storageFileShmContent, googleDriveService)
+        uploadOrUpdateFile("app_database-wal", storageFileWalContent, googleDriveService)
     }
 
     private fun findFileByName(fileName: String, googleDriveService: Drive): File? {
@@ -81,17 +82,28 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
         fileName: String,
         mediaContent: FileContent,
         googleDriveService: Drive
-    ): File {
-        val existingFile = findFileByName(fileName, googleDriveService)
-        return if (existingFile != null) {
-            googleDriveService.files().update(existingFile.id, null, mediaContent)
-                .execute() //todo not working???
-        } else {
-            val storageFile = File().apply {
-                parents = listOf("appDataFolder")
-                name = fileName
+    ): File? {
+        try {
+            val existingFile = findFileByName(fileName, googleDriveService)
+            return if (existingFile != null) {
+//            googleDriveService.files().delete(existingFile.id)
+                googleDriveService.files().update(existingFile.id, null, mediaContent)
+                    .execute() //todo not working???
+//            val storageFile = File().apply {
+//                parents = listOf("appDataFolder")
+//                name = fileName
+//            }
+//            googleDriveService.files().create(storageFile, mediaContent).execute()
+            } else {
+                val storageFile = File().apply {
+                    parents = listOf("appDataFolder")
+                    name = fileName
+                }
+                googleDriveService.files().create(storageFile, mediaContent).execute()
             }
-            googleDriveService.files().create(storageFile, mediaContent).execute()
+        } catch (e: Exception) {
+            Log.e("Google Drive", "Error: ${e.message}", e)
+            return null
         }
     }
 
@@ -112,24 +124,13 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
             .build()
 
         try {
-            val dbDir = context.getDatabasePath("app_database").parent
-            val dir = dbDir?.let { java.io.File(it) }
-            if (dir != null) {
-                if (dir.isDirectory) {
-                    val children = dir.list()
-                    if (children != null) {
-                        for (i in children.indices) {
-                            java.io.File(dir, children[i]).delete()
-                        }
-                    }
-                }
-            }
-
             val dbPath = context.getDatabasePath("app_database").path
             val dbPathShm =
                 context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
             val dbPathWal =
                 context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+            val dbPathCache =
+                context.cacheDir.path.plus("/app_database.lck")
 
             val files: FileList = googleDriveService.files().list()
                 .setSpaces("appDataFolder")
@@ -157,6 +158,12 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
 
                     "app_database-wal" -> {
                         val outputStream: OutputStream = FileOutputStream(dbPathWal)
+                        googleDriveService.files().get(file.id)
+                            .executeMediaAndDownloadTo(outputStream)
+                    }
+
+                    "app_database.lck" -> {
+                        val outputStream: OutputStream = FileOutputStream(dbPathCache)
                         googleDriveService.files().get(file.id)
                             .executeMediaAndDownloadTo(outputStream)
                     }
