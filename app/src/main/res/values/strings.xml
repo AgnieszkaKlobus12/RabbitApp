@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="age">Wiek: </string>
+    <string name="age_label">Wiek</string>
     <string name="rabbit_list_title">Lista królików i miotów</string>
     <string name="open">Otwórz</string>
     <string name="close">Zamknij</string>
@@ -25,7 +26,7 @@
     <string name="mother">Matka</string>
     <string name="father">Ojciec</string>
     <string name="pick">Wybierz</string>
-    <string name="ear_numbers">Numery:</string>
+    <string name="ear_numbers">Numery LU/PU:</string>
     <string name="unknown">Nieznane</string>
     <string name="sex_label">Płeć:</string>
     <string name="delete">Usuń</string>
@@ -121,4 +122,12 @@
     <string name="internet_error">Brak internetu, dane mogą być nieaktualne. Edycja wyłączona!</string>
     <string name="no_lock">Edycja zablokowana. Ktoś inny używa aplikacji!</string>
     <string name="non_editable">Edycja wyłączona. Brak internetu lub uprawnień!</string>
+    <string name="filter">Filtruj:</string>
+    <string name="alive">Żywy</string>
+    <string name="rabbit">Królik</string>
+    <string name="litter">Miot</string>
+    <string name="sort">Sortuj:</string>
+    <string name="name">Imię</string>
+    <string name="numbers">Numery</string>
+    <string name="cage">Klatka</string>
 </resources>

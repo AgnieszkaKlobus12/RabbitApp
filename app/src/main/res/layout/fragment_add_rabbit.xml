@@ -139,8 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/table_margin"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number" />
+                        android:ems="10" />
                 </TableRow>
 
                 <TableRow android:id="@+id/add_rabbit_cage_numbers_row">

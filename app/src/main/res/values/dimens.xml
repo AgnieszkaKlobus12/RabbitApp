@@ -14,5 +14,6 @@
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="image_large">200dp</dimen>
+    <dimen name="mini_margin">2.5dp</dimen>
 
 </resources>

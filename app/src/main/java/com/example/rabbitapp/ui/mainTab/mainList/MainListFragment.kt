@@ -52,6 +52,22 @@ class MainListFragment : Fragment() {
         binding.addNewMainButton.setOnClickListener(showFloatingAddButtons())
         binding.addRabbitButton.setOnClickListener(moveToAddRabbit())
         binding.addLitterButton.setOnClickListener(moveToAddLitter())
+
+        binding.filterFrame.setOnClickListener {
+            if (binding.categoriesRabbits.visibility == View.VISIBLE) {
+                binding.categoriesRabbits.visibility = View.GONE
+                binding.filterButton.contentDescription = getString(R.string.filter)
+                binding.filterLabel.text = getString(R.string.filter)
+                binding.filterButton.setImageResource(R.drawable.icon_filter)
+            } else {
+                binding.categoriesRabbits.visibility = View.VISIBLE
+                binding.filterButton.contentDescription = getString(R.string.close)
+                binding.filterLabel.text = getString(R.string.close)
+                binding.filterButton.setImageResource(R.drawable.icon_close)
+            }
+        }
+
+
     }
 
     override fun onDestroyView() {
