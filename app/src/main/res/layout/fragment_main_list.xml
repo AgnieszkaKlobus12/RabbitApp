@@ -69,6 +69,7 @@
                 app:singleSelection="false">
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/dead_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/alive_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,6 +87,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/rabbit_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,6 +96,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/litter_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,6 +123,7 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/name_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,6 +132,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/numbers_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -135,6 +141,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/cage_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,6 +150,7 @@
                     android:textAlignment="center" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
                     android:id="@+id/age_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

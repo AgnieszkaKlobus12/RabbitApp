@@ -59,4 +59,9 @@
         <item name="android:layout_marginHorizontal">25dp</item>
     </style>
 
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/background_color_chip_state_list_day</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+    </style>
+
 </resources>
