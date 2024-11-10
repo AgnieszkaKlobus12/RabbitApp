@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,8 +49,7 @@ class MainListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.clearSelected()
 
-        mainListAdapter =
-            MainListAdapter(viewModel.getAll(), onSelectedItem)
+        mainListAdapter = MainListAdapter(viewModel.getAll(), onSelectedItem)
         binding.fragmentHomeListInclude.fragmentListRecyclerView.adapter = mainListAdapter
 
         binding.addNewMainButton.setOnClickListener(showFloatingAddButtons())
@@ -68,26 +68,17 @@ class MainListFragment : Fragment() {
             }
         }
 
-        binding.numbersChip.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.earNumber })
-            }
-        }
-        binding.ageChip.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.birth })
-            }
-        }
-        binding.cageChip.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.cageNumber })
-            }
-        }
-        binding.nameChip.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.name })
-            }
-        }
+        sort()
+        binding.deadChip.setOnCheckedChangeListener(filter())
+        binding.aliveChip.setOnCheckedChangeListener(filter())
+        binding.rabbitChip.setOnCheckedChangeListener(filter())
+        binding.litterChip.setOnCheckedChangeListener(filter())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainListAdapter.updateData(viewModel.getAll())
+        filter().onCheckedChanged(null, true)
     }
 
     override fun onDestroyView() {
@@ -139,6 +130,61 @@ class MainListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
+    }
+
+    private fun sort() {
+        binding.numbersChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.earNumber })
+            }
+        }
+        binding.ageChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.birth })
+            }
+        }
+        binding.cageChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.cageNumber })
+            }
+        }
+        binding.nameChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.name })
+            }
+        }
+    }
+
+    private fun filter(): CompoundButton.OnCheckedChangeListener {
+        return CompoundButton.OnCheckedChangeListener { _, _ ->
+            var items = viewModel.getAll()
+            if (binding.deadChip.isChecked) {
+                items = items.filter { it.deathDate != null }
+            }
+            if (binding.aliveChip.isChecked) {
+                items = items.filter { it.deathDate == null }
+            }
+            if (binding.rabbitChip.isChecked) {
+                items = items.filter { it.type == "rabbit" }
+            }
+            if (binding.litterChip.isChecked) {
+                items = items.filter { it.type == "litter" }
+            }
+
+            if (binding.numbersChip.isChecked) {
+                items = items.sortedBy { it.earNumber }
+            }
+            if (binding.ageChip.isChecked) {
+                items = items.sortedBy { it.birth }
+            }
+            if (binding.cageChip.isChecked) {
+                items = items.sortedBy { it.cageNumber }
+            }
+            if (binding.nameChip.isChecked) {
+                items = items.sortedBy { it.name }
+            }
+            mainListAdapter.updateData(items)
         }
     }
 
