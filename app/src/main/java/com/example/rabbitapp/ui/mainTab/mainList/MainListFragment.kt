@@ -20,6 +20,20 @@ class MainListFragment : Fragment() {
     private var _binding: FragmentMainListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainListViewModel by activityViewModels()
+    private lateinit var mainListAdapter: MainListAdapter
+    private val onSelectedItem = object : OnSelectedItem {
+        override fun onItemClick(item: HomeListItem) {
+            if (item is Rabbit) {
+                viewModel.selectedRabbit = item
+                view?.findNavController()
+                    ?.navigate(R.id.action_navigation_home_to_rabbitDetailsFragment)
+            } else {
+                viewModel.selectedLitter = item as Litter
+                view?.findNavController()
+                    ?.navigate(R.id.action_navigation_home_to_litterDetailsFragment)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,20 +48,9 @@ class MainListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.clearSelected()
 
-        binding.fragmentHomeListInclude.fragmentListRecyclerView.adapter =
-            MainListAdapter(viewModel.getAll(), object : OnSelectedItem {
-                override fun onItemClick(item: HomeListItem) {
-                    if (item is Rabbit) {
-                        viewModel.selectedRabbit = item
-                        view.findNavController()
-                            .navigate(R.id.action_navigation_home_to_rabbitDetailsFragment)
-                    } else {
-                        viewModel.selectedLitter = item as Litter
-                        view.findNavController()
-                            .navigate(R.id.action_navigation_home_to_litterDetailsFragment)
-                    }
-                }
-            })
+        mainListAdapter =
+            MainListAdapter(viewModel.getAll(), onSelectedItem)
+        binding.fragmentHomeListInclude.fragmentListRecyclerView.adapter = mainListAdapter
 
         binding.addNewMainButton.setOnClickListener(showFloatingAddButtons())
         binding.addRabbitButton.setOnClickListener(moveToAddRabbit())
@@ -57,17 +60,34 @@ class MainListFragment : Fragment() {
             if (binding.categoriesRabbits.visibility == View.VISIBLE) {
                 binding.categoriesRabbits.visibility = View.GONE
                 binding.filterButton.contentDescription = getString(R.string.filter)
-                binding.filterLabel.text = getString(R.string.filter)
                 binding.filterButton.setImageResource(R.drawable.icon_filter)
             } else {
                 binding.categoriesRabbits.visibility = View.VISIBLE
                 binding.filterButton.contentDescription = getString(R.string.close)
-                binding.filterLabel.text = getString(R.string.close)
                 binding.filterButton.setImageResource(R.drawable.icon_close)
             }
         }
 
-
+        binding.numbersChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.earNumber })
+            }
+        }
+        binding.ageChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.birth })
+            }
+        }
+        binding.cageChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.cageNumber })
+            }
+        }
+        binding.nameChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mainListAdapter.updateData(mainListAdapter.getData().sortedBy { it.name })
+            }
+        }
     }
 
     override fun onDestroyView() {

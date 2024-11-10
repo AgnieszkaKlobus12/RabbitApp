@@ -15,7 +15,7 @@ import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.utils.RabbitDetails
 
 class MainListAdapter(
-    private val values: List<HomeListItem>,
+    private var values: List<HomeListItem>,
     private val onSelectedItem: OnSelectedItem
 ) :
     RecyclerView.Adapter<MainListAdapter.HomeListItemView>() {
@@ -24,6 +24,15 @@ class MainListAdapter(
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.home_list_item, parent, false)
         return HomeListItemView(itemView)
+    }
+
+    fun getData(): List<HomeListItem> {
+        return values
+    }
+
+    fun updateData(newItems: List<HomeListItem>) {
+        values = newItems
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: HomeListItemView, position: Int) {

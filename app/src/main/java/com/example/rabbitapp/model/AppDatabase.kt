@@ -24,7 +24,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class, Mating::class, Sickness::class, Sick::class],
-    version = 26
+    version = 29
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -40,11 +40,6 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: AppDatabase? = null
 
-        private val MIGRATION_24_25 = object : Migration(24, 25) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL("ALTER TABLE Rabbit ADD COLUMN deathDate INTEGER")
-            }
-        }
         private val MIGRATION_25_26 = object : Migration(25, 26) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE Rabbit ADD COLUMN cageNumber INTEGER")
@@ -60,7 +55,7 @@ abstract class AppDatabase : RoomDatabase() {
                     ctx.applicationContext, AppDatabase::class.java,
                     "app_database"
                 )
-                    .addMigrations(MIGRATION_24_25, MIGRATION_25_26)
+//                    .addMigrations(MIGRATION_24_25, MIGRATION_25_26)
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build()

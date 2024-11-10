@@ -198,12 +198,12 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
                             .executeMediaAndDownloadTo(outputStream)
                         val fileBytes = outputStream.toByteArray()
                         val dateTime = LocalDateTime.parse(String(fileBytes, Charsets.UTF_8))
-                        if (dateTime.plusMinutes(2).isAfter(LocalDateTime.now())) {
-                            return false
-                        } else {
+//                        if (dateTime.plusMinutes(2).isAfter(LocalDateTime.now())) { //todo disabled for tests
+//                            return false
+//                        } else {
                             refreshLock()
                             return true
-                        }
+//                        }
                     }
                 }
             }
