@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
@@ -191,10 +192,10 @@ class LitterAddFragment : FragmentWithPicture() {
                     LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter)
                         .toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
-                    if (binding.addLitterCageNumbers.text.toString().isEmpty()) {
-                        null
-                    } else {
+                    if (binding.addLitterCageNumbers.text.toString().isDigitsOnly()) {
                         binding.addLitterCageNumbers.text.toString().toInt()
+                    } else {
+                        null
                     },
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
