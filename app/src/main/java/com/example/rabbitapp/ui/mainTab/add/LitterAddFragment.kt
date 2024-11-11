@@ -51,10 +51,13 @@ class LitterAddFragment : FragmentWithPicture() {
                 viewModel.selectedLitter!!.fkMother,
                 viewModel.selectedLitter!!.fkFather
             )
+            requireActivity().title = resources.getString(R.string.edit_litter)
             setFieldsToSelectedLitter()
         } else if (mating != null) {
             parentSelectService.setParents(viewModel, mating!!.fkMother, mating!!.fkFather)
         }
+
+
 
         setPictureToSelectedOrDefault(
             binding.addLitterPicture,

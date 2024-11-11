@@ -35,10 +35,12 @@ class VaccineEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().title = resources.getString(R.string.add_vaccine)
 
         vaccine?.let {
             binding.fragmentVaccineEditVaccineName.setText(it.name)
             binding.fragmentVaccineEditVaccineDescription.setText(it.description)
+            requireActivity().title = resources.getString(R.string.edit_vaccine)
         }
 
         binding.addVaccineSaveButton.setOnClickListener {

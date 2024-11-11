@@ -36,10 +36,13 @@ class SicknessEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().title = resources.getString(R.string.add_sickness)
+
         sickness?.let {
             binding.fragmentSicknessEditSicknessName.setText(it.name)
             binding.fragmentSicknessEditSicknessSymptoms.setText(it.symptoms)
             binding.fragmentSicknessEditSicknessTreatment.setText(it.treatment)
+            requireActivity().title = resources.getString(R.string.edit_sickness)
         }
 
         binding.addSicknessSaveButton.setOnClickListener {

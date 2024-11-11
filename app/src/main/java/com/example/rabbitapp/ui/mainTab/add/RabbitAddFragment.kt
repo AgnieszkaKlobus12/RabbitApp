@@ -45,6 +45,7 @@ class RabbitAddFragment : FragmentWithPicture() {
                 viewModel.selectedRabbit!!.fkFather
             )
             setFieldsToSelectedRabbit()
+            requireActivity().title = resources.getString(R.string.edit_rabbit)
         }
         if (viewModel.selectedLitter != null) {
             parentSelectService.setParents(

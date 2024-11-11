@@ -137,4 +137,8 @@
     <string name="born">Wykocone</string>
     <string name="not_born">Niewykocone\n</string>
     <string name="vaccines_list">Lista szczepionek</string>
+    <string name="edit_litter">Edytuj miot</string>
+    <string name="edit_rabbit">Edytuj królika</string>
+    <string name="edit_mating">Edytuj pokrycie</string>
+    <string name="add_vaccine">Dodaj szczepionkę</string>
 </resources>
