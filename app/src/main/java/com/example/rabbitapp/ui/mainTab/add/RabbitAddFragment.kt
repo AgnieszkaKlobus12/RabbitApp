@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
@@ -169,10 +170,10 @@ class RabbitAddFragment : FragmentWithPicture() {
                         .toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
-                    if (binding.addRabbitCageNumbers.text.toString().isEmpty()) {
-                        null
-                    } else {
+                    if (binding.addRabbitCageNumbers.text.toString().isDigitsOnly()) {
                         binding.addRabbitCageNumbers.text.toString().toInt()
+                    } else {
+                        null
                     },
                     path,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
