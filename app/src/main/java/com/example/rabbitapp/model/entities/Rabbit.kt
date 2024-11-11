@@ -27,16 +27,17 @@ import androidx.room.PrimaryKey
 )
 data class Rabbit(
     @PrimaryKey(autoGenerate = true) override val id: Long,
-    override val name: String,
+    override var name: String,
     override var birth: Long,
     val sex: String,
-    val earNumber: String?,
-    override val cageNumber: Int?,
-    override val imagePath: String?,
+    override var earNumber: String?,
+    override var cageNumber: Int?,
+    override var imagePath: String?,
     override var fkMother: Long?,
     override var fkFather: Long?,
     var fkLitter: Long?,
-    override var deathDate: Long?
+    override var deathDate: Long?,
+    override val type: String = "rabbit",
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {

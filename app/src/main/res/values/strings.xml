@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="age">Wiek: </string>
+    <string name="age_label">Wiek</string>
     <string name="rabbit_list_title">Lista królików i miotów</string>
     <string name="open">Otwórz</string>
     <string name="close">Zamknij</string>
@@ -18,6 +19,7 @@
     <string name="litter_name_label">Nazwa:</string>
     <string name="rabbit_placeholder">Królik</string>
     <string name="birth_date_label">Data urodzenia:</string>
+    <string name="birth_date">Data wykocenia</string>
     <string name="female">Samica</string>
     <string name="male">Samiec</string>
     <string name="save">Zapisz</string>
@@ -25,7 +27,7 @@
     <string name="mother">Matka</string>
     <string name="father">Ojciec</string>
     <string name="pick">Wybierz</string>
-    <string name="ear_numbers">Numery:</string>
+    <string name="ear_numbers">Numery LU/PU:</string>
     <string name="unknown">Nieznane</string>
     <string name="sex_label">Płeć:</string>
     <string name="delete">Usuń</string>
@@ -68,12 +70,14 @@
     <string name="add_mating">Dodaj krycie</string>
     <string name="date">Data:</string>
     <string name="mating_date">Data pokrycia:</string>
+    <string name="mating_date_label">Data pokrycia</string>
     <string name="born_litter">Urodzony miot</string>
     <string name="rabbits_and_litters">Króliki i mioty</string>
     <string name="mating_details">Szczegóły miotu</string>
     <string name="end">Zakończ</string>
     <string name="overtime_for_mating_consider_archiving">Minęło ponad 45 dni od pokrycia. Zarchiwizuj pokrycie, aby je ukryć lub dodaj miot, jeśli zakończyło się owocnie.</string>
     <string name="archived">Zarchiwizowane!</string>
+    <string name="archived_label">Zarchiwizowane</string>
     <string name="archive">Archiwizuj</string>
     <string name="add">dodaj</string>
     <string name="matings_list">Lista pokryć</string>
@@ -121,4 +125,16 @@
     <string name="internet_error">Brak internetu, dane mogą być nieaktualne. Edycja wyłączona!</string>
     <string name="no_lock">Edycja zablokowana. Ktoś inny używa aplikacji!</string>
     <string name="non_editable">Edycja wyłączona. Brak internetu lub uprawnień!</string>
+    <string name="filter">Filtruj:</string>
+    <string name="alive">Żywy</string>
+    <string name="rabbit">Królik</string>
+    <string name="litter">Miot</string>
+    <string name="sort">Sortuj:</string>
+    <string name="name">Imię</string>
+    <string name="name_label">Nazwa</string>
+    <string name="numbers">Numery</string>
+    <string name="cage">Klatka</string>
+    <string name="born">Wykocone</string>
+    <string name="not_born">Niewykocone\n</string>
+    <string name="vaccines_list">Lista szczepionek</string>
 </resources>

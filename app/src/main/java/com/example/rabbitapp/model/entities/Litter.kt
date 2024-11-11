@@ -21,14 +21,16 @@ import androidx.room.PrimaryKey
 )
 data class Litter(
     @PrimaryKey(autoGenerate = true) override val id: Long,
-    override val name: String,
-    override val birth: Long,
-    val size: Int,
-    override val cageNumber: Int?,
-    override val imagePath: String?,
-    override val fkMother: Long?,
-    override val fkFather: Long?,
-    override var deathDate: Long?
+    override var name: String,
+    override var birth: Long,
+    var size: Int,
+    override var cageNumber: Int?,
+    override var imagePath: String?,
+    override var fkMother: Long?,
+    override var fkFather: Long?,
+    override var deathDate: Long?,
+    override val type: String = "litter",
+    override var earNumber: String? = null
 ) : HomeListItem {
 
     override fun equals(other: Any?): Boolean {

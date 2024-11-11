@@ -9,7 +9,7 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.Vaccine
 
 class VaccineListAdapter(
-    private val values: List<Vaccine>,
+    private var values: List<Vaccine>,
     private val onSelectedVaccine: OnSelectedVaccine
 ) :
     RecyclerView.Adapter<VaccineListAdapter.VaccineListItemView>() {
@@ -18,6 +18,15 @@ class VaccineListAdapter(
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.simple_list_item, parent, false)
         return VaccineListItemView(itemView)
+    }
+
+    fun getData(): List<Vaccine> {
+        return values
+    }
+
+    fun updateData(newItems: List<Vaccine>) {
+        values = newItems
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: VaccineListItemView, position: Int) {

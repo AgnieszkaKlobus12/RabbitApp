@@ -10,7 +10,7 @@ import com.example.rabbitapp.model.entities.Rabbit
 @Dao
 interface RabbitDao {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(rabbit: Rabbit): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

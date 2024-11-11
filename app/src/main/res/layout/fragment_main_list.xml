@@ -7,17 +7,159 @@
     tools:context=".ui.mainTab.mainList.MainListFragment">
 
     <TextView
-        android:id="@+id/fragment_home_text"
-        android:layout_width="match_parent"
+        android:id="@+id/fragment_rabbit_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/small_margin"
         android:text="@string/rabbit_list_title"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_home_list_include"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/bigger_text"
+        app:layout_constraintEnd_toStartOf="@id/filter_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_rabbit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_rabbit_text"
+        app:layout_constraintTop_toTopOf="@id/fragment_rabbit_text">
+
+        <ImageView
+            android:id="@+id/filter_button"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_filter" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableLayout
+        android:id="@+id/categories_rabbits"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/fragment_home_list_include"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_rabbit_text">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/filter_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/mini_margin"
+                android:paddingTop="11dp"
+                android:text="@string/filter"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                app:selectionRequired="false"
+                app:singleSelection="false">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/dead_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/dead"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/alive_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/alive"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/rabbit_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/rabbit"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/litter_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/litter"
+                    android:textAlignment="center" />
+            </com.google.android.material.chip.ChipGroup>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/sort_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/mini_margin"
+                android:paddingTop="11dp"
+                android:text="@string/sort"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/name_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/name"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/numbers_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/numbers"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/cage_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/cage"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipChoice"
+                    android:id="@+id/age_chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/mini_margin"
+                    android:text="@string/age_label"
+                    android:textAlignment="center" />
+            </com.google.android.material.chip.ChipGroup>
+        </TableRow>
+    </TableLayout>
 
     <include
         android:id="@+id/fragment_home_list_include"
@@ -27,7 +169,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_home_text" />
+        app:layout_constraintTop_toBottomOf="@id/categories_rabbits" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_new_main_button"
