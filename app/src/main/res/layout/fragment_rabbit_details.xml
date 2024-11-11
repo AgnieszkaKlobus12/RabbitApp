@@ -202,6 +202,7 @@
                 layout="@layout/fragment_mating_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/fragment_rabbit_details_include_vaccinations"
                 app:layout_constraintLeft_toLeftOf="parent"

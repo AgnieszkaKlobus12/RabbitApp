@@ -29,7 +29,6 @@ class MatingListFragment : Fragment() {
                     )
                 )
         }
-
     }
 
     override fun onCreateView(

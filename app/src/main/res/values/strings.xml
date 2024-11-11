@@ -141,4 +141,5 @@
     <string name="edit_rabbit">Edytuj królika</string>
     <string name="edit_mating">Edytuj pokrycie</string>
     <string name="add_vaccine">Dodaj szczepionkę</string>
+    <string name="not_archived_label">Niezachiwizowane</string>
 </resources>

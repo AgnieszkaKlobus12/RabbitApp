@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentRabbitDetailsBinding
@@ -32,6 +33,17 @@ class RabbitDetailsFragment : FragmentWithPicture() {
     private var _binding: FragmentRabbitDetailsBinding? = null
     private val binding get() = _binding!!
     private val parentSelectService: ParentSelectService = ParentSelectService()
+    private lateinit var matingListAdapter: MatingListAdapter
+    private val onSelectedItem = object : OnSelectedMating {
+        override fun onItemClick(item: Mating) {
+            view?.findNavController()
+                ?.navigate(
+                    RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToMatingFragment(
+                        item.id
+                    )
+                )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,20 +205,38 @@ class RabbitDetailsFragment : FragmentWithPicture() {
             val matings = viewModel.getAllMatingsForRabbit(it)
             if (matings.isNotEmpty()) {
                 binding.fragmentRabbitDetailsIncludeMatings.root.visibility = View.VISIBLE
+                matingListAdapter = MatingListAdapter(viewModel, matings, onSelectedItem)
                 binding.fragmentRabbitDetailsIncludeMatings.fragmentMatingListRecyclerView.adapter =
-                    MatingListAdapter(
-                        viewModel,
-                        matings,
-                        object : OnSelectedMating {
-                            override fun onItemClick(item: Mating) {
-                                view.findNavController()
-                                    .navigate(
-                                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToMatingFragment(
-                                            item.id
-                                        )
-                                    )
-                            }
-                        })
+                    matingListAdapter
+
+                binding.fragmentRabbitDetailsIncludeMatings.filterFrame.setOnClickListener {
+                    if (binding.fragmentRabbitDetailsIncludeMatings.categoriesMatings.visibility == View.VISIBLE) {
+                        binding.fragmentRabbitDetailsIncludeMatings.categoriesMatings.visibility =
+                            View.GONE
+                        binding.fragmentRabbitDetailsIncludeMatings.filterButton.contentDescription =
+                            getString(R.string.filter)
+                        binding.fragmentRabbitDetailsIncludeMatings.filterButton.setImageResource(R.drawable.icon_filter)
+                    } else {
+                        binding.fragmentRabbitDetailsIncludeMatings.categoriesMatings.visibility =
+                            View.VISIBLE
+                        binding.fragmentRabbitDetailsIncludeMatings.filterButton.contentDescription =
+                            getString(R.string.close)
+                        binding.fragmentRabbitDetailsIncludeMatings.filterButton.setImageResource(R.drawable.icon_close)
+                    }
+                }
+
+                binding.fragmentRabbitDetailsIncludeMatings.bornChip.setOnCheckedChangeListener(
+                    filter()
+                )
+                binding.fragmentRabbitDetailsIncludeMatings.notBornChip.setOnCheckedChangeListener(
+                    filter()
+                )
+                binding.fragmentRabbitDetailsIncludeMatings.archivedChip.setOnCheckedChangeListener(
+                    filter()
+                )
+                binding.fragmentRabbitDetailsIncludeMatings.notArchivedChip.setOnCheckedChangeListener(
+                    filter()
+                )
             }
         }
 
@@ -267,6 +297,25 @@ class RabbitDetailsFragment : FragmentWithPicture() {
             return getString(R.string.female)
         }
         return getString(R.string.unknown)
+    }
+
+    private fun filter(): CompoundButton.OnCheckedChangeListener {
+        return CompoundButton.OnCheckedChangeListener { _, _ ->
+            var items = viewModel.getAllMatingsForRabbit(viewModel.selectedRabbit!!.id)
+            if (binding.fragmentRabbitDetailsIncludeMatings.bornChip.isChecked) {
+                items = items.filter { it.fkLitter != null }
+            }
+            if (binding.fragmentRabbitDetailsIncludeMatings.notBornChip.isChecked) {
+                items = items.filter { it.fkLitter == null }
+            }
+            if (binding.fragmentRabbitDetailsIncludeMatings.archivedChip.isChecked) {
+                items = items.filter { it.archived }
+            }
+            if (binding.fragmentRabbitDetailsIncludeMatings.notArchivedChip.isChecked) {
+                items = items.filter { !it.archived }
+            }
+            matingListAdapter.updateData(items)
+        }
     }
 
 }
