@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
@@ -45,7 +46,8 @@ class RabbitAddFragment : FragmentWithPicture() {
                 viewModel.selectedRabbit!!.fkFather
             )
             setFieldsToSelectedRabbit()
-            requireActivity().title = resources.getString(R.string.edit_rabbit)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.edit_rabbit)
         }
         if (viewModel.selectedLitter != null) {
             parentSelectService.setParents(

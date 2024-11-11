@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
@@ -51,7 +52,8 @@ class LitterAddFragment : FragmentWithPicture() {
                 viewModel.selectedLitter!!.fkMother,
                 viewModel.selectedLitter!!.fkFather
             )
-            requireActivity().title = resources.getString(R.string.edit_litter)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.edit_litter)
             setFieldsToSelectedLitter()
         } else if (mating != null) {
             parentSelectService.setParents(viewModel, mating!!.fkMother, mating!!.fkFather)

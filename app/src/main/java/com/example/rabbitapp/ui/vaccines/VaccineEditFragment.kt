@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -35,12 +36,14 @@ class VaccineEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().title = resources.getString(R.string.add_vaccine)
+        (activity as AppCompatActivity).supportActionBar?.title =
+            resources.getString(R.string.add_vaccine)
 
         vaccine?.let {
             binding.fragmentVaccineEditVaccineName.setText(it.name)
             binding.fragmentVaccineEditVaccineDescription.setText(it.description)
-            requireActivity().title = resources.getString(R.string.edit_vaccine)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.edit_vaccine)
         }
 
         binding.addVaccineSaveButton.setOnClickListener {

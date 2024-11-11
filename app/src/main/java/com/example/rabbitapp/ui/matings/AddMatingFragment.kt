@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -53,10 +54,12 @@ class AddMatingFragment : Fragment() {
                 viewModel.selectedMother = viewModel.getRabbitFromId(args.motherId)
             }
         }
-        requireActivity().title = resources.getString(R.string.add_mating)
+        (activity as AppCompatActivity).supportActionBar?.title =
+            resources.getString(R.string.add_mating)
         if (args.matingId != 0L) {
             val mating = viewModel.getMating(args.matingId)
-            requireActivity().title = resources.getString(R.string.edit_mating)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.edit_mating)
             binding.addMatingDate.text = Editable.Factory.getInstance()
                 .newEditable(RabbitDetails.getDateString(mating!!.matingDate))
             binding.matingDateBirth.text = Editable.Factory.getInstance()

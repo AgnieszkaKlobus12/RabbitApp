@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
@@ -49,10 +50,12 @@ class AddSicknessFragment : FragmentWithPicture() {
             item = viewModel.getLitterFromId(args.litterId)
             Log.d("AddSicknessFragment", "litter: $item")
         }
-        requireActivity().title = resources.getString(R.string.add_sickness)
+        (activity as AppCompatActivity).supportActionBar?.title =
+            resources.getString(R.string.add_sickness)
         sickness = viewModel.getSickness(args.sicknessId)
         if (args.sickId != 0L) {
-            requireActivity().title = resources.getString(R.string.edit_sickness)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.edit_sickness)
             sick = viewModel.getSick(args.sickId)
             Log.d("AddSicknessFragment", "sick: $sick")
             sickness = sick?.let { viewModel.getSickness(it.fkSickness) }
