@@ -22,6 +22,35 @@ class SicknessesListFragment : Fragment() {
     private var _binding: FragmentSicknessesListBinding? = null
     private val viewModel: MainListViewModel by activityViewModels()
     private val binding get() = _binding!!
+    private lateinit var sicknessListAdapter: SicknessListAdapter
+    private val onSelectedItem = object : OnSelectedSickness {
+        override fun onItemClick(item: Sickness) {
+            if (args.rabbitId == 0L && args.litterId == 0L) {
+                view?.findNavController()
+                    ?.navigate(
+                        SicknessesListFragmentDirections.actionNavigationSicknessesToSicknessDetailsFragment(
+                            item.id
+                        )
+                    )
+            } else {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                    return
+                }
+                view?.findNavController()
+                    ?.navigate(
+                        SicknessesListFragmentDirections.actionNavigationSicknessesToAddSicknessFragment(
+                            args.rabbitId,
+                            args.litterId,
+                            item.id
+                        )
+                    )
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,35 +65,8 @@ class SicknessesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fragmentSicknessesListRecyclerView.adapter =
-            SicknessListAdapter(viewModel.getAllSicknesses(), object : OnSelectedSickness {
-                override fun onItemClick(item: Sickness) {
-                    if (args.rabbitId == 0L && args.litterId == 0L) {
-                        view.findNavController()
-                            .navigate(
-                                SicknessesListFragmentDirections.actionNavigationSicknessesToSicknessDetailsFragment(
-                                    item.id
-                                )
-                            )
-                    } else {
-                        if (!viewModel.getEditable()) {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.non_editable), Toast.LENGTH_SHORT
-                            ).show()
-                            return
-                        }
-                        view.findNavController()
-                            .navigate(
-                                SicknessesListFragmentDirections.actionNavigationSicknessesToAddSicknessFragment(
-                                    args.rabbitId,
-                                    args.litterId,
-                                    item.id
-                                )
-                            )
-                    }
-                }
-            })
+        sicknessListAdapter = SicknessListAdapter(viewModel.getAllSicknesses(), onSelectedItem)
+        binding.fragmentSicknessesListRecyclerView.adapter = sicknessListAdapter
 
         binding.addNewSicknessButton.setOnClickListener {
             if (!viewModel.getEditable()) {
@@ -77,11 +79,33 @@ class SicknessesListFragment : Fragment() {
             view.findNavController()
                 .navigate(R.id.action_navigation_sicknesses_to_editSicknessFragment)
         }
+
+        binding.filterFrame.setOnClickListener {
+            if (binding.categoriesSickness.visibility == View.VISIBLE) {
+                binding.categoriesSickness.visibility = View.GONE
+                binding.filterButton.contentDescription = getString(R.string.filter)
+                binding.filterButton.setImageResource(R.drawable.icon_filter)
+            } else {
+                binding.categoriesSickness.visibility = View.VISIBLE
+                binding.filterButton.contentDescription = getString(R.string.close)
+                binding.filterButton.setImageResource(R.drawable.icon_close)
+            }
+        }
+
+        sort()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun sort() {
+        binding.nameChip.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                sicknessListAdapter.updateData(sicknessListAdapter.getData().sortedBy { it.name })
+            }
+        }
     }
 
 }

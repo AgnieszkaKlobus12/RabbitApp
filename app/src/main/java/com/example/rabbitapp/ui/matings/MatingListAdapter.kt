@@ -13,7 +13,7 @@ import com.example.rabbitapp.utils.RabbitDetails
 
 class MatingListAdapter(
     private val viewModel: MainListViewModel,
-    private val values: List<Mating>,
+    private var values: List<Mating>,
     private val onSelectedItem: OnSelectedMating
 ) :
     RecyclerView.Adapter<MatingListAdapter.MatingItemView>() {
@@ -22,6 +22,15 @@ class MatingListAdapter(
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.mating_list_item, parent, false)
         return MatingItemView(itemView)
+    }
+
+    fun getData(): List<Mating> {
+        return values
+    }
+
+    fun updateData(newItems: List<Mating>) {
+        values = newItems
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: MatingItemView, position: Int) {
