@@ -185,6 +185,14 @@ class RabbitAddFragment : FragmentWithPicture() {
                     }
                 )
             )
+            if (viewModel.selectedLitter != null) {
+                viewModel.getAllVaccinationsForLitter(viewModel.selectedLitter!!.id).forEach {
+                    viewModel.save(it.copy(id = 0, fkRabbit = rabbitId, fkLitter = null))
+                }
+                viewModel.getAllSicknessesForLitter(viewModel.selectedLitter!!.id).forEach {
+                    viewModel.save(it.copy(id = 0, fkRabbit = rabbitId, fkLitter = null))
+                }
+            }
             viewModel.selectedRabbit = rabbitId.let { viewModel.getRabbitFromId(it) }
             view.findNavController()
                 .navigate(R.id.action_addRabbitFragment_to_rabbitDetailsFragment)

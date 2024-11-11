@@ -189,10 +189,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return vaccinesRepository.getAllVaccinationsForLitter(id)
     }
 
-    fun getAllMatings(): List<Mating> {
-        return matingRepository.getAll()
-    }
-
     fun save(mating: Mating): Long {
         return matingRepository.save(mating)
     }
