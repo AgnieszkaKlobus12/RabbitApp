@@ -1,13 +1,16 @@
 package com.example.rabbitapp.utils
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.getString
 import com.example.rabbitapp.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.Scopes
 import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.client.http.ByteArrayContent
 import com.google.api.client.http.FileContent
 import com.google.api.client.json.gson.GsonFactory
@@ -101,7 +104,7 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
         }
     }
 
-    fun downloadDatabase() {
+    fun downloadDatabase(activity: Activity) {
         val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
         val credential = GoogleAccountCredential.usingOAuth2(
             context,
@@ -163,6 +166,9 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
                     }
                 }
             }
+        } catch (e: UserRecoverableAuthIOException) {
+            startActivityForResult(activity, e.intent, 10, null)
+
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -201,8 +207,8 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
 //                        if (dateTime.plusMinutes(2).isAfter(LocalDateTime.now())) { //todo disabled for tests
 //                            return false
 //                        } else {
-                            refreshLock()
-                            return true
+                        refreshLock()
+                        return true
 //                        }
                     }
                 }

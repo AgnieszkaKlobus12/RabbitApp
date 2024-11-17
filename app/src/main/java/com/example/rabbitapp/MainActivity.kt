@@ -1,9 +1,11 @@
 package com.example.rabbitapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.rabbitapp.databinding.ActivityMainBinding
 import com.example.rabbitapp.utils.MainListViewModel
 import com.example.rabbitapp.utils.NetworkChangeReceiver
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +44,31 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         unregisterReceiver(networkReceiver)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+        handleSignInResult(task)
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            viewModel.loginWithGoogle(account, ::loginCallback)
+        } catch (e: ApiException) {
+            Log.w("LOGIN", "signInResult:failed code=" + e.statusCode)
+        }
+    }
+
+    private fun loginCallback(success: Boolean) {
+        if (success) {
+            val intent = Intent(this, MainActivity::class.java)
+            viewModel.setLock(viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock())
+            this.startActivity(intent)
+        } else {
+            Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_LONG).show()
+        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -94,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             viewModel.setInternet(true)
             GlobalScope.launch(Dispatchers.IO) {
-                viewModel.getGoogleDriveClient().downloadDatabase()
+                viewModel.getGoogleDriveClient().downloadDatabase(this@MainActivity)
                 if (!viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock()) {
                     viewModel.setLock(false)
                     runOnUiThread {
