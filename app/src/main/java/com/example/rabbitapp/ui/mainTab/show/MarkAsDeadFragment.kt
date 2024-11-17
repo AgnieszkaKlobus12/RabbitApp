@@ -72,10 +72,9 @@ class MarkAsDeadFragment : FragmentWithPicture() {
                     LocalDate.parse(binding.markDeadDate.text.toString(), dateFormatter)
                         .toEpochDay()
                 )
-                viewModel.selectedRabbit = viewModel.getRabbitFromId(args.rabbitId)
                 view.findNavController()
                     .navigate(
-                        MarkAsDeadFragmentDirections.navigationMarkDeadToRabbitDetailsFragment()
+                        MarkAsDeadFragmentDirections.navigationMarkDeadToRabbitDetailsFragment(args.rabbitId)
                     )
             } else {
                 viewModel.markLitterAsDead(
@@ -83,10 +82,9 @@ class MarkAsDeadFragment : FragmentWithPicture() {
                     LocalDate.parse(binding.markDeadDate.text.toString(), dateFormatter)
                         .toEpochDay()
                 )
-                viewModel.selectedLitter = viewModel.getLitterFromId(args.litterId)
                 view.findNavController()
                     .navigate(
-                        MarkAsDeadFragmentDirections.navigationMarkDeadToLitterDetailsFragment()
+                        MarkAsDeadFragmentDirections.navigationMarkDeadToLitterDetailsFragment(args.litterId)
                     )
             }
         }

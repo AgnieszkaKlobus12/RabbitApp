@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.PickParentsFragmentBinding
@@ -18,8 +19,8 @@ import com.example.rabbitapp.utils.MainListViewModel
 class ParentSelectService {
 
     fun displaySelectParentFragment(
-        pickMotherListFragment: Int,
-        pickFatherListFragment: Int,
+        actionMother: NavDirections,
+        actionFather: NavDirections,
         childFragmentManager: FragmentManager,
         viewModel: MainListViewModel,
         view: View?
@@ -36,9 +37,9 @@ class ParentSelectService {
             val pickButtonFragment = PickButtonFragment(Gender.FEMALE, object : StartSelect {
                 override fun select(gender: Gender?) {
                     parentSelect(
+                        actionMother,
+                        actionFather,
                         gender,
-                        pickMotherListFragment,
-                        pickFatherListFragment,
                         childFragmentManager,
                         view
                     )
@@ -54,9 +55,9 @@ class ParentSelectService {
             val pickButtonFragment = PickButtonFragment(Gender.MALE, object : StartSelect {
                 override fun select(gender: Gender?) {
                     parentSelect(
+                        actionMother,
+                        actionFather,
                         gender,
-                        pickMotherListFragment,
-                        pickFatherListFragment,
                         childFragmentManager,
                         view
                     )
@@ -108,26 +109,26 @@ class ParentSelectService {
     }
 
     fun setOnClickListenersParents(
+        actionMother: NavDirections,
+        actionFather: NavDirections,
         childFragmentManager: FragmentManager,
         view: View?,
         binding: PickParentsFragmentBinding,
-        pickMotherListFragment: Int,
-        pickFatherListFragment: Int
     ) {
         binding.addMotherFragment.setOnClickListener {
             parentSelect(
+                actionMother,
+                actionFather,
                 Gender.FEMALE,
-                pickMotherListFragment,
-                pickFatherListFragment,
                 childFragmentManager,
                 view
             )
         }
         binding.addFatherFragment.setOnClickListener {
             parentSelect(
+                actionMother,
+                actionFather,
                 Gender.MALE,
-                pickMotherListFragment,
-                pickFatherListFragment,
                 childFragmentManager,
                 view
             )
@@ -135,19 +136,19 @@ class ParentSelectService {
     }
 
     fun parentSelect(
+        actionMother: NavDirections,
+        actionFather: NavDirections,
         parentGender: Gender?,
-        pickMotherListFragment: Int,
-        pickFatherListFragment: Int,
         childFragmentManager: FragmentManager, view: View?
     ) {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (parentGender == Gender.FEMALE) {
             view?.findNavController()
-                ?.navigate(pickMotherListFragment)
+                ?.navigate(actionMother)
         }
         if (parentGender == Gender.MALE) {
             view?.findNavController()
-                ?.navigate(pickFatherListFragment)
+                ?.navigate(actionFather)
         }
         transaction.commit()
     }

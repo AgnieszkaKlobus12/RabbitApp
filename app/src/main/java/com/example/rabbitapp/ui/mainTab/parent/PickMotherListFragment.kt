@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.databinding.ContentHomeListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
@@ -16,6 +17,7 @@ import com.example.rabbitapp.utils.Gender
 import com.example.rabbitapp.utils.MainListViewModel
 
 class PickMotherListFragment : Fragment() {
+    private val args: PickMotherListFragmentArgs by navArgs()
     private var _binding: ContentHomeListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainListViewModel by activityViewModels()
@@ -33,12 +35,12 @@ class PickMotherListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.selectedMother = null
         val idList: MutableList<Long> = mutableListOf()
-        if (viewModel.selectedRabbit?.id != null) {
-            idList.add(viewModel.selectedRabbit!!.id)
+        if (args.rabbitId != 0L) {
+            idList.add(args.rabbitId)
         }
-        if (viewModel.selectedLitter?.id != null) {
+        if (args.litterId != 0L) {
             idList.addAll(
-                viewModel.getAllRabbitFromLitter(viewModel.selectedLitter!!.id)
+                viewModel.getAllRabbitFromLitter(args.litterId)
                     .map { rabbit: Rabbit -> rabbit.id })
         }
         binding.fragmentListRecyclerView.adapter =

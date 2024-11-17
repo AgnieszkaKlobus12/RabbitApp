@@ -352,6 +352,10 @@
             android:name="rabbit_id"
             android:defaultValue="0L"
             app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
         <action
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
             app:destination="@id/navigation_rabbit_list" />
@@ -405,17 +409,51 @@
     <fragment
         android:id="@+id/pickFatherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickFatherListFragment"
-        android:label="PickFatherListFragment" />
+        android:label="PickFatherListFragment">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/pickLitterListFragment"
         android:name="com.example.rabbitapp.ui.matings.PickLitterListFragment"
-        android:label="PickLitterListFragment" />
+        android:label="PickLitterListFragment">
+        <argument
+            android:name="mother_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="father_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="mating_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_pickLitterListFragment_to_addMattingFragment"
+            app:destination="@id/addMatingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/pickMotherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickMotherListFragment"
-        android:label="PickMotherListFragment" />
+        android:label="PickMotherListFragment">
+        <argument
+            android:name="rabbit_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="litter_id"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/rabbitDetailsFragment"

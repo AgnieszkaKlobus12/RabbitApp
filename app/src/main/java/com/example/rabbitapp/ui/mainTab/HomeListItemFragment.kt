@@ -25,7 +25,7 @@ class HomeListItemFragment(val item: HomeListItem) : FragmentWithPicture() {
         binding.homeListItemName.text = item.name
         setPictureToSelectedOrDefault(
             binding.homeListItemPicture,
-            viewModel.selectedLitter,
+            item,
             R.drawable.rabbit_2_back
         )
         return binding.root

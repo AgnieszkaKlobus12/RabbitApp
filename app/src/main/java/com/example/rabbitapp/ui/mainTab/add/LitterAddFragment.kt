@@ -63,8 +63,6 @@ class LitterAddFragment : FragmentWithPicture() {
             parentSelectService.setParents(viewModel, mating!!.fkMother, mating!!.fkFather)
         }
 
-
-
         setPictureToSelectedOrDefault(
             binding.addLitterPicture,
             litter,
@@ -90,15 +88,27 @@ class LitterAddFragment : FragmentWithPicture() {
 
         if (mating == null) {
             parentSelectService.setOnClickListenersParents(
+                LitterAddFragmentDirections.actionAddLitterFragmentToPickMotherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
+                LitterAddFragmentDirections.actionAddLitterFragmentToPickFatherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
                 childFragmentManager,
                 view,
                 binding.fragmentAddLitterIncludeParents,
-                R.id.action_addLitterFragment_to_pickMotherListFragment,
-                R.id.action_addLitterFragment_to_pickFatherListFragment
             )
             parentSelectService.displaySelectParentFragment(
-                R.id.action_addLitterFragment_to_pickMotherListFragment,
-                R.id.action_addLitterFragment_to_pickFatherListFragment,
+                LitterAddFragmentDirections.actionAddLitterFragmentToPickMotherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
+                LitterAddFragmentDirections.actionAddLitterFragmentToPickFatherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
                 childFragmentManager,
                 viewModel, view
             )

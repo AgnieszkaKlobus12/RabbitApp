@@ -159,8 +159,8 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
                 }
             }
         } catch (e: UserRecoverableAuthIOException) {
+            Log.e("Synchronisation Error", "User authentication required")
             startActivityForResult(activity, e.intent, 10, null)
-
         } catch (e: IOException) {
             e.printStackTrace()
         }

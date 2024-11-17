@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
-import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.utils.MainListViewModel
 
@@ -25,13 +24,19 @@ class MainListFragment : Fragment() {
     private val onSelectedItem = object : OnSelectedItem {
         override fun onItemClick(item: HomeListItem) {
             if (item is Rabbit) {
-                viewModel.selectedRabbit = item
                 view?.findNavController()
-                    ?.navigate(R.id.action_navigation_home_to_rabbitDetailsFragment)
+                    ?.navigate(
+                        MainListFragmentDirections.actionNavigationHomeToRabbitDetailsFragment(
+                            item.id
+                        )
+                    )
             } else {
-                viewModel.selectedLitter = item as Litter
                 view?.findNavController()
-                    ?.navigate(R.id.action_navigation_home_to_litterDetailsFragment)
+                    ?.navigate(
+                        MainListFragmentDirections.actionNavigationHomeToLitterDetailsFragment(
+                            item.id
+                        )
+                    )
             }
         }
     }

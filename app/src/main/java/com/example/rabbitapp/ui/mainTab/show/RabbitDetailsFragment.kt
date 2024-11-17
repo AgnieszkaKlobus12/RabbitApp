@@ -127,7 +127,11 @@ class RabbitDetailsFragment : FragmentWithPicture() {
             R.id.navigation_edit_rabbit -> {
                 Log.d("RabbitDetailsFragment", "Edit rabbit")
                 view?.findNavController()
-                    ?.navigate(R.id.action_rabbitDetailsFragment_to_addRabbitFragment)
+                    ?.navigate(
+                        RabbitDetailsFragmentDirections.actionRabbitDetailsFragmentToAddRabbitFragment(
+                            rabbit!!.id
+                        )
+                    )
                 true
             }
 

@@ -136,8 +136,14 @@ class AddMatingFragment : Fragment() {
         }
 
         parentSelectService.displaySelectParentFragment(
-            R.id.action_addMatingFragment_to_pickMotherListFragment,
-            R.id.action_addMatingFragment_to_pickFatherListFragment,
+            AddMatingFragmentDirections.actionAddMatingFragmentToPickMotherListFragment(
+                0L,
+                litter?.id ?: 0L
+            ),
+            AddMatingFragmentDirections.actionAddMatingFragmentToPickFatherListFragment(
+                0L,
+                litter?.id ?: 0L
+            ),
             childFragmentManager,
             viewModel, view
         )
@@ -157,9 +163,15 @@ class AddMatingFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 parentSelectService.parentSelect(
+                    AddMatingFragmentDirections.actionAddMatingFragmentToPickMotherListFragment(
+                        0L,
+                        litter?.id ?: 0L
+                    ),
+                    AddMatingFragmentDirections.actionAddMatingFragmentToPickFatherListFragment(
+                        0L,
+                        litter?.id ?: 0L
+                    ),
                     Gender.FEMALE,
-                    R.id.action_addMatingFragment_to_pickMotherListFragment,
-                    R.id.action_addMatingFragment_to_pickFatherListFragment,
                     childFragmentManager,
                     view
                 )
@@ -178,9 +190,15 @@ class AddMatingFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 parentSelectService.parentSelect(
+                    AddMatingFragmentDirections.actionAddMatingFragmentToPickMotherListFragment(
+                        0L,
+                        litter?.id ?: 0L
+                    ),
+                    AddMatingFragmentDirections.actionAddMatingFragmentToPickFatherListFragment(
+                        0L,
+                        litter?.id ?: 0L
+                    ),
                     Gender.MALE,
-                    R.id.action_addMatingFragment_to_pickMotherListFragment,
-                    R.id.action_addMatingFragment_to_pickFatherListFragment,
                     childFragmentManager,
                     view
                 )
@@ -203,11 +221,17 @@ class AddMatingFragment : Fragment() {
             }
         } else {
             parentSelectService.setOnClickListenersParents(
+                AddMatingFragmentDirections.actionAddMatingFragmentToPickMotherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
+                AddMatingFragmentDirections.actionAddMatingFragmentToPickFatherListFragment(
+                    0L,
+                    litter?.id ?: 0L
+                ),
                 childFragmentManager,
                 view,
                 binding.fragmentAddMatingIncludeParents,
-                R.id.action_addMatingFragment_to_pickMotherListFragment,
-                R.id.action_addMatingFragment_to_pickFatherListFragment
             )
 
             binding.matingDateBirth.setOnClickListener {
@@ -232,7 +256,13 @@ class AddMatingFragment : Fragment() {
                 override fun select(gender: Gender?) {
                     val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
                     view?.findNavController()
-                        ?.navigate(R.id.action_addMatingFragment_to_pickLitterListFragment)
+                        ?.navigate(
+                            AddMatingFragmentDirections.actionAddMatingFragmentToPickLitterListFragment(
+                                args.motherId,
+                                args.fatherId,
+                                args.matingId
+                            )
+                        )
                     transaction.commit()
                 }
             })

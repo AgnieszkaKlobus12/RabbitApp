@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
+import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
@@ -27,6 +28,7 @@ class RabbitAddFragment : FragmentWithPicture() {
     private val binding get() = _binding!!
     private val args: RabbitAddFragmentArgs by navArgs()
     private var rabbit: Rabbit? = null
+    private var litter: Litter? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     private val parentSelectService: ParentSelectService = ParentSelectService()
 
@@ -38,6 +40,11 @@ class RabbitAddFragment : FragmentWithPicture() {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
         if (args.rabbitId != 0L) {
             rabbit = viewModel.getRabbitFromId(args.rabbitId)
+            litter = rabbit!!.fkLitter?.let { viewModel.getLitterFromId(it) }
+        }
+        if (args.litterId != 0L) {
+            litter = viewModel.getLitterFromId(args.litterId)
+            rabbit?.fkLitter = args.litterId
         }
         setGalleryLauncher(binding.addRabbitPicture)
 
@@ -54,11 +61,11 @@ class RabbitAddFragment : FragmentWithPicture() {
             (activity as AppCompatActivity).supportActionBar?.title =
                 resources.getString(R.string.edit_rabbit)
         }
-        if (viewModel.selectedLitter != null) {
+        if (litter != null) {
             parentSelectService.setParents(
                 viewModel,
-                viewModel.selectedLitter!!.fkMother,
-                viewModel.selectedLitter!!.fkFather
+                litter!!.fkMother,
+                litter!!.fkFather
             )
             setLitterItem()
         }
@@ -77,18 +84,26 @@ class RabbitAddFragment : FragmentWithPicture() {
 
         binding.addRabbitSaveButton.setOnClickListener(saveRabbit())
         parentSelectService.displaySelectParentFragment(
-            R.id.action_addRabbitFragment_to_pickMotherListFragment,
-            R.id.action_addRabbitFragment_to_pickFatherListFragment,
+            RabbitAddFragmentDirections.actionAddRabbitFragmentToPickMotherListFragment(
+                rabbit?.id ?: 0L
+            ),
+            RabbitAddFragmentDirections.actionAddRabbitFragmentToPickFatherListFragment(
+                rabbit?.id ?: 0L
+            ),
             childFragmentManager,
             viewModel, view
         )
-        if (viewModel.selectedLitter == null) {
+        if (rabbit?.fkLitter == null && litter == null) {
             parentSelectService.setOnClickListenersParents(
+                RabbitAddFragmentDirections.actionAddRabbitFragmentToPickMotherListFragment(
+                    rabbit?.id ?: 0L
+                ),
+                RabbitAddFragmentDirections.actionAddRabbitFragmentToPickFatherListFragment(
+                    rabbit?.id ?: 0L
+                ),
                 childFragmentManager,
                 view,
                 binding.fragmentAddRabbitIncludeParents,
-                R.id.action_addRabbitFragment_to_pickMotherListFragment,
-                R.id.action_addRabbitFragment_to_pickFatherListFragment
             )
 
             binding.addRabbitDate.setOnClickListener {
@@ -187,7 +202,7 @@ class RabbitAddFragment : FragmentWithPicture() {
                     },
                     imageList,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
-                    viewModel.selectedLitter?.id,
+                    litter?.id,
                     if (binding.addRabbitDeathSwitch.isChecked) {
                         LocalDate.parse(binding.addRabbitDeathDate.text.toString(), dateFormatter)
                             .toEpochDay()
@@ -196,11 +211,11 @@ class RabbitAddFragment : FragmentWithPicture() {
                     }
                 )
             )
-            if (viewModel.selectedLitter != null) {
-                viewModel.getAllVaccinationsForLitter(viewModel.selectedLitter!!.id).forEach {
+            if (litter != null) {
+                viewModel.getAllVaccinationsForLitter(litter!!.id).forEach {
                     viewModel.save(it.copy(id = 0, fkRabbit = rabbitId, fkLitter = null))
                 }
-                viewModel.getAllSicknessesForLitter(viewModel.selectedLitter!!.id).forEach {
+                viewModel.getAllSicknessesForLitter(litter!!.id).forEach {
                     viewModel.save(it.copy(id = 0, fkRabbit = rabbitId, fkLitter = null))
                 }
             }
@@ -244,16 +259,16 @@ class RabbitAddFragment : FragmentWithPicture() {
     private fun setLitterItem() {
         binding.fragmentAddRabbitBelongTo.root.visibility = View.VISIBLE
         binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemAge.text =
-            viewModel.selectedLitter?.let { RabbitDetails.getAge(it.birth) }
+            litter?.let { RabbitDetails.getAge(it.birth) }
         binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemName.text =
-            viewModel.selectedLitter?.name
+            litter?.name
         setPictureToSelectedOrDefault(
             binding.fragmentAddRabbitBelongTo.fragmentBelongsToLitterItem.homeListItemPicture,
-            viewModel.selectedLitter,
+            litter,
             R.drawable.rabbit_2_back
         )
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(
-            LocalDate.ofEpochDay(viewModel.selectedLitter!!.birth).format(dateFormatter)
+            LocalDate.ofEpochDay(litter!!.birth).format(dateFormatter)
         )
         binding.addRabbitDate.setOnClickListener {
             Toast.makeText(
@@ -261,7 +276,7 @@ class RabbitAddFragment : FragmentWithPicture() {
                 getString(R.string.date_change_illegal), Toast.LENGTH_SHORT
             ).show()
         }
-        Log.d("RabbitFragment", "Litter added ${viewModel.selectedLitter}")
+        Log.d("RabbitFragment", "Litter added $litter")
     }
 
 }

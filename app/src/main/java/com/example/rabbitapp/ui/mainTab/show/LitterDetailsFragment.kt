@@ -58,7 +58,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
             R.id.navigation_add_rabbit -> {
                 if (viewModel.getAllRabbitFromLitter(litter!!.id).size < litter?.size!!) {
                     view?.findNavController()
-                        ?.navigate(R.id.action_litterDetailsFragment_to_addRabbitFragment)
+                        ?.navigate(LitterDetailsFragmentDirections.actionLitterDetailsFragmentToAddRabbitFragment())
                 } else {
                     Toast.makeText(
                         requireContext(),
