@@ -63,9 +63,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun loginCallback(success: Boolean) {
         if (success) {
-            val intent = Intent(this, MainActivity::class.java)
             viewModel.setLock(viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock())
-            this.startActivity(intent)
+            this.onCreate(null)
         } else {
             Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_LONG).show()
         }

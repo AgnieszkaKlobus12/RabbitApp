@@ -32,9 +32,12 @@ abstract class FragmentWithPicture : Fragment() {
         entity: HomeListItem?,
         drawable: Int
     ) {
-        if (entity?.imagePath != null && entity.imagePath!!.isNotEmpty()) {
-            pictureView.setImageBitmap(BitmapFactory.decodeFile(entity.imagePath!!))
-            pictureView.tag = entity.imagePath!!
+        if (entity?.imagePath != null && entity.imagePath.isNotEmpty()) {
+            entity.imagePath.stream().filter { path -> BitmapFactory.decodeFile(path) != null }
+                .findFirst().ifPresent {
+                pictureView.setImageBitmap(BitmapFactory.decodeFile(it))
+                pictureView.tag = it
+            }
         } else {
             pictureView.setImageResource(drawable)
             pictureView.tag = drawable
@@ -120,11 +123,15 @@ abstract class FragmentWithPicture : Fragment() {
     }
 
     private fun removeOldImage(item: HomeListItem?) {
-        if (item?.imagePath == null || item.imagePath!!.isEmpty()) {
+        if (item?.imagePath == null || item.imagePath.isEmpty()) {
             return
         }
-        val reportFilePath = File(item.imagePath!!)
-        reportFilePath.delete()
+        item.imagePath.stream().filter { path -> BitmapFactory.decodeFile(path) != null }
+            .findFirst().ifPresent {
+            val reportFilePath = File(it)
+            reportFilePath.delete()
+        }
+
     }
 
 }

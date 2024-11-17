@@ -25,7 +25,7 @@ data class Litter(
     override var birth: Long,
     var size: Int,
     override var cageNumber: Int?,
-    override var imagePath: String?,
+    override var imagePath: List<String>,
     override var fkMother: Long?,
     override var fkFather: Long?,
     override var deathDate: Long?,

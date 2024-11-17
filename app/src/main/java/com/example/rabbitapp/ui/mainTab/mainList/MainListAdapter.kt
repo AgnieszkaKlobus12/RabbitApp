@@ -62,8 +62,11 @@ class MainListAdapter(
     }
 
     private fun setPictureToSelectedOrDefault(item: HomeListItem, image: ImageView) {
-        if (!item.imagePath.isNullOrEmpty()) {
-            image.setImageBitmap(BitmapFactory.decodeFile(item.imagePath))
+        if (item.imagePath.isNotEmpty()) {
+            item.imagePath.stream().map { path -> BitmapFactory.decodeFile(path) }
+                .filter { map -> map != null }.findFirst().ifPresent { map ->
+                    image.setImageBitmap(map)
+                }
         } else if (item is Rabbit) {
             image.setImageResource(R.drawable.rabbit_back)
         } else {

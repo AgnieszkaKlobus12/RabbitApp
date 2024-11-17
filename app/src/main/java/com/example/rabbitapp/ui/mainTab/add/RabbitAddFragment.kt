@@ -162,6 +162,10 @@ class RabbitAddFragment : FragmentWithPicture() {
                 return@OnClickListener
             }
             val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
+            val imageList = viewModel.selectedRabbit?.imagePath?.toMutableList() ?: mutableListOf()
+            if (path != null) {
+                imageList.add(path)
+            }
             val rabbitId: Long = viewModel.save(
                 Rabbit(
                     viewModel.selectedRabbit?.id ?: 0,
@@ -170,12 +174,14 @@ class RabbitAddFragment : FragmentWithPicture() {
                         .toEpochDay(),
                     getRabbitGender(),
                     binding.addRabbitNumbers.text.toString(),
-                    if (binding.addRabbitCageNumbers.text.toString().isDigitsOnly()) {
+                    if (binding.addRabbitCageNumbers.text.toString() != "" && binding.addRabbitCageNumbers.text.toString()
+                            .isDigitsOnly()
+                    ) {
                         binding.addRabbitCageNumbers.text.toString().toInt()
                     } else {
                         null
                     },
-                    path,
+                    imageList,
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
                     viewModel.selectedLitter?.id,
                     if (binding.addRabbitDeathSwitch.isChecked) {

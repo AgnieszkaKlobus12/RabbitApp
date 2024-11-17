@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.rabbitapp.model.dao.LitterDao
@@ -13,6 +14,7 @@ import com.example.rabbitapp.model.dao.SickDao
 import com.example.rabbitapp.model.dao.SicknessDao
 import com.example.rabbitapp.model.dao.VaccinatedDao
 import com.example.rabbitapp.model.dao.VaccineDao
+import com.example.rabbitapp.model.entities.Converters
 import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.Sickness
@@ -24,8 +26,9 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @Database(
     entities = [Rabbit::class, Vaccine::class, Litter::class, Vaccinated::class, Mating::class, Sickness::class, Sick::class],
-    version = 29
+    version = 31
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun rabbitRepository(): RabbitDao

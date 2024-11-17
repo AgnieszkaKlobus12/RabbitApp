@@ -5,7 +5,7 @@ interface HomeListItem {
     var name: String
     var birth: Long
     var cageNumber: Int?
-    var imagePath: String?
+    var imagePath: List<String>
     var fkMother: Long?
     var fkFather: Long?
     var deathDate: Long?

@@ -32,7 +32,7 @@ data class Rabbit(
     val sex: String,
     override var earNumber: String?,
     override var cageNumber: Int?,
-    override var imagePath: String?,
+    override var imagePath: List<String>,
     override var fkMother: Long?,
     override var fkFather: Long?,
     var fkLitter: Long?,

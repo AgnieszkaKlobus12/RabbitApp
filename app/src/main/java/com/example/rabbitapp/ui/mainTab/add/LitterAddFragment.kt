@@ -182,6 +182,10 @@ class LitterAddFragment : FragmentWithPicture() {
             }
             var rabbitList = emptyList<Rabbit>()
             val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
+            val imageList = viewModel.selectedLitter?.imagePath?.toMutableList() ?: mutableListOf()
+            if (path != null) {
+                imageList.add(path)
+            }
             viewModel.selectedLitter?.id?.let {
                 rabbitList = viewModel.getAllRabbitFromLitter(it)
             }
@@ -192,12 +196,14 @@ class LitterAddFragment : FragmentWithPicture() {
                     LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter)
                         .toEpochDay(),
                     Integer.parseInt(binding.addLitterNumber.text.toString()),
-                    if (binding.addLitterCageNumbers.text.toString().isDigitsOnly()) {
+                    if (binding.addLitterCageNumbers.text.toString() != "" && binding.addLitterCageNumbers.text.toString()
+                            .isDigitsOnly()
+                    ) {
                         binding.addLitterCageNumbers.text.toString().toInt()
                     } else {
                         null
                     },
-                    path,
+                    imageList.toList(),
                     viewModel.selectedMother?.id, viewModel.selectedFather?.id,
                     if (binding.addLitterDeathSwitch.isChecked) {
                         LocalDate.parse(binding.addLitterDeathDate.text.toString(), dateFormatter)

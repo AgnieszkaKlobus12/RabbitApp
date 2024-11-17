@@ -126,8 +126,6 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
                 context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
             val dbPathWal =
                 context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
-            val dbPathCache =
-                context.cacheDir.path.plus("/app_database.lck")
 
             val files: FileList = googleDriveService.files().list()
                 .setSpaces("appDataFolder")
@@ -155,12 +153,6 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
 
                     "app_database-wal" -> {
                         val outputStream: OutputStream = FileOutputStream(dbPathWal)
-                        googleDriveService.files().get(file.id)
-                            .executeMediaAndDownloadTo(outputStream)
-                    }
-
-                    "app_database.lck" -> {
-                        val outputStream: OutputStream = FileOutputStream(dbPathCache)
                         googleDriveService.files().get(file.id)
                             .executeMediaAndDownloadTo(outputStream)
                     }
