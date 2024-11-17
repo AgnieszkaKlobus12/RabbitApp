@@ -25,7 +25,7 @@ class LitterAddFragment : FragmentWithPicture() {
 
     private val args: LitterAddFragmentArgs by navArgs()
     private var mating: Mating? = null
-
+    private var litter: Litter? = null
     private var _binding: FragmentAddLitterBinding? = null
     private val binding get() = _binding!!
 
@@ -41,17 +41,20 @@ class LitterAddFragment : FragmentWithPicture() {
         if (args.matingId != 0L) {
             mating = viewModel.getMating(args.matingId)
         }
+        if (args.litterId != 0L) {
+            litter = viewModel.getLitterFromId(args.litterId)
+        }
 
         setGalleryLauncher(binding.addLitterPicture)
 
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
-        if (viewModel.selectedLitter != null) {
+        if (litter != null) {
             parentSelectService.setParents(
                 viewModel,
-                viewModel.selectedLitter!!.fkMother,
-                viewModel.selectedLitter!!.fkFather
+                litter!!.fkMother,
+                litter!!.fkFather
             )
             (activity as AppCompatActivity).supportActionBar?.title =
                 resources.getString(R.string.edit_litter)
@@ -64,7 +67,7 @@ class LitterAddFragment : FragmentWithPicture() {
 
         setPictureToSelectedOrDefault(
             binding.addLitterPicture,
-            viewModel.selectedLitter,
+            litter,
             R.drawable.rabbit_2_back
         )
 
@@ -79,7 +82,7 @@ class LitterAddFragment : FragmentWithPicture() {
             showDatePickerDialog()
         }
 
-        viewModel.selectedLitter?.id?.let {
+        litter?.id?.let {
             if (viewModel.getAllRabbitFromLitter(it).isNotEmpty()) {
                 binding.addLitterMessage.visibility = View.VISIBLE
             }
@@ -153,19 +156,19 @@ class LitterAddFragment : FragmentWithPicture() {
 
     private fun setFieldsToSelectedLitter() {
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(
-            LocalDate.ofEpochDay(viewModel.selectedLitter!!.birth).format(dateFormatter)
+            LocalDate.ofEpochDay(litter!!.birth).format(dateFormatter)
         )
-        if (viewModel.selectedLitter!!.deathDate != null) {
+        if (litter!!.deathDate != null) {
             binding.addLitterDeathDate.text = Editable.Factory.getInstance().newEditable(
-                viewModel.selectedRabbit!!.deathDate?.let {
+                litter!!.deathDate?.let {
                     LocalDate.ofEpochDay(it).format(dateFormatter)
                 }
             )
         }
-        binding.addLitterDeathSwitch.isChecked = viewModel.selectedLitter!!.deathDate != null
-        binding.addLitterCageNumbers.setText(viewModel.selectedLitter!!.cageNumber.toString())
-        binding.addLitterName.setText(viewModel.selectedLitter!!.name)
-        binding.addLitterNumber.setText(viewModel.selectedLitter!!.size.toString())
+        binding.addLitterDeathSwitch.isChecked = litter!!.deathDate != null
+        binding.addLitterCageNumbers.setText(litter!!.cageNumber.toString())
+        binding.addLitterName.setText(litter!!.name)
+        binding.addLitterNumber.setText(litter!!.size.toString())
     }
 
     private fun saveLitter(): View.OnClickListener {
@@ -181,17 +184,17 @@ class LitterAddFragment : FragmentWithPicture() {
                 return@OnClickListener
             }
             var rabbitList = emptyList<Rabbit>()
-            val path = saveNewPicture(viewModel.selectedLitter, binding.addLitterPicture)
-            val imageList = viewModel.selectedLitter?.imagePath?.toMutableList() ?: mutableListOf()
+            val path = saveNewPicture(litter, binding.addLitterPicture)
+            val imageList = litter?.imagePath?.toMutableList() ?: mutableListOf()
             if (path != null) {
                 imageList.add(path)
             }
-            viewModel.selectedLitter?.id?.let {
+            litter?.id?.let {
                 rabbitList = viewModel.getAllRabbitFromLitter(it)
             }
             val id = viewModel.save(
                 Litter(
-                    viewModel.selectedLitter?.id ?: 0,
+                    litter?.id ?: 0,
                     binding.addLitterName.text.toString(),
                     LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter)
                         .toEpochDay(),
@@ -244,9 +247,13 @@ class LitterAddFragment : FragmentWithPicture() {
                         viewModel.update(rabbit)
                     }
                 }
-                viewModel.selectedLitter = id.let { viewModel.getLitterFromId(it) }
+                litter = id.let { viewModel.getLitterFromId(it) }
                 view.findNavController()
-                    .navigate(R.id.action_addLitterFragment_to_litterDetailsFragment)
+                    .navigate(
+                        LitterAddFragmentDirections.actionAddLitterFragmentToLitterDetailsFragment(
+                            litter!!.id
+                        )
+                    )
             }
         }
     }

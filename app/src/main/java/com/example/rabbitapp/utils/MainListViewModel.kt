@@ -32,9 +32,6 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     var selectedMother: Rabbit? = null
     var selectedFather: Rabbit? = null
 
-    var selectedRabbit: Rabbit? = null
-    var selectedLitter: Litter? = null
-
     private var googleAccount: GoogleSignInAccount? = null
     private var internet = true
     private var lock = true
@@ -147,18 +144,7 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         return litter
     }
 
-    fun deleteCurrentlySelectedRabbit() {
-        Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
-        selectedRabbit?.id?.let { rabbitRepository.deleteRabbitWithId(it) }
-    }
-
-    fun deleteCurrentlySelectedLitter() {
-        Log.d("ViewModel", "Rabbit $selectedRabbit deleted.")
-        selectedLitter?.id?.let { litterRepository.deleteWithId(it) }
-    }
-
     fun deleteVaccine(id: Long?) {
-        Log.d("ViewModel", "Vaccine $selectedRabbit deleted.")
         id?.let { vaccinesRepository.deleteWithId(it) }
     }
 
@@ -167,10 +153,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun clearSelected() {
-        selectedRabbit = null
         selectedFather = null
         selectedMother = null
-        selectedLitter = null
     }
 
     fun getAllVaccines(): List<Vaccine> {

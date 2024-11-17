@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddMatingBinding
+import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
@@ -32,6 +33,7 @@ class AddMatingFragment : Fragment() {
 
     private val args: AddMatingFragmentArgs by navArgs()
 
+    private var litter: Litter? = null
     private var _binding: FragmentAddMatingBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainListViewModel by activityViewModels()
@@ -54,6 +56,10 @@ class AddMatingFragment : Fragment() {
                 viewModel.selectedMother = viewModel.getRabbitFromId(args.motherId)
             }
         }
+        if (args.litterId != 0L) {
+            litter = viewModel.getLitterFromId(args.litterId)
+
+        }
         (activity as AppCompatActivity).supportActionBar?.title =
             resources.getString(R.string.add_mating)
         if (args.matingId != 0L) {
@@ -64,8 +70,8 @@ class AddMatingFragment : Fragment() {
                 .newEditable(RabbitDetails.getDateString(mating!!.matingDate))
             binding.matingDateBirth.text = Editable.Factory.getInstance()
                 .newEditable(RabbitDetails.getDateString(mating.birthDate))
-            if (viewModel.selectedLitter == null) {
-                viewModel.selectedLitter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
+            if (litter == null) {
+                litter = mating.fkLitter?.let { viewModel.getLitterFromId(it) }
             }
             if (viewModel.selectedFather == null) {
                 viewModel.selectedFather = mating.fkFather?.let { viewModel.getRabbitFromId(it) }
@@ -99,9 +105,9 @@ class AddMatingFragment : Fragment() {
                 ).show()
                 return@setOnClickListener
             }
-            if (viewModel.selectedLitter != null) {
+            if (litter != null) {
                 viewModel.save(
-                    viewModel.selectedLitter!!.copy(
+                    litter!!.copy(
                         birth = LocalDate.parse(
                             binding.matingDateBirth.text.toString(),
                             dateFormatter
@@ -121,7 +127,7 @@ class AddMatingFragment : Fragment() {
                     binding.archiveSwitch.isChecked,
                     viewModel.selectedMother?.id,
                     viewModel.selectedFather?.id,
-                    viewModel.selectedLitter?.id
+                    litter?.id
                 )
             )
             view.findNavController().navigate(
@@ -136,7 +142,7 @@ class AddMatingFragment : Fragment() {
             viewModel, view
         )
 
-        if (viewModel.selectedLitter != null) {
+        if (litter != null) {
             binding.fragmentAddMatingIncludeParents.addMotherFragment.setOnClickListener {
                 if (!viewModel.getEditable()) {
                     Toast.makeText(
@@ -218,8 +224,8 @@ class AddMatingFragment : Fragment() {
 
     private fun displayLitterIfSelected() {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        if (viewModel.selectedLitter != null) {
-            val selectedLitterFragment = HomeListItemFragment(viewModel.selectedLitter!!)
+        if (litter != null) {
+            val selectedLitterFragment = HomeListItemFragment(litter!!)
             transaction.replace(R.id.add_litter_fragment, selectedLitterFragment)
         } else {
             val pickButtonFragment = PickButtonFragment(null, object : StartSelect {

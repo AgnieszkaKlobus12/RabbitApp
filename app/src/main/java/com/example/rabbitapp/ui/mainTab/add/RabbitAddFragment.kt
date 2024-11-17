@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentAddRabbitBinding
 import com.example.rabbitapp.model.entities.Rabbit
@@ -24,7 +25,8 @@ import java.util.Calendar
 class RabbitAddFragment : FragmentWithPicture() {
     private var _binding: FragmentAddRabbitBinding? = null
     private val binding get() = _binding!!
-
+    private val args: RabbitAddFragmentArgs by navArgs()
+    private var rabbit: Rabbit? = null
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     private val parentSelectService: ParentSelectService = ParentSelectService()
 
@@ -34,17 +36,19 @@ class RabbitAddFragment : FragmentWithPicture() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddRabbitBinding.inflate(inflater, container, false)
-
+        if (args.rabbitId != 0L) {
+            rabbit = viewModel.getRabbitFromId(args.rabbitId)
+        }
         setGalleryLauncher(binding.addRabbitPicture)
 
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
-        if (viewModel.selectedRabbit != null) {
+        if (rabbit != null) {
             parentSelectService.setParents(
                 viewModel,
-                viewModel.selectedRabbit!!.fkMother,
-                viewModel.selectedRabbit!!.fkFather
+                rabbit!!.fkMother,
+                rabbit!!.fkFather
             )
             setFieldsToSelectedRabbit()
             (activity as AppCompatActivity).supportActionBar?.title =
@@ -61,7 +65,7 @@ class RabbitAddFragment : FragmentWithPicture() {
 
         setPictureToSelectedOrDefault(
             binding.addRabbitPicture,
-            viewModel.selectedRabbit,
+            rabbit,
             R.drawable.rabbit_back
         )
 
@@ -129,20 +133,20 @@ class RabbitAddFragment : FragmentWithPicture() {
 
     private fun setFieldsToSelectedRabbit() {
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(
-            LocalDate.ofEpochDay(viewModel.selectedRabbit!!.birth).format(dateFormatter)
+            LocalDate.ofEpochDay(rabbit!!.birth).format(dateFormatter)
         )
-        binding.addRabbitName.setText(viewModel.selectedRabbit!!.name)
-        binding.addRabbitNumbers.setText(viewModel.selectedRabbit!!.earNumber)
-        if (viewModel.selectedRabbit!!.deathDate != null) {
+        binding.addRabbitName.setText(rabbit!!.name)
+        binding.addRabbitNumbers.setText(rabbit!!.earNumber)
+        if (rabbit!!.deathDate != null) {
             binding.addRabbitDeathDate.text = Editable.Factory.getInstance().newEditable(
-                viewModel.selectedRabbit!!.deathDate?.let {
+                rabbit!!.deathDate?.let {
                     LocalDate.ofEpochDay(it).format(dateFormatter)
                 }
             )
         }
-        binding.addRabbitDeathSwitch.isChecked = viewModel.selectedRabbit!!.deathDate != null
-        binding.addRabbitCageNumbers.setText(viewModel.selectedRabbit!!.cageNumber.toString())
-        if (viewModel.selectedRabbit!!.sex == Gender.FEMALE.name) {
+        binding.addRabbitDeathSwitch.isChecked = rabbit!!.deathDate != null
+        binding.addRabbitCageNumbers.setText(rabbit!!.cageNumber.toString())
+        if (rabbit!!.sex == Gender.FEMALE.name) {
             binding.addRabbitGenderFemale.isChecked = true
         } else {
             binding.addRabbitGenderMale.isChecked = true
@@ -161,14 +165,14 @@ class RabbitAddFragment : FragmentWithPicture() {
                 ).show()
                 return@OnClickListener
             }
-            val path = saveNewPicture(viewModel.selectedRabbit, binding.addRabbitPicture)
-            val imageList = viewModel.selectedRabbit?.imagePath?.toMutableList() ?: mutableListOf()
+            val path = saveNewPicture(rabbit, binding.addRabbitPicture)
+            val imageList = rabbit?.imagePath?.toMutableList() ?: mutableListOf()
             if (path != null) {
                 imageList.add(path)
             }
             val rabbitId: Long = viewModel.save(
                 Rabbit(
-                    viewModel.selectedRabbit?.id ?: 0,
+                    rabbit?.id ?: 0,
                     binding.addRabbitName.text.toString(),
                     LocalDate.parse(binding.addRabbitDate.text.toString(), dateFormatter)
                         .toEpochDay(),
@@ -200,9 +204,13 @@ class RabbitAddFragment : FragmentWithPicture() {
                     viewModel.save(it.copy(id = 0, fkRabbit = rabbitId, fkLitter = null))
                 }
             }
-            viewModel.selectedRabbit = rabbitId.let { viewModel.getRabbitFromId(it) }
+            rabbit = rabbitId.let { viewModel.getRabbitFromId(it) }
             view.findNavController()
-                .navigate(R.id.action_addRabbitFragment_to_rabbitDetailsFragment)
+                .navigate(
+                    RabbitAddFragmentDirections.actionAddRabbitFragmentToRabbitDetailsFragment(
+                        rabbit!!.id
+                    )
+                )
         }
     }
 

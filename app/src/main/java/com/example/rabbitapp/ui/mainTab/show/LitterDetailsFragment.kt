@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentLitterDetailsBinding
 import com.example.rabbitapp.model.entities.HomeListItem
+import com.example.rabbitapp.model.entities.Litter
 import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.model.entities.relations.Sick
 import com.example.rabbitapp.model.entities.relations.Vaccinated
@@ -29,6 +31,9 @@ import com.example.rabbitapp.utils.RabbitDetails
 
 class LitterDetailsFragment : FragmentWithPicture() {
 
+    private val args: LitterDetailsFragmentArgs by navArgs()
+
+    private var litter: Litter? = null
     private var _binding: FragmentLitterDetailsBinding? = null
     private val binding get() = _binding!!
     private val parentSelectService: ParentSelectService = ParentSelectService()
@@ -42,7 +47,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
         if (viewModel.getEditable()) {
             inflater.inflate(R.menu.litter_details_menu, menu)
         }
-        if (viewModel.selectedLitter?.deathDate != null) {
+        if (litter?.deathDate != null) {
             val item = menu.findItem(R.id.navigation_kill_litter)
             item.setVisible(false)
         }
@@ -51,7 +56,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_add_rabbit -> {
-                if (viewModel.getAllRabbitFromLitter(viewModel.selectedLitter!!.id).size < viewModel.selectedLitter?.size!!) {
+                if (viewModel.getAllRabbitFromLitter(litter!!.id).size < litter?.size!!) {
                     view?.findNavController()
                         ?.navigate(R.id.action_litterDetailsFragment_to_addRabbitFragment)
                 } else {
@@ -69,7 +74,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     ?.navigate(
                         LitterDetailsFragmentDirections.actionLitterDetailsFragmentToSicknessListFragment(
                             0L,
-                            viewModel.selectedLitter!!.id
+                            litter!!.id
                         )
                     )
                 true
@@ -80,7 +85,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     ?.navigate(
                         LitterDetailsFragmentDirections.actionLitterDetailsFragmentToVaccineListFragment(
                             0L,
-                            viewModel.selectedLitter!!.id
+                            litter!!.id
                         )
                     )
                 true
@@ -90,7 +95,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
                 view?.findNavController()
                     ?.navigate(
                         LitterDetailsFragmentDirections.actionLitterDetailsFragmentToMarkDead(
-                            0L, viewModel.selectedLitter!!.id
+                            0L, litter!!.id
                         )
                     )
                 true
@@ -108,7 +113,6 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     builder.apply {
                         setPositiveButton(R.string.ok) { dialog, _ ->
                             dialog.dismiss()
-                            viewModel.deleteCurrentlySelectedLitter()
                             view?.findNavController()
                                 ?.navigate(R.id.action_litterDetailsFragment_to_navigation_home)
                         }
@@ -134,7 +138,11 @@ class LitterDetailsFragment : FragmentWithPicture() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLitterDetailsBinding.inflate(inflater, container, false)
-        return binding.root
+        val root: View = binding.root
+        if (args.litterId != 0L) {
+            litter = viewModel.getLitterFromId(args.litterId)
+        }
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -142,36 +150,56 @@ class LitterDetailsFragment : FragmentWithPicture() {
 
         setPictureToSelectedOrDefault(
             binding.litterDetailsImage,
-            viewModel.selectedLitter,
+            litter,
             R.drawable.rabbit_2_back
         )
 
         binding.litterDetailsAge.text =
-            viewModel.selectedLitter?.let { RabbitDetails.getAge(it.birth) }
-        binding.litterDetailsName.text = viewModel.selectedLitter?.name
-        binding.litterDetailsAmount.text = viewModel.selectedLitter?.size.toString()
+            litter?.let { RabbitDetails.getAge(it.birth) }
+        binding.litterDetailsName.text = litter?.name
+        binding.litterDetailsAmount.text = litter?.size.toString()
         binding.litterDetailsBirth.text =
-            viewModel.selectedLitter?.let { RabbitDetails.getDateString(it.birth) }
-        if (viewModel.selectedLitter?.deathDate != null) {
+            litter?.let { RabbitDetails.getDateString(it.birth) }
+        if (litter?.deathDate != null) {
             binding.litterDetailsDeathRow.visibility = View.VISIBLE
             binding.litterDetailsDeath.text =
-                viewModel.selectedLitter?.let { RabbitDetails.getDateString(it.deathDate!!) }
+                litter?.let { RabbitDetails.getDateString(it.deathDate!!) }
         } else {
             binding.litterDetailsDeathRow.visibility = View.GONE
         }
-        if (viewModel.selectedLitter?.cageNumber != null) {
-            binding.litterDetailsCageNumber.text = viewModel.selectedLitter?.cageNumber.toString()
+        if (litter?.cageNumber != null) {
+            binding.litterDetailsCageNumber.text = litter?.cageNumber.toString()
         } else {
             binding.litterDetailsCageNumber.text = ""
         }
-        viewModel.selectedLitter?.let {
+        litter?.let {
             parentSelectService.displayParentOrUnknown(
                 it.fkMother, it.fkFather,
                 childFragmentManager,
                 viewModel
             )
+            if (it.fkMother != null) {
+                binding.fragmentLitterDetailsIncludeParents.addMotherFragment.setOnClickListener {
+                    view.findNavController()
+                        .navigate(
+                            LitterDetailsFragmentDirections.actonLitterDetailsFragmentToRabbitDetailsFragment(
+                                litter!!.fkMother!!
+                            )
+                        )
+                }
+            }
+            if (it.fkFather != null) {
+                binding.fragmentLitterDetailsIncludeParents.addFatherFragment.setOnClickListener {
+                    view.findNavController()
+                        .navigate(
+                            LitterDetailsFragmentDirections.actonLitterDetailsFragmentToRabbitDetailsFragment(
+                                litter!!.fkFather!!
+                            )
+                        )
+                }
+            }
         }
-        viewModel.selectedLitter?.id?.let {
+        litter?.id?.let {
             val rabbitList = viewModel.getAllRabbitFromLitter(it)
             if (rabbitList.isNotEmpty()) {
                 binding.fragmentLitterDetailsIncludeLitterItems.root.visibility = View.VISIBLE
@@ -179,16 +207,19 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     MainListAdapter(rabbitList, object : OnSelectedItem {
                         override fun onItemClick(item: HomeListItem) {
                             if (item is Rabbit) {
-                                viewModel.selectedRabbit = item
                                 view.findNavController()
-                                    .navigate(R.id.acton_litterDetailsFragment_to_rabbitDetailsFragment)
+                                    .navigate(
+                                        LitterDetailsFragmentDirections.actonLitterDetailsFragmentToRabbitDetailsFragment(
+                                            item.id
+                                        )
+                                    )
                             }
                         }
                     })
             }
         }
 
-        viewModel.selectedLitter?.id?.let {
+        litter?.id?.let {
             val sicknesses = viewModel.getAllSicknessesForLitter(it)
             if (sicknesses.isNotEmpty()) {
                 binding.fragmentLitterDetailsIncludeSicknesses.root.visibility = View.VISIBLE
@@ -209,14 +240,14 @@ class LitterDetailsFragment : FragmentWithPicture() {
             }
         }
 
-        viewModel.selectedLitter?.id?.let {
+        litter?.id?.let {
             val vaccinations = viewModel.getAllVaccinationsForLitter(it)
             if (vaccinations.isNotEmpty()) {
                 binding.fragmentLitterDetailsIncludeVaccinations.root.visibility = View.VISIBLE
                 binding.fragmentLitterDetailsIncludeVaccinations.fragmentVaccinationsListRecyclerView.adapter =
                     VaccinationsListAdapter(
                         viewModel,
-                        viewModel.getAllVaccinationsForLitter(viewModel.selectedLitter!!.id),
+                        viewModel.getAllVaccinationsForLitter(litter!!.id),
                         object : OnSelectedVaccination {
                             override fun onItemClick(item: Vaccinated) {
                                 view.findNavController()

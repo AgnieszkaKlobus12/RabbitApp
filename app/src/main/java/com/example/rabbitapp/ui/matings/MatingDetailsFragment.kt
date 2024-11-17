@@ -103,7 +103,10 @@ class MatingDetailsFragment : Fragment() {
                 view?.findNavController()
                     ?.navigate(
                         MatingDetailsFragmentDirections.actionMatingDetailsFragmentToEditMatingsFragment(
-                            mating!!.id
+                            mating!!.id,
+                            mating!!.fkMother ?: 0L,
+                            mating!!.fkFather ?: 0L,
+                            mating!!.fkLitter ?: 0L
                         )
                     )
                 true
