@@ -27,6 +27,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -125,6 +126,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.setInternet(true)
             GlobalScope.launch(Dispatchers.IO) {
                 viewModel.getGoogleDriveClient().downloadDatabase(this@MainActivity)
+                viewModel.dataRefresh.postValue(Random.nextInt(1000))
                 if (!viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock()) {
                     viewModel.setLock(false)
                     runOnUiThread {

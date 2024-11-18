@@ -78,12 +78,19 @@ class MainListFragment : Fragment() {
         binding.aliveChip.setOnCheckedChangeListener(filter())
         binding.rabbitChip.setOnCheckedChangeListener(filter())
         binding.litterChip.setOnCheckedChangeListener(filter())
+
+        viewModel.dataRefresh.observe(viewLifecycleOwner) {
+            refreshFragment()
+        }
+    }
+
+    private fun refreshFragment() {
+        mainListAdapter.updateData(viewModel.getAll())
     }
 
     override fun onResume() {
         super.onResume()
         mainListAdapter.updateData(viewModel.getAll())
-        filter().onCheckedChanged(null, true)
     }
 
     override fun onDestroyView() {
