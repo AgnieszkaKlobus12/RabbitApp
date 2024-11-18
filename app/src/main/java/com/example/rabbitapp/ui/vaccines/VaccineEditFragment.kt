@@ -47,6 +47,9 @@ class VaccineEditFragment : Fragment() {
         }
 
         binding.addVaccineSaveButton.setOnClickListener {
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
             if (!viewModel.getEditable()) {
                 Toast.makeText(
                     requireContext(),
@@ -68,6 +71,15 @@ class VaccineEditFragment : Fragment() {
                     )
                 )
         }
+    }
+
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (binding.fragmentVaccineEditVaccineName.text.isEmpty()) {
+            binding.fragmentVaccineEditVaccineName.error = getString(R.string.error_empty)
+            correct = false
+        }
+        return correct
     }
 
 }

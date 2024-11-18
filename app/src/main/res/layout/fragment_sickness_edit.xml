@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/fragment_sickness_edit_sickness_name_label"
+        app:layout_constraintBottom_toTopOf="@id/fragment_sickness_edit_sickness_symptoms_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/default_margin"
-            android:text="@string/unknown"
+            android:hint="@string/unknown"
             android:textSize="@dimen/bigger_text"
             android:textStyle="bold" />
     </LinearLayout>
@@ -59,7 +59,7 @@
         android:layout_margin="@dimen/default_margin"
         android:gravity="center|top"
         android:inputType="textMultiLine"
-        android:text="@string/your_description"
+        android:hint="@string/your_description"
         android:textSize="@dimen/default_text"
         app:layout_constraintBottom_toTopOf="@id/fragment_sickness_edit_sickness_treatment_label"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:layout_margin="@dimen/default_margin"
         android:gravity="center|top"
         android:inputType="textMultiLine"
-        android:text="@string/your_description"
+        android:hint="@string/your_description"
         android:textSize="@dimen/default_text"
         app:layout_constraintBottom_toTopOf="@id/add_sickness_save_button"
         app:layout_constraintEnd_toEndOf="parent"

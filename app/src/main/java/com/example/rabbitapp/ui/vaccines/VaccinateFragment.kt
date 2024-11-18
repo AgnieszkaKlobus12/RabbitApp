@@ -108,6 +108,9 @@ class VaccinateFragment : FragmentWithPicture() {
         binding.fragmentVaccinateVaccineDescription.text = vaccine!!.description
 
         binding.vaccinateSaveButton.setOnClickListener {
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
             if (!viewModel.getEditable()) {
                 Toast.makeText(
                     requireContext(),
@@ -145,14 +148,34 @@ class VaccinateFragment : FragmentWithPicture() {
             )
             if (item is Rabbit) {
                 view.findNavController()
-                    .navigate(R.id.action_navigation_vaccinate_to_rabbitDetailsFragment)
+                    .navigate(
+                        VaccinateFragmentDirections.actionNavigationVaccinateToRabbitDetailsFragment(
+                            (item as Rabbit).id
+                        )
+                    )
             } else {
                 view.findNavController()
-                    .navigate(R.id.action_navigation_vaccinate_to_litterDetailsFragment)
+                    .navigate(
+                        VaccinateFragmentDirections.actionNavigationVaccinateToLitterDetailsFragment(
+                            (item as Litter).id
+                        )
+                    )
             }
         }
     }
 
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (binding.fragmentVaccinateDoseNumber.text.isEmpty()) {
+            binding.fragmentVaccinateDoseNumber.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.vaccinatedDoseDescription.text.isEmpty()) {
+            binding.vaccinatedDoseDescription.error = getString(R.string.error_empty)
+            correct = false
+        }
+        return correct
+    }
 
     private fun showDatePickerDialog(textView: TextView) {
         val calendar = Calendar.getInstance()

@@ -49,6 +49,9 @@ class SicknessEditFragment : Fragment() {
         }
 
         binding.addSicknessSaveButton.setOnClickListener {
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
             if (!viewModel.getEditable()) {
                 Toast.makeText(
                     requireContext(),
@@ -72,5 +75,24 @@ class SicknessEditFragment : Fragment() {
                 )
         }
     }
+
+
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (binding.fragmentSicknessEditSicknessName.text.isEmpty()) {
+            binding.fragmentSicknessEditSicknessName.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.fragmentSicknessEditSicknessSymptoms.text.isEmpty()) {
+            binding.fragmentSicknessEditSicknessSymptoms.error = getString(R.string.error_empty)
+            correct = false
+        }
+        if (binding.fragmentSicknessEditSicknessTreatment.text.isEmpty()) {
+            binding.fragmentSicknessEditSicknessTreatment.error = getString(R.string.error_empty)
+            correct = false
+        }
+        return correct
+    }
+
 
 }

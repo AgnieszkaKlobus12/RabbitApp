@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/default_margin"
-            android:text="@string/unknown"
+            android:hint="@string/unknown"
             android:textSize="@dimen/bigger_text"
             android:textStyle="bold" />
     </LinearLayout>
@@ -59,7 +59,7 @@
         android:layout_margin="@dimen/default_margin"
         android:gravity="center|top"
         android:inputType="textMultiLine"
-        android:text="@string/your_description"
+        android:hint="@string/your_description"
         android:textSize="@dimen/default_text"
         app:layout_constraintBottom_toTopOf="@id/add_vaccine_save_button"
         app:layout_constraintEnd_toEndOf="parent"

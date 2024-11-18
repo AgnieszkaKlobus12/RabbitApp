@@ -176,7 +176,7 @@
                 android:layout_marginTop="@dimen/tiny_margin"
                 android:layout_marginBottom="@dimen/default_margin"
                 android:minHeight="50dp"
-                android:text="@string/unknown"
+                android:hint="@string/unknown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

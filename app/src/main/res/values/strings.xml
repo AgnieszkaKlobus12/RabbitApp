@@ -73,7 +73,7 @@
     <string name="mating_date_label">Data pokrycia</string>
     <string name="born_litter">Urodzony miot</string>
     <string name="rabbits_and_litters">Króliki i mioty</string>
-    <string name="mating_details">Szczegóły miotu</string>
+    <string name="mating_details">Szczegóły krycia</string>
     <string name="end">Zakończ</string>
     <string name="overtime_for_mating_consider_archiving">Minęło ponad 45 dni od pokrycia. Zarchiwizuj pokrycie, aby je ukryć lub dodaj miot, jeśli zakończyło się owocnie.</string>
     <string name="archived">Zarchiwizowane!</string>

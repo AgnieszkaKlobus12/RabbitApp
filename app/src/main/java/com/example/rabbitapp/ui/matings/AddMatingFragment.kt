@@ -98,6 +98,9 @@ class AddMatingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addMatingSaveButton.setOnClickListener {
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
             if (!viewModel.getEditable()) {
                 Toast.makeText(
                     requireContext(),
@@ -287,4 +290,20 @@ class AddMatingFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (viewModel.selectedMother == null) {
+            binding.fragmentAddMatingIncludeParents.addMotherError.visibility = View.VISIBLE
+            correct = false
+        } else {
+            binding.fragmentAddMatingIncludeParents.addMotherError.visibility = View.GONE
+        }
+        if (viewModel.selectedFather == null) {
+            binding.fragmentAddMatingIncludeParents.addFatherError.visibility = View.VISIBLE
+            correct = false
+        } else {
+            binding.fragmentAddMatingIncludeParents.addFatherError.visibility = View.GONE
+        }
+        return correct
+    }
 }
