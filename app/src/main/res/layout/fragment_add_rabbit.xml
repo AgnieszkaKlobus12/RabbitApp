@@ -103,7 +103,9 @@
                         android:gravity="center" />
                 </TableRow>
 
-                <TableRow android:id="@+id/add_rabbit_death_date_row">
+                <TableRow
+                    android:id="@+id/add_rabbit_death_date_row"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/add_rabbit_death_date_label"

@@ -153,6 +153,8 @@ class RabbitAddFragment : FragmentWithPicture() {
         binding.addRabbitName.setText(rabbit!!.name)
         binding.addRabbitNumbers.setText(rabbit!!.earNumber)
         if (rabbit!!.deathDate != null) {
+            binding.addRabbitDeathDateRow.visibility = View.VISIBLE
+            binding.addRabbitCageNumbersRow.visibility = View.GONE
             binding.addRabbitDeathDate.text = Editable.Factory.getInstance().newEditable(
                 rabbit!!.deathDate?.let {
                     LocalDate.ofEpochDay(it).format(dateFormatter)

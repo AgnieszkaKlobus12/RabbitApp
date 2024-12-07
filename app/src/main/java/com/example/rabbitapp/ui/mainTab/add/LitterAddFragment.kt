@@ -174,6 +174,8 @@ class LitterAddFragment : FragmentWithPicture() {
                     LocalDate.ofEpochDay(it).format(dateFormatter)
                 }
             )
+            binding.addLitterDeathDateRow.visibility = View.VISIBLE
+            binding.addLitterCageNumbersRow.visibility = View.GONE
         }
         binding.addLitterDeathSwitch.isChecked = litter!!.deathDate != null
         binding.addLitterCageNumbers.setText(litter!!.cageNumber.toString())
