@@ -146,4 +146,5 @@
     <string name="pick_father">Wybierz ojca</string>
     <string name="pick_litter">Wybierz miot</string>
     <string name="pick_mother">Wybierz matkę</string>
+    <string name="error_death_date">Data śmierci nie może być wcześniejsza niż urodzenia!</string>
 </resources>

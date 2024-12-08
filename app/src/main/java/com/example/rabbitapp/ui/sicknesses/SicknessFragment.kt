@@ -3,6 +3,9 @@ package com.example.rabbitapp.ui.sicknesses
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -37,6 +40,69 @@ class SicknessFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if (viewModel.getEditable()) {
+            inflater.inflate(R.menu.sick_details_menu, menu)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.navigation_edit_sick -> {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    view?.findNavController()
+                        ?.navigate(
+                            SicknessFragmentDirections.actionNavigationDetailsSicknessToEditSicknessFragment(
+                                sickness?.id ?: 0
+                            )
+                        )
+                }
+                true
+            }
+
+            R.id.navigation_delete_sick -> {
+                if (!viewModel.getEditable()) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.non_editable), Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val alertDialog = requireActivity().let {
+                        val builder = AlertDialog.Builder(it)
+                        builder.apply {
+                            setPositiveButton(R.string.ok) { dialog, _ ->
+                                dialog.dismiss()
+                                viewModel.deleteSickness(sickness!!.id)
+                                view?.findNavController()
+                                    ?.navigate(R.id.action_navigation_details_sickness_to_navigation_sicknesses)
+                            }
+                            setNegativeButton(R.string.cancel) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            setTitle(R.string.alert)
+                            setMessage(R.string.confirm_delete_sickness_message)
+                        }
+                        builder.create()
+                    }
+                    alertDialog.show()
+                }
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,27 +110,10 @@ class SicknessFragment : Fragment() {
         binding.fragmentSicknessEditSicknessTreatment.text = sickness?.treatment
         binding.fragmentSicknessEditSicknessSymptoms.text = sickness?.symptoms
 
-        binding.sicknessDetailsEditButton.setOnClickListener {
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-            view.findNavController()
-                .navigate(
-                    SicknessFragmentDirections.actionNavigationDetailsSicknessToEditSicknessFragment(
-                        sickness?.id ?: 0
-                    )
-                )
-        }
-
         val sick = viewModel.getAllWithSickness(sickness!!.id)
         if (sick.isNotEmpty()) {
             binding.fragmentSicknessSick.root.visibility = View.VISIBLE
             binding.fragmentSicknessDivider.visibility = View.VISIBLE
-            binding.fragmentSicknessDivider2.visibility = View.VISIBLE
         }
 
         binding.fragmentSicknessSick.fragmentSickListRecyclerView.adapter =
@@ -73,34 +122,6 @@ class SicknessFragment : Fragment() {
                     //nothing
                 }
             })
-
-        binding.sicknessDetailsDeleteButton.setOnClickListener {
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-            val alertDialog = requireActivity().let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                        viewModel.deleteSickness(sickness!!.id)
-                        view.findNavController()
-                            .navigate(R.id.action_navigation_details_sickness_to_navigation_sicknesses)
-                    }
-                    setNegativeButton(R.string.cancel) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    setTitle(R.string.alert)
-                    setMessage(R.string.confirm_delete_sickness_message)
-                }
-                builder.create()
-            }
-            alertDialog.show()
-        }
     }
 
 }

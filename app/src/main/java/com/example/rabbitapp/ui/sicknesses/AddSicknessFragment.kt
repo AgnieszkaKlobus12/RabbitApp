@@ -148,10 +148,18 @@ class AddSicknessFragment : FragmentWithPicture() {
             )
             if (item is Rabbit) {
                 view.findNavController()
-                    .navigate(R.id.action_navigation_add_sickness_to_rabbitDetailsFragment)
+                    .navigate(
+                        AddSicknessFragmentDirections.actionNavigationAddSicknessToRabbitDetailsFragment(
+                            (item as Rabbit).id
+                        )
+                    )
             } else {
                 view.findNavController()
-                    .navigate(R.id.action_navigation_add_sickness_to_litterDetailsFragment)
+                    .navigate(
+                        AddSicknessFragmentDirections.actionNavigationAddSicknessToLitterDetailsFragment(
+                            (item as Litter).id
+                        )
+                    )
             }
         }
     }

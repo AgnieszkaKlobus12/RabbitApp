@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -108,10 +109,10 @@ class RabbitAddFragment : FragmentWithPicture() {
             )
 
             binding.addRabbitDate.setOnClickListener {
-                showDatePickerDialog()
+                showDatePickerDialog(binding.addRabbitDate)
             }
             binding.addRabbitDeathDate.setOnClickListener {
-                showDatePickerDialog()
+                showDatePickerDialog(binding.addRabbitDeathDate)
             }
         } else {
             parentSelectService.setChangeIllegalMessage(
@@ -134,7 +135,7 @@ class RabbitAddFragment : FragmentWithPicture() {
         }
     }
 
-    private fun showDatePickerDialog() {
+    private fun showDatePickerDialog(view: TextView) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -143,7 +144,7 @@ class RabbitAddFragment : FragmentWithPicture() {
         val datePickerDialog =
             DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
-                binding.addRabbitDate.text =
+                view.text =
                     Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
             }, year, month, day)
 
@@ -250,6 +251,17 @@ class RabbitAddFragment : FragmentWithPicture() {
             correct = false
         } else {
             binding.addRabbitGenderError.visibility = View.GONE
+        }
+
+        if (binding.addRabbitDeathSwitch.isChecked && LocalDate.parse(
+                binding.addRabbitDeathDate.text.toString(),
+                dateFormatter
+            ).isBefore(LocalDate.parse(binding.addRabbitDate.text.toString(), dateFormatter))
+        ) {
+            correct = false
+            binding.addRabbitDeathError.visibility = View.VISIBLE
+        } else {
+            binding.addRabbitDeathError.visibility = View.GONE
         }
         return correct
     }

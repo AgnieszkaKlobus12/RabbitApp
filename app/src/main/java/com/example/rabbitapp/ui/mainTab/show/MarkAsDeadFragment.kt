@@ -66,6 +66,9 @@ class MarkAsDeadFragment : FragmentWithPicture() {
                 ).show()
                 return@setOnClickListener
             }
+            if (!validateFields()) {
+                return@setOnClickListener
+            }
             if (args.rabbitId != 0L) {
                 viewModel.markRabbitAsDead(
                     args.rabbitId,
@@ -105,6 +108,20 @@ class MarkAsDeadFragment : FragmentWithPicture() {
             }, year, month, day)
 
         datePickerDialog.show()
+    }
+
+    private fun validateFields(): Boolean {
+        var correct = true
+        if (LocalDate.parse(
+                binding.markDeadDate.text.toString(), dateFormatter
+            ).isBefore(item?.birth?.let { LocalDate.ofEpochDay(it) })
+        ) {
+            correct = false
+            binding.deathError.visibility = View.VISIBLE
+        } else {
+            binding.deathError.visibility = View.GONE
+        }
+        return correct
     }
 
 }

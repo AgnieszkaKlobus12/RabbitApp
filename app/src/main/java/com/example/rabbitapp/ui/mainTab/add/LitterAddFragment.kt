@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -78,10 +79,10 @@ class LitterAddFragment : FragmentWithPicture() {
 
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
         binding.addLitterDate.setOnClickListener {
-            showDatePickerDialog()
+            showDatePickerDialog(binding.addLitterDate)
         }
         binding.addLitterDeathDate.setOnClickListener {
-            showDatePickerDialog()
+            showDatePickerDialog(binding.addLitterDeathDate)
         }
 
         litter?.id?.let {
@@ -152,7 +153,7 @@ class LitterAddFragment : FragmentWithPicture() {
         }
     }
 
-    private fun showDatePickerDialog() {
+    private fun showDatePickerDialog(view: TextView) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -161,7 +162,7 @@ class LitterAddFragment : FragmentWithPicture() {
         val datePickerDialog =
             DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
-                binding.addLitterDate.text =
+                view.text =
                     Editable.Factory.getInstance().newEditable(selectedDate.format(dateFormatter))
             }, year, month, day)
 
@@ -287,6 +288,16 @@ class LitterAddFragment : FragmentWithPicture() {
         if (binding.addLitterNumber.text.isEmpty()) {
             binding.addLitterNumber.error = getString(R.string.error_empty)
             correct = false
+        }
+        if (binding.addLitterDeathSwitch.isChecked && LocalDate.parse(
+                binding.addLitterDeathDate.text.toString(),
+                dateFormatter
+            ).isBefore(LocalDate.parse(binding.addLitterDate.text.toString(), dateFormatter))
+        ) {
+            correct = false
+            binding.addLitterDeathError.visibility = View.VISIBLE
+        } else {
+            binding.addLitterDeathError.visibility = View.GONE
         }
         return correct
     }

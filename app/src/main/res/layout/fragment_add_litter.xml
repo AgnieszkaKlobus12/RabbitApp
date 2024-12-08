@@ -129,6 +129,19 @@
                         android:gravity="center" />
                 </TableRow>
 
+                <TableRow android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/add_litter_death_error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_span="2"
+                        android:text="@string/error_death_date"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
+                </TableRow>
+
                 <TableRow>
 
                     <TextView

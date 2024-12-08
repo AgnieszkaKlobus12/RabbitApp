@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/table_margin"
                         android:layout_weight="1"
-                        android:text="@string/birth_date_label" />
+                        android:text="@string/estimated_birth_date" />
 
                     <TextView
                         android:id="@+id/mating_date_birth"

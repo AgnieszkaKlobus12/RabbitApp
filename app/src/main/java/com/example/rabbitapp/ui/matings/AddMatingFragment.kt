@@ -252,6 +252,7 @@ class AddMatingFragment : Fragment() {
     private fun displayLitterIfSelected() {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (litter != null) {
+            binding.matingDateBirthLabel.text = getString(R.string.birth_date)
             val selectedLitterFragment = HomeListItemFragment(litter!!)
             transaction.replace(R.id.add_litter_fragment, selectedLitterFragment)
         } else {
