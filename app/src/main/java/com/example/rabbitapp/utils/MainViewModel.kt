@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.rabbitapp.MainApplication
 import com.example.rabbitapp.model.AppDatabase
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Litter
@@ -37,7 +38,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var internet = true
     private var lock = true
 
-    private var googleDriveClient: GoogleDriveClient = GoogleDriveClient(application, true)
+    private var googleDriveClient: GoogleDriveClient =
+        GoogleDriveClient(application as MainApplication, true)
     val dataRefresh: MutableLiveData<Int> = MutableLiveData()
 
     init {

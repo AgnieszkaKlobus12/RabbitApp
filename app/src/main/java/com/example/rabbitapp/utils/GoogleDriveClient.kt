@@ -1,10 +1,10 @@
 package com.example.rabbitapp.utils
 
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.getString
+import com.example.rabbitapp.MainApplication
 import com.example.rabbitapp.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.Scopes
@@ -28,16 +28,19 @@ import java.io.IOException
 import java.io.OutputStream
 import java.time.LocalDateTime
 
-class GoogleDriveClient(private val context: Context, private var internetConnection: Boolean) {
+class GoogleDriveClient(
+    private val application: MainApplication,
+    private var internetConnection: Boolean
+) {
 
     fun setInternetConnection(internetConnection: Boolean) {
         this.internetConnection = internetConnection
     }
 
     fun uploadLocalDatabase() {
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(application)
         val credential = GoogleAccountCredential.usingOAuth2(
-            context,
+            application,
             setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
         )
         credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -47,16 +50,16 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
             GsonFactory(),
             credential
         )
-            .setApplicationName(getString(context, R.string.app_name))
+            .setApplicationName(getString(application, R.string.app_name))
             .build()
 
-        val dbPath = context.getDatabasePath("app_database").path
+        val dbPath = application.getDatabasePath("app_database").path
         val dbPathShm =
-            context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
+            application.getDatabasePath("app_database").parent?.plus("/app_database-shm")
         val dbPathWal =
-            context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+            application.getDatabasePath("app_database").parent?.plus("/app_database-wal")
         val dbPathCache =
-            context.cacheDir.path.plus("/app_database.lck")
+            application.cacheDir.path.plus("/app_database.lck")
 
         val filePath = java.io.File(dbPath)
         val filePathShm = dbPathShm?.let { java.io.File(it) }
@@ -106,9 +109,9 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
     }
 
     fun downloadDatabase(activity: Activity) {
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(application)
         val credential = GoogleAccountCredential.usingOAuth2(
-            context,
+            application,
             setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
         )
         credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -118,15 +121,15 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
             GsonFactory(),
             credential
         )
-            .setApplicationName(getString(context, R.string.app_name))
+            .setApplicationName(getString(application, R.string.app_name))
             .build()
 
         try {
-            val dbPath = context.getDatabasePath("app_database").path
+            val dbPath = application.getDatabasePath("app_database").path
             val dbPathShm =
-                context.getDatabasePath("app_database").parent?.plus("/app_database-shm")
+                application.getDatabasePath("app_database").parent?.plus("/app_database-shm")
             val dbPathWal =
-                context.getDatabasePath("app_database").parent?.plus("/app_database-wal")
+                application.getDatabasePath("app_database").parent?.plus("/app_database-wal")
 
             val files: FileList = googleDriveService.files().list()
                 .setSpaces("appDataFolder")
@@ -168,9 +171,9 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
     }
 
     fun checkAndClaimDatabaseBlock(): Boolean {
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(application)
         val credential = GoogleAccountCredential.usingOAuth2(
-            context,
+            application,
             setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
         )
         credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -180,7 +183,7 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
             GsonFactory(),
             credential
         )
-            .setApplicationName(getString(context, R.string.app_name))
+            .setApplicationName(getString(application, R.string.app_name))
             .build()
 
         try {
@@ -218,9 +221,9 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
     private fun refreshLock() {
         CoroutineScope(Dispatchers.Default).launch {
             val googleSignInAccount =
-                GoogleSignIn.getLastSignedInAccount(context)
+                GoogleSignIn.getLastSignedInAccount(application)
             val credential = GoogleAccountCredential.usingOAuth2(
-                context,
+                application,
                 setOf(Scopes.DRIVE_FILE, DriveScopes.DRIVE_APPDATA)
             )
             credential.setSelectedAccount(googleSignInAccount!!.account)
@@ -230,10 +233,10 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
                 GsonFactory(),
                 credential
             )
-                .setApplicationName(getString(context, R.string.app_name))
+                .setApplicationName(getString(application, R.string.app_name))
                 .build()
 
-            while (true) {
+            while (application.appLifecycleObserver.foreground) {
                 if (internetConnection) {
                     val files: FileList = googleDriveService.files().list()
                         .setSpaces("appDataFolder")
