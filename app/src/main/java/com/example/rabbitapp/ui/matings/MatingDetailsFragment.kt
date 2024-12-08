@@ -20,7 +20,7 @@ import com.example.rabbitapp.databinding.FragmentMatingDetailsBinding
 import com.example.rabbitapp.model.entities.relations.Mating
 import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 
@@ -31,7 +31,7 @@ class MatingDetailsFragment : Fragment() {
 
     private var _binding: FragmentMatingDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private val parentSelectService: ParentSelectService = ParentSelectService()
 
     private var mating: Mating? = null

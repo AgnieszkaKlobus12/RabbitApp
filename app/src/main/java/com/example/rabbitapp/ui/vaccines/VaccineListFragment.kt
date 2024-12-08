@@ -12,14 +12,14 @@ import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccineListBinding
 import com.example.rabbitapp.model.entities.Vaccine
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class VaccineListFragment : Fragment() {
 
     private val args: VaccineListFragmentArgs by navArgs()
 
     private var _binding: FragmentVaccineListBinding? = null
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private lateinit var vaccineListAdapter: VaccineListAdapter
     private val onSelectedItem = object : OnSelectedVaccine {

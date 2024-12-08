@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentVaccineEditBinding
 import com.example.rabbitapp.model.entities.Vaccine
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class VaccineEditFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class VaccineEditFragment : Fragment() {
 
     private var _binding: FragmentVaccineEditBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

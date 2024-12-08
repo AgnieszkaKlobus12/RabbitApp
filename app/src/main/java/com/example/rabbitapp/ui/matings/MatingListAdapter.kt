@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.relations.Mating
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 
 class MatingListAdapter(
-    private val viewModel: MainListViewModel,
+    private val viewModel: MainViewModel,
     private var values: List<Mating>,
     private val onSelectedItem: OnSelectedMating
 ) :

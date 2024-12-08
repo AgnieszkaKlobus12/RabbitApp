@@ -358,7 +358,9 @@
             app:argType="long" />
         <action
             android:id="@+id/action_addRabbitFragment_to_navigation_home"
-            app:destination="@id/navigation_rabbit_list" />
+            app:destination="@id/navigation_rabbit_list"
+            app:popUpTo="@id/navigation_rabbit_list"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addRabbitFragment_to_rabbitDetailsFragment"
             app:destination="@id/rabbitDetailsFragment"
@@ -392,7 +394,9 @@
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addLitterFragment_to_navigation_home"
-            app:destination="@id/navigation_rabbit_list" />
+            app:destination="@id/navigation_rabbit_list"
+            app:popUpTo="@id/navigation_rabbit_list"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_addLitterFragment_to_litterDetailsFragment"
             app:destination="@id/litterDetailsFragment"
@@ -466,7 +470,9 @@
             app:argType="long" />
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_navigation_home"
-            app:destination="@id/navigation_rabbit_list" />
+            app:destination="@id/navigation_rabbit_list"
+            app:popUpTo="@id/navigation_rabbit_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_rabbitDetailsFragment_to_mark_dead"
             app:destination="@id/navigation_mark_dead" />
@@ -507,7 +513,9 @@
             app:argType="long" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_navigation_home"
-            app:destination="@id/navigation_rabbit_list" />
+            app:destination="@id/navigation_rabbit_list"
+            app:popUpTo="@id/navigation_rabbit_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_litterDetailsFragment_to_mark_dead"
             app:destination="@id/navigation_mark_dead" />

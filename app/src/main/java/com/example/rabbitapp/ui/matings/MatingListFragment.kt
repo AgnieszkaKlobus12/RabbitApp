@@ -12,13 +12,13 @@ import androidx.navigation.findNavController
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMatingBinding
 import com.example.rabbitapp.model.entities.relations.Mating
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class MatingListFragment : Fragment() {
 
     private var _binding: FragmentMatingBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var matingListAdapter: MatingListAdapter
     private val onSelectedItem = object : OnSelectedMating {
         override fun onItemClick(item: Mating) {

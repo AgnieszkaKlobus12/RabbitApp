@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.rabbitapp.MainActivity
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.ActivityLoginBinding
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
@@ -19,11 +19,11 @@ import com.google.android.gms.tasks.Task
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: MainListViewModel
+    private lateinit var loginViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loginViewModel = ViewModelProvider(this)[MainListViewModel::class.java]
+        loginViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -141,6 +141,7 @@ class RabbitDetailsFragment : FragmentWithPicture() {
                     val builder = AlertDialog.Builder(it)
                     builder.apply {
                         setPositiveButton(R.string.ok) { dialog, _ ->
+                            viewModel.deleteRabbit(rabbit!!.id)
                             dialog.dismiss()
                             view?.findNavController()
                                 ?.navigate(R.id.action_rabbitDetailsFragment_to_navigation_home)

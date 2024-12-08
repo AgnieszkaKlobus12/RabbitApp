@@ -23,7 +23,7 @@ import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
 import com.example.rabbitapp.ui.mainTab.add.StartSelect
 import com.example.rabbitapp.ui.mainTab.parent.ParentSelectService
 import com.example.rabbitapp.utils.Gender
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -36,7 +36,7 @@ class AddMatingFragment : Fragment() {
     private var litter: Litter? = null
     private var _binding: FragmentAddMatingBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     private val parentSelectService: ParentSelectService = ParentSelectService()

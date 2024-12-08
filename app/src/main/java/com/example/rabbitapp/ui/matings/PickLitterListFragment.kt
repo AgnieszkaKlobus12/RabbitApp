@@ -12,13 +12,13 @@ import com.example.rabbitapp.databinding.ContentHomeListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class PickLitterListFragment : Fragment() {
     private val args: PickLitterListFragmentArgs by navArgs()
     private var _binding: ContentHomeListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

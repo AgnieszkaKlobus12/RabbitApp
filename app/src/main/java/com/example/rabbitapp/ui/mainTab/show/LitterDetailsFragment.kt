@@ -112,6 +112,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
                     val builder = AlertDialog.Builder(it)
                     builder.apply {
                         setPositiveButton(R.string.ok) { dialog, _ ->
+                            viewModel.deleteLitter(litter!!.id)
                             dialog.dismiss()
                             view?.findNavController()
                                 ?.navigate(R.id.action_litterDetailsFragment_to_navigation_home)

@@ -14,7 +14,7 @@ import com.example.rabbitapp.ui.mainTab.HomeListItemFragment
 import com.example.rabbitapp.ui.mainTab.add.PickButtonFragment
 import com.example.rabbitapp.ui.mainTab.add.StartSelect
 import com.example.rabbitapp.utils.Gender
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class ParentSelectService {
 
@@ -22,7 +22,7 @@ class ParentSelectService {
         actionMother: NavDirections,
         actionFather: NavDirections,
         childFragmentManager: FragmentManager,
-        viewModel: MainListViewModel,
+        viewModel: MainViewModel,
         view: View?
     ) {
         Log.d(
@@ -71,7 +71,7 @@ class ParentSelectService {
     fun displayParentOrUnknown(
         fkMother: Long?, fkFather: Long?,
         childFragmentManager: FragmentManager,
-        viewModel: MainListViewModel,
+        viewModel: MainViewModel,
     ) {
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (fkMother != null) {
@@ -153,7 +153,7 @@ class ParentSelectService {
         transaction.commit()
     }
 
-    fun setParents(viewModel: MainListViewModel, motherId: Long?, fatherId: Long?) {
+    fun setParents(viewModel: MainViewModel, motherId: Long?, fatherId: Long?) {
         if (viewModel.selectedMother == null) {
             viewModel.selectedMother =
                 motherId?.let { viewModel.getRabbitFromId(it) }

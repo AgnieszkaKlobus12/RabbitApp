@@ -80,6 +80,7 @@
                 <com.google.android.material.chip.Chip
                     style="@style/CustomChipChoice"
                     android:id="@+id/alive_chip"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/mini_margin"

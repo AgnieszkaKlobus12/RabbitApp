@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.HomeListItem
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
@@ -25,7 +25,7 @@ import java.util.UUID
 
 abstract class FragmentWithPicture : Fragment() {
 
-    protected val viewModel: MainListViewModel by activityViewModels()
+    protected val viewModel: MainViewModel by activityViewModels()
 
     fun setPictureToSelectedOrDefault(
         pictureView: ImageView,

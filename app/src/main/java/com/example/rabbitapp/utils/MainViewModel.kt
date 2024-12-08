@@ -22,7 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)
-class MainListViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val rabbitRepository: RabbitService
     private val litterRepository: LitterService
@@ -75,7 +75,8 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun save(rabbit: Rabbit): Long {
-        return rabbitRepository.save(rabbit)
+        val result = rabbitRepository.save(rabbit)
+        return result
     }
 
     fun update(rabbit: Rabbit) {
@@ -286,6 +287,13 @@ class MainListViewModel(application: Application) : AndroidViewModel(application
         Log.d("ViewModel", "Google account: $googleAccount")
     }
 
+    fun deleteRabbit(id: Long) {
+        rabbitRepository.deleteRabbitWithId(id)
+    }
+
+    fun deleteLitter(id: Long) {
+        litterRepository.deleteWithId(id)
+    }
+
 
 }
-

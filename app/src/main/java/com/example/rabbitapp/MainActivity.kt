@@ -16,7 +16,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rabbitapp.databinding.ActivityMainBinding
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.example.rabbitapp.utils.NetworkChangeReceiver
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var viewModel: MainListViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var networkReceiver: NetworkChangeReceiver
 
     override fun onStart() {
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel = ViewModelProvider(this)[MainListViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -143,18 +143,6 @@ class MainActivity : AppCompatActivity() {
                     binding.appBarMain.root.visibility = View.VISIBLE
                 }
             }
-        }
-    }
-
-    fun setLoader(visible: Boolean) {
-        if (visible) {
-            binding.navView.visibility = View.GONE
-            binding.progressBarMain.visibility = View.VISIBLE
-            binding.appBarMain.root.visibility = View.GONE
-        } else {
-            binding.navView.visibility = View.VISIBLE
-            binding.progressBarMain.visibility = View.GONE
-            binding.appBarMain.root.visibility = View.VISIBLE
         }
     }
 

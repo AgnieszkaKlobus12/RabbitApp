@@ -14,13 +14,13 @@ import com.example.rabbitapp.model.entities.Rabbit
 import com.example.rabbitapp.ui.mainTab.mainList.MainListAdapter
 import com.example.rabbitapp.ui.mainTab.mainList.OnSelectedItem
 import com.example.rabbitapp.utils.Gender
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class PickMotherListFragment : Fragment() {
     private val args: PickMotherListFragmentArgs by navArgs()
     private var _binding: ContentHomeListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -7,11 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rabbitapp.R
 import com.example.rabbitapp.model.entities.relations.Vaccinated
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 import com.example.rabbitapp.utils.RabbitDetails
 
 class VaccinationsListAdapter(
-    private val viewModel: MainListViewModel,
+    private val viewModel: MainViewModel,
     private val values: List<Vaccinated>,
     private val onSelectedItem: OnSelectedVaccination
 ) :

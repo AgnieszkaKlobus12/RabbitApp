@@ -71,6 +71,7 @@ class GoogleDriveClient(private val context: Context, private var internetConnec
         uploadOrUpdateFile("app_database", storageFileContent, googleDriveService)
         uploadOrUpdateFile("app_database-shm", storageFileShmContent, googleDriveService)
         uploadOrUpdateFile("app_database-wal", storageFileWalContent, googleDriveService)
+        Log.d("Synchronisation", "Database uploaded")
     }
 
     private fun findFileByName(fileName: String, googleDriveService: Drive): File? {

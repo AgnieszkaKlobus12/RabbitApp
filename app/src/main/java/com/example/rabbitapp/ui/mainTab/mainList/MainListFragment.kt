@@ -13,13 +13,13 @@ import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentMainListBinding
 import com.example.rabbitapp.model.entities.HomeListItem
 import com.example.rabbitapp.model.entities.Rabbit
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 class MainListFragment : Fragment() {
 
     private var _binding: FragmentMainListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var mainListAdapter: MainListAdapter
     private val onSelectedItem = object : OnSelectedItem {
         override fun onItemClick(item: HomeListItem) {

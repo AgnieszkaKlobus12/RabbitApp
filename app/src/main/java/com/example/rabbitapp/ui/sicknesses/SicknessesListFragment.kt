@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
 import com.example.rabbitapp.databinding.FragmentSicknessesListBinding
 import com.example.rabbitapp.model.entities.Sickness
-import com.example.rabbitapp.utils.MainListViewModel
+import com.example.rabbitapp.utils.MainViewModel
 
 
 class SicknessesListFragment : Fragment() {
@@ -20,7 +20,7 @@ class SicknessesListFragment : Fragment() {
     private val args: SicknessesListFragmentArgs by navArgs()
 
     private var _binding: FragmentSicknessesListBinding? = null
-    private val viewModel: MainListViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     private val binding get() = _binding!!
     private lateinit var sicknessListAdapter: SicknessListAdapter
     private val onSelectedItem = object : OnSelectedSickness {
