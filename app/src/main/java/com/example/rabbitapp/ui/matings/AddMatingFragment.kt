@@ -298,6 +298,7 @@ class AddMatingFragment : Fragment() {
         } else {
             binding.fragmentAddMatingIncludeParents.addMotherError.visibility = View.GONE
         }
+
         if (viewModel.selectedFather == null) {
             binding.fragmentAddMatingIncludeParents.addFatherError.visibility = View.VISIBLE
             correct = false

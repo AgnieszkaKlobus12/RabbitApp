@@ -43,7 +43,7 @@ class MatingListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.clearSelected()
         matingListAdapter =
             MatingListAdapter(viewModel, viewModel.getAllNotArchivedMating(), onSelectedItem)
         binding.fragmentMatingListRecyclerView.adapter = matingListAdapter

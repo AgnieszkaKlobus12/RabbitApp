@@ -49,6 +49,7 @@ class LitterAddFragment : FragmentWithPicture() {
 
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addLitterDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+        binding.addLitterDeathDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
         if (litter != null) {
             parentSelectService.setParents(
@@ -77,6 +78,9 @@ class LitterAddFragment : FragmentWithPicture() {
 
         binding.addLitterSaveButton.setOnClickListener(saveLitter())
         binding.addLitterDate.setOnClickListener {
+            showDatePickerDialog()
+        }
+        binding.addLitterDeathDate.setOnClickListener {
             showDatePickerDialog()
         }
 
@@ -178,7 +182,7 @@ class LitterAddFragment : FragmentWithPicture() {
             binding.addLitterCageNumbersRow.visibility = View.GONE
         }
         binding.addLitterDeathSwitch.isChecked = litter!!.deathDate != null
-        binding.addLitterCageNumbers.setText(litter!!.cageNumber.toString())
+        binding.addLitterCageNumbers.setText(litter?.cageNumber?.toString() ?: "")
         binding.addLitterName.setText(litter!!.name)
         binding.addLitterNumber.setText(litter!!.size.toString())
     }

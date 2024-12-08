@@ -143,4 +143,7 @@
     <string name="add_vaccine">Dodaj szczepionkę</string>
     <string name="not_archived_label">Niezachiwizowane</string>
     <string name="wait_for_save">Zapisywanie do chmury. Poczekaj kilka sekund i spróbuj ponownie</string>
+    <string name="pick_father">Wybierz ojca</string>
+    <string name="pick_litter">Wybierz miot</string>
+    <string name="pick_mother">Wybierz matkę</string>
 </resources>

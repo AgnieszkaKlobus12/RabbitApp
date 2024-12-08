@@ -50,6 +50,7 @@ class RabbitAddFragment : FragmentWithPicture() {
 
         val formattedDate = LocalDate.now().format(dateFormatter)
         binding.addRabbitDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
+        binding.addRabbitDeathDate.text = Editable.Factory.getInstance().newEditable(formattedDate)
 
         if (rabbit != null) {
             parentSelectService.setParents(
@@ -109,6 +110,9 @@ class RabbitAddFragment : FragmentWithPicture() {
             binding.addRabbitDate.setOnClickListener {
                 showDatePickerDialog()
             }
+            binding.addRabbitDeathDate.setOnClickListener {
+                showDatePickerDialog()
+            }
         } else {
             parentSelectService.setChangeIllegalMessage(
                 requireContext(),
@@ -162,7 +166,7 @@ class RabbitAddFragment : FragmentWithPicture() {
             )
         }
         binding.addRabbitDeathSwitch.isChecked = rabbit!!.deathDate != null
-        binding.addRabbitCageNumbers.setText(rabbit!!.cageNumber.toString())
+        binding.addRabbitCageNumbers.setText(rabbit?.cageNumber?.toString() ?: "")
         if (rabbit!!.sex == Gender.FEMALE.name) {
             binding.addRabbitGenderFemale.isChecked = true
         } else {

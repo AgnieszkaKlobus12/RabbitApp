@@ -339,7 +339,7 @@
         <action
             android:id="@+id/action_addMatingFragment_to_matingDetailsFragment"
             app:destination="@id/matingDetailsFragment"
-            app:popUpTo="@id/addMatingFragment"
+            app:popUpTo="@id/navigation_matings"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -413,7 +413,7 @@
     <fragment
         android:id="@+id/pickFatherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickFatherListFragment"
-        android:label="PickFatherListFragment">
+        android:label="@string/pick_father">
         <argument
             android:name="rabbit_id"
             android:defaultValue="0L"
@@ -427,7 +427,7 @@
     <fragment
         android:id="@+id/pickLitterListFragment"
         android:name="com.example.rabbitapp.ui.matings.PickLitterListFragment"
-        android:label="PickLitterListFragment">
+        android:label="@string/pick_litter">
         <argument
             android:name="mother_id"
             android:defaultValue="0L"
@@ -448,7 +448,7 @@
     <fragment
         android:id="@+id/pickMotherListFragment"
         android:name="com.example.rabbitapp.ui.mainTab.parent.PickMotherListFragment"
-        android:label="PickMotherListFragment">
+        android:label="@string/pick_mother">
         <argument
             android:name="rabbit_id"
             android:defaultValue="0L"
