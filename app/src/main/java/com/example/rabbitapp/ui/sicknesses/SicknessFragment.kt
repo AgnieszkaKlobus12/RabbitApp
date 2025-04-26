@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -46,56 +45,40 @@ class SicknessFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.getEditable()) {
-            inflater.inflate(R.menu.sick_details_menu, menu)
-        }
+        inflater.inflate(R.menu.sick_details_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_edit_sick -> {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    view?.findNavController()
-                        ?.navigate(
-                            SicknessFragmentDirections.actionNavigationDetailsSicknessToEditSicknessFragment(
-                                sickness?.id ?: 0
-                            )
+                view?.findNavController()
+                    ?.navigate(
+                        SicknessFragmentDirections.actionNavigationDetailsSicknessToEditSicknessFragment(
+                            sickness?.id ?: 0
                         )
-                }
+                    )
                 true
             }
 
             R.id.navigation_delete_sick -> {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val alertDialog = requireActivity().let {
-                        val builder = AlertDialog.Builder(it)
-                        builder.apply {
-                            setPositiveButton(R.string.ok) { dialog, _ ->
-                                dialog.dismiss()
-                                viewModel.deleteSickness(sickness!!.id)
-                                view?.findNavController()
-                                    ?.navigate(R.id.action_navigation_details_sickness_to_navigation_sicknesses)
-                            }
-                            setNegativeButton(R.string.cancel) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            setTitle(R.string.alert)
-                            setMessage(R.string.confirm_delete_sickness_message)
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deleteSickness(sickness!!.id)
+                            view?.findNavController()
+                                ?.navigate(R.id.action_navigation_details_sickness_to_navigation_sicknesses)
                         }
-                        builder.create()
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_delete_sickness_message)
                     }
-                    alertDialog.show()
+                    builder.create()
                 }
+                alertDialog.show()
                 true
             }
 

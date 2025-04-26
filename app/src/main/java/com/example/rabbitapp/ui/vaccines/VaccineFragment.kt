@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -36,56 +35,40 @@ class VaccineFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.getEditable()) {
-            inflater.inflate(R.menu.vaccine_details_menu, menu)
-        }
+        inflater.inflate(R.menu.vaccine_details_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_edit_vaccine -> {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    view?.findNavController()
-                        ?.navigate(
-                            VaccineFragmentDirections.actionNavigationVaccineDetailsToVaccineEditFragment(
-                                vaccine?.id ?: 0
-                            )
+                view?.findNavController()
+                    ?.navigate(
+                        VaccineFragmentDirections.actionNavigationVaccineDetailsToVaccineEditFragment(
+                            vaccine?.id ?: 0
                         )
-                }
+                    )
                 true
             }
 
             R.id.navigation_delete_vaccine -> {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val alertDialog = requireActivity().let {
-                        val builder = AlertDialog.Builder(it)
-                        builder.apply {
-                            setPositiveButton(R.string.ok) { dialog, _ ->
-                                dialog.dismiss()
-                                viewModel.deleteVaccine(vaccine?.id)
-                                view?.findNavController()
-                                    ?.navigate(R.id.action_navigation_vaccine_details_to_vaccineListFragment)
-                            }
-                            setNegativeButton(R.string.cancel) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            setTitle(R.string.alert)
-                            setMessage(R.string.confirm_delete_vaccine_message)
+                val alertDialog = requireActivity().let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.apply {
+                        setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            viewModel.deleteVaccine(vaccine?.id)
+                            view?.findNavController()
+                                ?.navigate(R.id.action_navigation_vaccine_details_to_vaccineListFragment)
                         }
-                        builder.create()
+                        setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setTitle(R.string.alert)
+                        setMessage(R.string.confirm_delete_vaccine_message)
                     }
-                    alertDialog.show()
+                    builder.create()
                 }
+                alertDialog.show()
                 true
             }
 

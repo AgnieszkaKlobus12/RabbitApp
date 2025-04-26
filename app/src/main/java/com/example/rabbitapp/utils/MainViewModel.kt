@@ -68,14 +68,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         this.internet = editable
     }
 
-    fun setLock(lock: Boolean) {
-        this.lock = lock
-    }
-
-    fun getEditable(): Boolean {
-        return internet && lock
-    }
-
     fun save(rabbit: Rabbit): Long {
         val result = rabbitRepository.save(rabbit)
         return result
@@ -296,6 +288,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteLitter(id: Long) {
         litterRepository.deleteWithId(id)
     }
-
 
 }

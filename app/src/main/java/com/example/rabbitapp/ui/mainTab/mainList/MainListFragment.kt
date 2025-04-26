@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -114,35 +113,15 @@ class MainListFragment : Fragment() {
     }
 
     private fun moveToAddRabbit(): View.OnClickListener {
-        return if (viewModel.getEditable()) {
-            View.OnClickListener { view ->
-                view.findNavController().navigate(R.id.action_navigation_home_to_addRabbitFragment)
-            }
-        } else {
-            View.OnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        return View.OnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_home_to_addRabbitFragment)
         }
     }
 
     private fun moveToAddLitter(): View.OnClickListener {
-        return if (viewModel.getEditable()) {
-            View.OnClickListener { view ->
+        return View.OnClickListener { view ->
                 view.findNavController().navigate(R.id.action_navigation_home_to_addLitterFragment)
             }
-        } else {
-            View.OnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
     }
 
     private fun sort() {

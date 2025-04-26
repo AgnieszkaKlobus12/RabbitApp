@@ -57,9 +57,7 @@ class RabbitDetailsFragment : FragmentWithPicture() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.getEditable()) {
-            inflater.inflate(R.menu.rabbit_details_menu, menu)
-        }
+        inflater.inflate(R.menu.rabbit_details_menu, menu)
         if (rabbit?.deathDate != null) {
             val item = menu.findItem(R.id.navigation_kill_rabbit)
             item.setVisible(false)

@@ -180,13 +180,6 @@ class RabbitAddFragment : FragmentWithPicture() {
             if (!validateFields()) {
                 return@OnClickListener
             }
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
             val path = saveNewPicture(rabbit, binding.addRabbitPicture)
             val imageList = rabbit?.imagePath?.toMutableList() ?: mutableListOf()
             if (path != null) {

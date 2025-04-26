@@ -11,7 +11,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -45,13 +44,6 @@ abstract class FragmentWithPicture : Fragment() {
     }
 
     fun setGalleryLauncher(picture: ImageView) {
-        if (!viewModel.getEditable()) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.non_editable), Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
         val galleryLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {

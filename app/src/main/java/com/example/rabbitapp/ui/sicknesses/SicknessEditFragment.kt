@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -50,13 +49,6 @@ class SicknessEditFragment : Fragment() {
 
         binding.addSicknessSaveButton.setOnClickListener {
             if (!validateFields()) {
-                return@setOnClickListener
-            }
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
                 return@setOnClickListener
             }
             val savedId = viewModel.save(

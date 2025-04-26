@@ -101,13 +101,6 @@ class AddMatingFragment : Fragment() {
             if (!validateFields()) {
                 return@setOnClickListener
             }
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             if (litter != null) {
                 viewModel.save(
                     litter!!.copy(
@@ -153,13 +146,6 @@ class AddMatingFragment : Fragment() {
 
         if (litter != null) {
             binding.fragmentAddMatingIncludeParents.addMotherFragment.setOnClickListener {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
                 Toast.makeText(
                     context,
                     "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
@@ -180,13 +166,6 @@ class AddMatingFragment : Fragment() {
                 )
             }
             binding.fragmentAddMatingIncludeParents.addFatherFragment.setOnClickListener {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
                 Toast.makeText(
                     context,
                     "Uwaga! Zmiana rodzice spowoduje zmianę również w powiązanym miocie!",
@@ -208,13 +187,6 @@ class AddMatingFragment : Fragment() {
             }
 
             binding.matingDateBirth.setOnClickListener {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
                 showDatePickerDialog(binding.matingDateBirth)
                 Toast.makeText(
                     context,

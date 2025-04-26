@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun loginCallback(success: Boolean) {
         if (success) {
-            viewModel.setLock(viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock())
             this.onCreate(null)
         } else {
             Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_LONG).show()
@@ -127,16 +126,6 @@ class MainActivity : AppCompatActivity() {
             GlobalScope.launch(Dispatchers.IO) {
                 viewModel.getGoogleDriveClient().downloadDatabase(this@MainActivity)
                 viewModel.dataRefresh.postValue(Random.nextInt(1000))
-                if (!viewModel.getGoogleDriveClient().checkAndClaimDatabaseBlock()) {
-                    viewModel.setLock(false)
-                    runOnUiThread {
-                        Toast.makeText(
-                            applicationContext,
-                            getString(R.string.no_lock), //todo custom bigger toast
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
                 runOnUiThread {
                     binding.navView.visibility = View.VISIBLE
                     binding.progressBarMain.visibility = View.GONE

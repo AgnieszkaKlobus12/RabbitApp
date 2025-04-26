@@ -44,9 +44,7 @@ class LitterDetailsFragment : FragmentWithPicture() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.getEditable()) {
-            inflater.inflate(R.menu.litter_details_menu, menu)
-        }
+        inflater.inflate(R.menu.litter_details_menu, menu)
         if (litter?.deathDate != null) {
             val item = menu.findItem(R.id.navigation_kill_litter)
             item.setVisible(false)

@@ -6,7 +6,6 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.rabbitapp.R
@@ -59,13 +58,6 @@ class MarkAsDeadFragment : FragmentWithPicture() {
         )
 
         binding.markDeadSaveButton.setOnClickListener {
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             if (!validateFields()) {
                 return@setOnClickListener
             }

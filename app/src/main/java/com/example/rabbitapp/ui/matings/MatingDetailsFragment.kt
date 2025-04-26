@@ -52,10 +52,7 @@ class MatingDetailsFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (viewModel.getEditable()) {
-            inflater.inflate(R.menu.mating_details_menu, menu)
-        }
-
+        inflater.inflate(R.menu.mating_details_menu, menu)
         if (mating?.archived == true) {
             val item = menu.findItem(R.id.navigation_archive)
             item.setVisible(false)

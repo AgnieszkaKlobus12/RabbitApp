@@ -109,13 +109,6 @@ class AddSicknessFragment : FragmentWithPicture() {
         binding.fragmentAddSicknessSicknessSymptoms.text = sickness!!.symptoms
 
         binding.addSicknessSaveButton.setOnClickListener {
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             viewModel.save(
                 Sick(
                     sick?.id ?: 0L,

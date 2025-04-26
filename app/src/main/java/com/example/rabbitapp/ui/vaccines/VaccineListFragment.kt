@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -32,13 +31,6 @@ class VaccineListFragment : Fragment() {
                         )
                     )
             } else {
-                if (!viewModel.getEditable()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.non_editable), Toast.LENGTH_SHORT
-                    ).show()
-                    return
-                }
                 view?.findNavController()
                     ?.navigate(
                         VaccineListFragmentDirections.actionNavigationVaccineListToVaccinateFragment(
@@ -68,13 +60,6 @@ class VaccineListFragment : Fragment() {
         binding.fragmentListRecyclerView.adapter = vaccineListAdapter
 
         binding.addNewVaccineButton.setOnClickListener {
-            if (!viewModel.getEditable()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.non_editable), Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
             view.findNavController()
                 .navigate(R.id.action_navigation_vaccine_list_to_vaccineEditFragment)
         }
@@ -90,7 +75,6 @@ class VaccineListFragment : Fragment() {
                 binding.filterButton.setImageResource(R.drawable.icon_close)
             }
         }
-
         sort()
     }
 
